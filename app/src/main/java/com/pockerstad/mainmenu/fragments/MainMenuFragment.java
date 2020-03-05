@@ -42,6 +42,22 @@ public class MainMenuFragment extends Fragment {
             }
         });
 
+        ImageButton settingsBtn = view.findViewById(R.id.settingsBtn);
+        settingsBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ((NavigationHost) getActivity()).navigateTo(new SettingsFragment(), true);
+            }
+        });
+
+        ImageButton helpBtn = view.findViewById(R.id.helpBtn);
+        helpBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ((NavigationHost) getActivity()).navigateTo(new HelpFragment(), true);
+            }
+        });
+
         return view;
     }
 

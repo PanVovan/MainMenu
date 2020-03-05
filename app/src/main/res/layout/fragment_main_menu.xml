@@ -20,8 +20,8 @@
 
     <ImageButton
         android:id="@+id/btnExit"
-        android:layout_width="70dp"
-        android:layout_height="70dp"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
         android:adjustViewBounds="true"
         android:background="@drawable/exit"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -29,8 +29,8 @@
 
     <ImageButton
         android:id="@+id/settingsBtn"
-        android:layout_width="70dp"
-        android:layout_height="70dp"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
         android:adjustViewBounds="true"
         android:background="@drawable/__settings"
         app:layout_constraintStart_toStartOf="parent"
@@ -38,8 +38,8 @@
 
     <ImageButton
         android:id="@+id/helpBtn"
-        android:layout_width="70dp"
-        android:layout_height="70dp"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
         android:adjustViewBounds="true"
         android:background="@drawable/__help"
         app:layout_constraintStart_toEndOf="@+id/settingsBtn"
@@ -47,10 +47,9 @@
 
     <ImageButton
         android:id="@+id/topButton"
-        android:layout_width="70dp"
-        android:layout_height="70dp"
-        android:layout_marginTop="124dp"
-        android:layout_marginEnd="124dp"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
+        android:layout_marginTop="144dp"
         android:adjustViewBounds="true"
         android:background="@drawable/__top"
         app:layout_constraintEnd_toEndOf="parent"
@@ -58,12 +57,21 @@
 
     <ImageButton
         android:id="@+id/friendsButton"
-        android:layout_width="70dp"
-        android:layout_height="70dp"
-        android:layout_marginTop="124dp"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
+        android:layout_marginTop="144dp"
         android:adjustViewBounds="true"
         android:background="@drawable/__friends"
         app:layout_constraintEnd_toStartOf="@+id/topButton"
         app:layout_constraintTop_toTopOf="parent" />
+
+    <fragment
+        android:id="@+id/fragment"
+        android:name="com.pockerstad.mainmenu.fragments.PlayerMain"
+        android:layout_width="200dp"
+        android:layout_height="139dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:ignore="MissingConstraints" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

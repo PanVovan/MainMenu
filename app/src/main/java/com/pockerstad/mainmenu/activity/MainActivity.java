@@ -1,4 +1,4 @@
-package com.pockerstad.mainmenu;
+package com.pockerstad.mainmenu.activity;
 
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -9,6 +9,7 @@ import android.annotation.SuppressLint;
 import android.content.pm.ActivityInfo;
 import android.os.Bundle;
 
+import com.pockerstad.mainmenu.R;
 import com.pockerstad.mainmenu.fragments.MainMenuFragment;
 import com.pockerstad.mainmenu.util.NavigationHost;
 
