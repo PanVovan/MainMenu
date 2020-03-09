@@ -50,6 +50,11 @@ public class PokerHandClassifier implements HandClassifier {
         return result;
     }
 
+
+    /////////////////////////////////ЛОГИКА НА КЛИЕНТЕ/////////////////////////////////////
+    ///////////////////////////ПОИСК КЛАССИФИКАЦИИ КОМБИНАЦИИ//////////////////////////////
+
+
     //Метод обнаружения классификации
     @RequiresApi(api = Build.VERSION_CODES.N)
     private Classification detectImpl() {
