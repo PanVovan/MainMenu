@@ -8,6 +8,8 @@ import androidx.annotation.RequiresApi;
 import com.pockerstad.mainmenu.logic.card.Card;
 import com.pockerstad.mainmenu.logic.card.Rank;
 
+import org.jetbrains.annotations.NotNull;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
@@ -49,16 +51,20 @@ public class RankGroup implements Iterable<Map.Entry<Rank, List<Card>>> {
         return this.pairCount;
     }
 
+    //Инициализация мапы группы рангов
     @RequiresApi(api = Build.VERSION_CODES.N)
     private static Map<Rank, List<Card>> initRankGroup(final SortedSet<Card> cards) {
 
+        //Условие сортировки мапы
         final Comparator<Map.Entry<Rank, List<Card>>> valueComparator =
                 (o1, o2) -> o2.getValue().size() == o1.getValue().size() ? o2.getKey().getRankValue() - o1.getKey().getRankValue() :
                         o2.getValue().size() - o1.getValue().size();
 
+        //Лист мапов
         final List<Map.Entry<Rank, List<Card>>> listOfEntries =
                 new ArrayList<>(cards.stream().collect(Collectors.groupingBy(Card::getRank)).entrySet());
 
+        //Отсортируем лист мапов по условию
         listOfEntries.sort(valueComparator);
 
         final LinkedHashMap<Rank, List<Card>> sortedResults = new LinkedHashMap<>();

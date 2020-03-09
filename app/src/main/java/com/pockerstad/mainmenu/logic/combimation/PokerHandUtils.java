@@ -1,5 +1,9 @@
 package com.pockerstad.mainmenu.logic.combimation;
 
+import android.os.Build;
+
+import androidx.annotation.RequiresApi;
+
 import com.pockerstad.mainmenu.logic.card.Card;
 import com.pockerstad.mainmenu.logic.card.Rank;
 import com.pockerstad.mainmenu.logic.card.Suit;
@@ -15,6 +19,8 @@ public enum PokerHandUtils {
     ;   //no instance
     public static final int TIE = 0;
 
+
+    //листы роял-флешей и колес
     public static final List<Card> ROYAL_FLUSH_SPADES = Arrays.asList(new Card(ACE, Suit.SPADES),
             new Card(Rank.KING, Suit.SPADES),
             new Card(Rank.QUEEN, Suit.SPADES),
@@ -65,6 +71,7 @@ public enum PokerHandUtils {
             new Card(FIVE, Suit.DIAMONDS));
 
 
+    // Листы рангов флешей
     public static final List<Rank> STRAIGHT_TWO_TO_SIX = Arrays.asList(TWO, THREE, FOUR, FIVE, SIX);
 
     public static final List<Rank> STRAIGHT_THREE_TO_SEVEN = Arrays.asList(THREE, FOUR, FIVE, SIX, SEVEN);
@@ -90,6 +97,7 @@ public enum PokerHandUtils {
         }
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.N)
     public static Classification classifyPokerHand(final RankGroup rankGroup,
                                                    final SuitGroup suitGroup,
                                                    final SortedSet<Card> cards) {

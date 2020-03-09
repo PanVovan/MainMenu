@@ -15,6 +15,7 @@ import java.util.SortedSet;
 import java.util.TreeMap;
 import java.util.stream.Collectors;
 
+//Реализуем Iterable чтоб можно было использовать этот класс в foreach
 public class SuitGroup implements Iterable<Map.Entry<Suit, List<Card>>> {
 
     private final Map<Suit, List<Card>> suitMap;
@@ -35,6 +36,7 @@ public class SuitGroup implements Iterable<Map.Entry<Suit, List<Card>>> {
 
     @RequiresApi(api = Build.VERSION_CODES.N)
     private static Map<Suit, List<Card>> initSuitGroup(final SortedSet<Card> cards) {
+        //Возвращаем мапу, сгруппированную по масти
         return Collections.unmodifiableMap(new TreeMap<>(cards.stream().collect(Collectors.groupingBy(Card::getSuit))));
     }
 
