@@ -5,6 +5,66 @@
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="horizontal"
+    android:background="@drawable/lobby_background"
     tools:context=".fragments.ChooseLobbyFragment">
+
+    <ImageView
+        android:id="@+id/stat_of_menu"
+        android:layout_width="244dp"
+        android:layout_height="59dp"
+        android:background="@drawable/public_label"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintStart_toStartOf="parent"
+        tools:layout_editor_absoluteY="-9dp"
+        tools:ignore="MissingConstraints" />
+
+    <ImageButton
+        android:id="@+id/public_games"
+        android:adjustViewBounds="true"
+        android:layout_width="138dp"
+        android:layout_height="55dp"
+        android:background="@drawable/button"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <ImageButton
+        android:id="@+id/private_games"
+        android:layout_width="138dp"
+        android:layout_height="55dp"
+        android:layout_marginStart="30dp"
+        android:adjustViewBounds="true"
+        android:background="@drawable/button"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/public_games" />
+
+    <ImageButton
+        android:id="@+id/new_lobby"
+        android:layout_width="138dp"
+        android:layout_height="55dp"
+        android:layout_marginStart="60dp"
+        android:adjustViewBounds="true"
+        android:background="@drawable/button"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/private_games" />
+
+    <ImageButton
+        android:id="@+id/btnExit"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
+        android:adjustViewBounds="true"
+        android:background="@drawable/exit"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        />
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="729dp"
+        android:layout_height="298dp"
+        tools:layout_editor_absoluteX="1dp"
+        tools:layout_editor_absoluteY="52dp"
+        tools:ignore="MissingConstraints">
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

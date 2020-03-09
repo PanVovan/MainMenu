@@ -35,12 +35,7 @@ public class MainMenuFragment extends Fragment {
         });
 
         ImageButton exitBtn = view.findViewById(R.id.btnExit);
-        exitBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                getActivity().finish();
-            }
-        });
+        exitBtn.setOnClickListener(v -> getActivity().finish());
 
         ImageButton settingsBtn = view.findViewById(R.id.settingsBtn);
         settingsBtn.setOnClickListener(new View.OnClickListener() {

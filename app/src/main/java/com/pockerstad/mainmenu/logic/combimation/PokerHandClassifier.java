@@ -35,12 +35,6 @@ public class PokerHandClassifier implements HandClassifier {
         this.cards = Collections.unmodifiableSortedSet(cards);
     }
 
-    //Поиск самой большой карты
-    @RequiresApi(api = Build.VERSION_CODES.N)
-    private SortedSet<Card> calculateHighCards() {
-        return new TreeSet<>(this.cards.stream().limit(5).collect(Collectors.toSet()));
-    }
-
     //Обнаружить классификацию карт
     @RequiresApi(api = Build.VERSION_CODES.N)
     @Override
@@ -310,6 +304,12 @@ public class PokerHandClassifier implements HandClassifier {
         }
         //Если нет пары, то ищем наибольшую карту
         return new Classification(ClassificationRank.HIGH_CARD, calculateHighCards());
+    }
+
+    //Поиск самой большой карты
+    @RequiresApi(api = Build.VERSION_CODES.N)
+    private SortedSet<Card> calculateHighCards() {
+        return new TreeSet<>(this.cards.stream().limit(5).collect(Collectors.toSet()));
     }
 
     //Ищем кикер
