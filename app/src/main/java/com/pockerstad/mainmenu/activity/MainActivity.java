@@ -27,7 +27,7 @@ public class MainActivity extends AppCompatActivity implements NavigationHost {
         if (savedInstanceState == null) {
             getSupportFragmentManager()
                     .beginTransaction()
-                    .add(R.id.container, new MainMenuFragment())
+                    .add(R.id.container_main_menu, new MainMenuFragment())
                     .commit();
         }
     }
@@ -38,7 +38,7 @@ public class MainActivity extends AppCompatActivity implements NavigationHost {
         FragmentTransaction transaction =
                 getSupportFragmentManager()
                         .beginTransaction()
-                        .replace(R.id.container, fragment);
+                        .replace(R.id.container_main_menu, fragment);
 
         if (addToBackstack) {
             //определяем, будет ли добавляться фрагмент в стек или нет
