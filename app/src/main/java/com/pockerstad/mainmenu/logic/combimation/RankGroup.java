@@ -1,14 +1,9 @@
 package com.pockerstad.mainmenu.logic.combimation;
 
-
-import android.os.Build;
-
-import androidx.annotation.RequiresApi;
-
+import com.annimon.stream.Collectors;
+import com.annimon.stream.Stream;
 import com.pockerstad.mainmenu.logic.card.Card;
 import com.pockerstad.mainmenu.logic.card.Rank;
-
-import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -18,7 +13,7 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.SortedSet;
-import java.util.stream.Collectors;
+
 
 public class RankGroup implements Iterable<Map.Entry<Rank, List<Card>>> {
 
@@ -27,7 +22,6 @@ public class RankGroup implements Iterable<Map.Entry<Rank, List<Card>>> {
     private final int setCount;
     private final int pairCount;
 
-    @RequiresApi(api = Build.VERSION_CODES.N)
     public RankGroup(final SortedSet<Card> cards) {
         this.rankMap = initRankGroup(cards);
         this.quadCount = groupCount(4);
@@ -52,7 +46,6 @@ public class RankGroup implements Iterable<Map.Entry<Rank, List<Card>>> {
     }
 
     //Инициализация мапы группы рангов
-    @RequiresApi(api = Build.VERSION_CODES.N)
     private static Map<Rank, List<Card>> initRankGroup(final SortedSet<Card> cards) {
 
         //Условие сортировки мапы
@@ -62,10 +55,10 @@ public class RankGroup implements Iterable<Map.Entry<Rank, List<Card>>> {
 
         //Лист мапов
         final List<Map.Entry<Rank, List<Card>>> listOfEntries =
-                new ArrayList<>(cards.stream().collect(Collectors.groupingBy(Card::getRank)).entrySet());
+                new ArrayList<>(Stream.of(cards).collect(Collectors.groupingBy(Card::getRank)).entrySet());
 
         //Отсортируем лист мапов по условию
-        listOfEntries.sort(valueComparator);
+        Collections.sort(listOfEntries, valueComparator);
 
         final LinkedHashMap<Rank, List<Card>> sortedResults = new LinkedHashMap<>();
 
@@ -76,13 +69,19 @@ public class RankGroup implements Iterable<Map.Entry<Rank, List<Card>>> {
         return Collections.unmodifiableMap(sortedResults);
     }
 
-    @RequiresApi(api = Build.VERSION_CODES.N)
     private int groupCount(final int groupSize) {
-        return Math.toIntExact(this.rankMap.values().stream().filter(n -> n.size() == groupSize).count());
+        int counter = 0;
+        for (Map.Entry<Rank, List<Card>> i: rankMap.entrySet()){
+            if(i.getValue().size() == groupSize)
+                counter++;
+        }
+        return counter;
     }
 
     @Override
     public Iterator<Map.Entry<Rank, List<Card>>> iterator() {
         return this.rankMap.entrySet().iterator();
     }
+
+
 }

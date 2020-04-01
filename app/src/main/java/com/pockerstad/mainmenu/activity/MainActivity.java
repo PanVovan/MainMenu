@@ -7,10 +7,12 @@ import androidx.fragment.app.FragmentTransaction;
 
 import android.annotation.SuppressLint;
 import android.content.pm.ActivityInfo;
+import android.graphics.Bitmap;
 import android.os.Bundle;
 
 import com.pockerstad.mainmenu.R;
 import com.pockerstad.mainmenu.fragments.MainMenuFragment;
+import com.pockerstad.mainmenu.util.CardView;
 import com.pockerstad.mainmenu.util.NavigationHost;
 
 public class MainActivity extends AppCompatActivity implements NavigationHost {
@@ -22,6 +24,8 @@ public class MainActivity extends AppCompatActivity implements NavigationHost {
         setContentView(R.layout.activity_main);
         //задаем горизонтальную ориентацию
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_USER_LANDSCAPE);
+
+        Bitmap b = CardView.initView(true, this);
 
         //если активность пустая, то отображаем главное меню (пока не придумали что делать с регистрацией)
         if (savedInstanceState == null) {

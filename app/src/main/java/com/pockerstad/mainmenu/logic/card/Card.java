@@ -1,43 +1,37 @@
 package com.pockerstad.mainmenu.logic.card;
 
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.Map;
-
 public class Card implements Comparable<Card>{
 
-    private final Rank rank;
-    private final Suit suit;
-
-    private final static Map<String, Card> CARD_CACHE = initCache();
+    private Rank rank;
+    private Suit suit;
 
     public Card(Rank rank, Suit suit) {
         this.rank = rank;
         this.suit = suit;
     }
 
-    //Создание карт
-
-    private static Map<String, Card> initCache() {
-        //Создаем ссылку типа мап карт и присваеваем ей объект типа хэшмап
-        final Map<String, Card> deck = new HashMap<>();
-        //Заполняем мапу в соответствии с ее мастью и рангом
-        for (final Suit suit : Suit.values()) {
-            for (final Rank rank : Rank.values()) {
-                deck.put(cardKey(rank, suit), new Card(rank, suit));
-            }
+    public Card(int card){
+        switch (card%100){
+            case 2: this.rank = Rank.TWO; break;
+            case 3: this.rank = Rank.THREE; break;
+            case 4: this.rank = Rank.FOUR; break;
+            case 5: this.rank = Rank.FIVE; break;
+            case 6: this.rank = Rank.SIX; break;
+            case 7: this.rank = Rank.SEVEN; break;
+            case 8: this.rank = Rank.EIGHT; break;
+            case 9: this.rank = Rank.NINE; break;
+            case 10: this.rank = Rank.TEN; break;
+            case 11: this.rank = Rank.JACK; break;
+            case 12: this.rank = Rank.QUEEN; break;
+            case 13: this.rank = Rank.KING; break;
+            case 14: this.rank = Rank.ACE; break;
         }
-        return Collections.unmodifiableMap(deck);
-    }
-
-    //Статический метод получения карты
-    static Card getCard(final Rank rank,
-                        final Suit suit) {
-        final Card card = CARD_CACHE.get(cardKey(rank, suit));
-        if (card != null) {
-            return card;
+        switch (card/100){
+            case 1: this.suit = Suit.DIAMONDS;break;
+            case 2: this.suit = Suit.CLUBS;break;
+            case 3: this.suit = Suit.HEARTS;break;
+            case 4: this.suit = Suit.SPADES;break;
         }
-        throw new RuntimeException("Invalid card ! " + rank + " " + suit);
     }
 
     public Rank getRank() {
@@ -83,5 +77,9 @@ public class Card implements Comparable<Card>{
         int result = this.rank != null ? this.rank.hashCode() : 0;
         result = 31 * result + (this.suit != null ? this.suit.hashCode() : 0);
         return result;
+    }
+
+    public Integer getCardCode(){
+        return this.rank.getRankValue() + this.suit.getSuitValue()*100;
     }
 }

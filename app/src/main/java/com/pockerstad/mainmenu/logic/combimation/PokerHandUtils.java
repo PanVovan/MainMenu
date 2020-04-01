@@ -1,9 +1,5 @@
 package com.pockerstad.mainmenu.logic.combimation;
 
-import android.os.Build;
-
-import androidx.annotation.RequiresApi;
-
 import com.pockerstad.mainmenu.logic.card.Card;
 import com.pockerstad.mainmenu.logic.card.Rank;
 import com.pockerstad.mainmenu.logic.card.Suit;
@@ -97,7 +93,6 @@ public enum PokerHandUtils {
         }
     }
 
-    @RequiresApi(api = Build.VERSION_CODES.N)
     public static Classification classifyPokerHand(final RankGroup rankGroup,
                                                    final SuitGroup suitGroup,
                                                    final SortedSet<Card> cards) {

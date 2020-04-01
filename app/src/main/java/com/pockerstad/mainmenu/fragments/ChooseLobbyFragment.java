@@ -3,6 +3,8 @@ package com.pockerstad.mainmenu.fragments;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -11,7 +13,12 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 
 import com.pockerstad.mainmenu.R;
+import com.pockerstad.mainmenu.customview.Lobby;
+import com.pockerstad.mainmenu.customview.LobbyRecycleAdapter;
 import com.pockerstad.mainmenu.util.NavigationHost;
+
+import java.util.ArrayList;
+import java.util.List;
 
 
 /**
@@ -57,6 +64,27 @@ public class ChooseLobbyFragment extends Fragment {
                 label.setBackgroundResource(R.drawable.new_lobby_label);
             }
         });
+
+        RecyclerView recyclerView;
+        recyclerView = view.findViewById(R.id.lobby_view);
+        recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+
+        List<Lobby> l = new ArrayList<>();
+        l.add(new Lobby("MyLobby1", "lobby.123", "1"));
+        l.add(new Lobby("MyLobby2", "lobby.321", "2"));
+        l.add(new Lobby("MyLobby3", "lobby.234", "3"));
+        l.add(new Lobby("MyLobby4", "lobby.432", "4"));
+        l.add(new Lobby("MyLobby5", "lobby.345", "5"));
+        l.add(new Lobby("MyLobby6", "lobby.543", "5"));
+        l.add(new Lobby("MyLobby7", "lobby.345", "5"));
+        l.add(new Lobby("MyLobby8", "lobby.543", "3"));
+        l.add(new Lobby("MyLobby9", "lobby.456", "4"));
+        l.add(new Lobby("MyLobby10", "lobby.654", "2"));
+        l.add(new Lobby("MyLobby11", "lobby.567", "3"));
+        l.add(new Lobby("MyLobby12", "lobby.765", "5"));
+
+        LobbyRecycleAdapter adapter = new LobbyRecycleAdapter(getContext(), l);
+        recyclerView.setAdapter(adapter);
 
         return view;
     }

@@ -8,6 +8,15 @@
     android:background="@drawable/lobby_background"
     tools:context=".fragments.ChooseLobbyFragment">
 
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/lobby_view"
+        android:layout_width="545dp"
+        android:layout_height="288dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
     <ImageView
         android:id="@+id/stat_of_menu"
         android:layout_width="244dp"
@@ -36,7 +45,8 @@
         android:adjustViewBounds="true"
         android:background="@drawable/button"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/public_games" />
+        app:layout_constraintStart_toEndOf="@+id/public_games"
+        android:layout_marginLeft="30dp" />
 
     <ImageButton
         android:id="@+id/new_lobby"
@@ -46,7 +56,8 @@
         android:adjustViewBounds="true"
         android:background="@drawable/button"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/private_games" />
+        app:layout_constraintStart_toEndOf="@+id/private_games"
+        android:layout_marginLeft="60dp" />
 
     <ImageButton
         android:id="@+id/btnExit"
@@ -58,13 +69,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         />
 
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:layout_width="729dp"
-        android:layout_height="298dp"
-        tools:layout_editor_absoluteX="1dp"
-        tools:layout_editor_absoluteY="52dp"
-        tools:ignore="MissingConstraints">
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -6,7 +6,7 @@ android {
 
     defaultConfig {
         applicationId "com.pockerstad.mainmenu"
-        minSdkVersion 21
+        minSdkVersion 14
         targetSdkVersion 29
         versionCode 1
         versionName "1.0"
@@ -25,6 +25,9 @@ android {
         targetCompatibility = 1.8
     }
 
+    sourceSets {
+        main.res.srcDirs += 'src/main/res-cardview'
+    }
 }
 
 dependencies {
@@ -37,5 +40,6 @@ dependencies {
     androidTestImplementation 'androidx.test.ext:junit:1.1.1'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
     implementation 'org.jetbrains:annotations-java5:15.0'
-    implementation 'androidx.recyclerview:recyclerview:1.0.0'
+    implementation 'androidx.recyclerview:recyclerview:1.1.0'
+    implementation 'com.annimon:stream:1.2.1'
 }

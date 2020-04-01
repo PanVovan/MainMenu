@@ -1,9 +1,7 @@
 package com.pockerstad.mainmenu.logic.combimation;
 
-import android.os.Build;
-
-import androidx.annotation.RequiresApi;
-
+import com.annimon.stream.Collectors;
+import com.annimon.stream.Stream;
 import com.pockerstad.mainmenu.logic.card.Card;
 import com.pockerstad.mainmenu.logic.card.Rank;
 import com.pockerstad.mainmenu.logic.card.Suit;
@@ -19,7 +17,6 @@ import java.util.Map;
 import java.util.Set;
 import java.util.SortedSet;
 import java.util.TreeSet;
-import java.util.stream.Collectors;
 
 public class PokerHandClassifier implements HandClassifier {
 
@@ -36,7 +33,7 @@ public class PokerHandClassifier implements HandClassifier {
     }
 
     //Обнаружить классификацию карт
-    @RequiresApi(api = Build.VERSION_CODES.N)
+
     @Override
     public Classification classify() {
         final Classification result = detectImpl();
@@ -50,13 +47,13 @@ public class PokerHandClassifier implements HandClassifier {
 
 
     //Метод обнаружения классификации
-    @RequiresApi(api = Build.VERSION_CODES.N)
+
     private Classification detectImpl() {
         //Пытаемся обнаружить РоялФлеш
         return detectRoyalFlush();
     }
 
-    @RequiresApi(api = Build.VERSION_CODES.N)
+
     private Classification detectRoyalFlush() {
         final List<Card> handCards = new ArrayList<>(this.cards);
 
@@ -80,7 +77,7 @@ public class PokerHandClassifier implements HandClassifier {
         return detectStraightFlushWheel();
     }
 
-    @RequiresApi(api = Build.VERSION_CODES.N)
+
     private Classification detectStraightFlushWheel() {
         final List<Card> handCards = new ArrayList<>(this.cards);
 
@@ -104,7 +101,7 @@ public class PokerHandClassifier implements HandClassifier {
         return detectStraightFlush();
     }
 
-    @RequiresApi(api = Build.VERSION_CODES.N)
+
     private Classification detectStraightFlush() {
         //Создаем мапу карт сгруппированных по мастям
         final Map<Suit, List<Card>> suitGroup = this.suitGroup.getSuitMap();
@@ -125,7 +122,7 @@ public class PokerHandClassifier implements HandClassifier {
         return detectFourOfAKind();
     }
 
-    @RequiresApi(api = Build.VERSION_CODES.N)
+
     private Classification detectFourOfAKind() {
         //Если в руке есть четвертки, то
         if (this.rankGroup.getQuadCount() == 1) {
@@ -142,7 +139,7 @@ public class PokerHandClassifier implements HandClassifier {
     }
 
 
-    @RequiresApi(api = Build.VERSION_CODES.N)
+
     private Classification detectFullHouse() {
         //Если карты соответствуют условию фуллхауза, то
         if (this.rankGroup.getSetCount() == 2 ||
@@ -182,7 +179,7 @@ public class PokerHandClassifier implements HandClassifier {
         return fullHousePair;
     }
 
-    @RequiresApi(api = Build.VERSION_CODES.N)
+
     private Classification detectFlush() {
         final Map<Suit, List<Card>> suitGroup = this.suitGroup.getSuitMap();
         for (final Map.Entry<Suit, List<Card>> entry : suitGroup.entrySet()) {
@@ -195,7 +192,7 @@ public class PokerHandClassifier implements HandClassifier {
         return detectWheel();
     }
 
-    @RequiresApi(api = Build.VERSION_CODES.N)
+
     private Classification detectWheel() {
         final List<Rank> wheelRanks = Arrays.asList(Rank.ACE, Rank.TWO, Rank.THREE, Rank.FOUR, Rank.FIVE);
         //Создадим коллекцию рангов из руки
@@ -219,7 +216,7 @@ public class PokerHandClassifier implements HandClassifier {
         return detectNormalStraight();
     }
 
-    @RequiresApi(api = Build.VERSION_CODES.N)
+
     private Classification detectNormalStraight() {
         final Set<Rank> cardRanks = this.rankGroup.getRankMap().keySet();
 
@@ -260,7 +257,6 @@ public class PokerHandClassifier implements HandClassifier {
         return results;
     }
 
-    @RequiresApi(api = Build.VERSION_CODES.N)
     private Classification isSet() {
         //Если тройка одна, то добавляем соответствующие карты в классификацию
         if (this.rankGroup.getSetCount() == 1) {
@@ -275,7 +271,6 @@ public class PokerHandClassifier implements HandClassifier {
         return detectTwoPair();
     }
 
-    @RequiresApi(api = Build.VERSION_CODES.N)
     private Classification detectTwoPair() {
         //Если на руке две пары, то добавляем их в классификацию
         if (this.rankGroup.getPairCount() == 2) {
@@ -290,7 +285,8 @@ public class PokerHandClassifier implements HandClassifier {
         return isPair();
     }
 
-    @RequiresApi(api = Build.VERSION_CODES.N)
+
+
     private Classification isPair() {
         //Если пара одна, то добавляем ее в классификацию
         if (this.rankGroup.getPairCount() == 1) {
@@ -307,19 +303,17 @@ public class PokerHandClassifier implements HandClassifier {
     }
 
     //Поиск самой большой карты
-    @RequiresApi(api = Build.VERSION_CODES.N)
     private SortedSet<Card> calculateHighCards() {
-        return new TreeSet<>(this.cards.stream().limit(5).collect(Collectors.toSet()));
+        return new TreeSet<>(Stream.of(this.cards).limit(5).collect(Collectors.toSet()));
     }
 
     //Ищем кикер
-    @RequiresApi(api = Build.VERSION_CODES.N)
     private static Card extractQuadKicker(final Iterator<Map.Entry<Rank, List<Card>>> rankGroup) {
         if (!rankGroup.hasNext()) {
             throw new RuntimeException("No kicker to extract!");
         }
         final SortedSet<Card> remainingCards = new TreeSet<>();
-        rankGroup.forEachRemaining(rankListEntry -> remainingCards.addAll(rankListEntry.getValue()));
+        Stream.of(rankGroup).forEach(rankListEntry -> remainingCards.addAll(rankListEntry.getValue()));
         return remainingCards.last();
     }
 
