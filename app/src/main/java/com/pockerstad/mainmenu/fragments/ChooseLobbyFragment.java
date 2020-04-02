@@ -13,28 +13,45 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 
 import com.pockerstad.mainmenu.R;
-import com.pockerstad.mainmenu.customview.Lobby;
-import com.pockerstad.mainmenu.customview.LobbyRecycleAdapter;
+import com.pockerstad.mainmenu.customparts.lobby_view.Lobby;
+import com.pockerstad.mainmenu.customparts.lobby_view.LobbyRecyclerViewAdapter;
 import com.pockerstad.mainmenu.util.NavigationHost;
 
 import java.util.ArrayList;
-import java.util.List;
 
 
 /**
  * A simple {@link Fragment} subclass.
  */
-public class ChooseLobbyFragment extends Fragment {
+public class ChooseLobbyFragment extends Fragment implements LobbyRecyclerViewAdapter.OnLobbyClickListener {
 
     private ImageView label;
-    ImageButton privateButton;
-    ImageButton publicButton;
-    ImageButton newLobbyButton;
+    private ImageButton privateButton;
+    private ImageButton publicButton;
+    private ImageButton newLobbyButton;
+
+    //Заглушка
+    private ArrayList<Lobby> lobbies = new ArrayList<>();
+    RecyclerView recyclerView;
+    LobbyRecyclerViewAdapter adapter;
+
+    //конец заглушки
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_choose_lobby, container, false);
+
+        //Заглушка
+        recyclerView = view.findViewById(R.id.lobby_container);
+
+        lobbies.add(new Lobby(3, 4));
+        lobbies.add(new Lobby(5, 6));
+
+        adapter = new LobbyRecyclerViewAdapter(lobbies, this);
+        recyclerView.setAdapter(adapter);
+        recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+        //конец заглушки
 
         label = view.findViewById(R.id.stat_of_menu);
 
@@ -65,29 +82,14 @@ public class ChooseLobbyFragment extends Fragment {
             }
         });
 
-        RecyclerView recyclerView;
-        recyclerView = view.findViewById(R.id.lobby_view);
-        recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
 
-        List<Lobby> l = new ArrayList<>();
-        l.add(new Lobby("MyLobby1", "lobby.123", "1"));
-        l.add(new Lobby("MyLobby2", "lobby.321", "2"));
-        l.add(new Lobby("MyLobby3", "lobby.234", "3"));
-        l.add(new Lobby("MyLobby4", "lobby.432", "4"));
-        l.add(new Lobby("MyLobby5", "lobby.345", "5"));
-        l.add(new Lobby("MyLobby6", "lobby.543", "5"));
-        l.add(new Lobby("MyLobby7", "lobby.345", "5"));
-        l.add(new Lobby("MyLobby8", "lobby.543", "3"));
-        l.add(new Lobby("MyLobby9", "lobby.456", "4"));
-        l.add(new Lobby("MyLobby10", "lobby.654", "2"));
-        l.add(new Lobby("MyLobby11", "lobby.567", "3"));
-        l.add(new Lobby("MyLobby12", "lobby.765", "5"));
 
-        LobbyRecycleAdapter adapter = new LobbyRecycleAdapter(getContext(), l);
-        recyclerView.setAdapter(adapter);
 
         return view;
     }
 
-
+    @Override
+    public void onLobbyClicked(Lobby lobby) {
+        ((NavigationHost) getActivity()).navigateTo(new GameViewFragment(), false);
+    }
 }

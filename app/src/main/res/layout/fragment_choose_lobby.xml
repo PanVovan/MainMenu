@@ -9,7 +9,7 @@
     tools:context=".fragments.ChooseLobbyFragment">
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/lobby_view"
+        android:id="@+id/lobby_container"
         android:layout_width="545dp"
         android:layout_height="288dp"
         app:layout_constraintBottom_toBottomOf="parent"

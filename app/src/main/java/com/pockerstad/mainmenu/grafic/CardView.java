@@ -1,4 +1,4 @@
-package com.pockerstad.mainmenu.util;
+package com.pockerstad.mainmenu.grafic;
 
 import android.content.Context;
 import android.graphics.Bitmap;

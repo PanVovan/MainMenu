@@ -5,19 +5,15 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
-import android.annotation.SuppressLint;
 import android.content.pm.ActivityInfo;
-import android.graphics.Bitmap;
 import android.os.Bundle;
 
 import com.pockerstad.mainmenu.R;
 import com.pockerstad.mainmenu.fragments.MainMenuFragment;
-import com.pockerstad.mainmenu.util.CardView;
 import com.pockerstad.mainmenu.util.NavigationHost;
 
 public class MainActivity extends AppCompatActivity implements NavigationHost {
 
-    @SuppressLint("SourceLockedOrientationActivity")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -25,7 +21,6 @@ public class MainActivity extends AppCompatActivity implements NavigationHost {
         //задаем горизонтальную ориентацию
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_USER_LANDSCAPE);
 
-        Bitmap b = CardView.initView(true, this);
 
         //если активность пустая, то отображаем главное меню (пока не придумали что делать с регистрацией)
         if (savedInstanceState == null) {
