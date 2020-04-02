@@ -24,8 +24,7 @@ public class GameViewFragment extends Fragment {
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_game_view, container, false);
 
-        SurfaceView sv = view.findViewById(R.id.gameAnimationView);
-        gameAnimationView = new GameAnimationView(getContext(), sv);
+        gameAnimationView = (GameAnimationView) view.findViewById(R.id.gameAnimationView);
 
         return view;
     }

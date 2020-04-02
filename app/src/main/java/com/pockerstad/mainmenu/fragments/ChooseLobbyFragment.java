@@ -1,5 +1,6 @@
 package com.pockerstad.mainmenu.fragments;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -13,6 +14,8 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 
 import com.pockerstad.mainmenu.R;
+import com.pockerstad.mainmenu.activity.GameActivity;
+import com.pockerstad.mainmenu.activity.MainActivity;
 import com.pockerstad.mainmenu.customparts.lobby_view.Lobby;
 import com.pockerstad.mainmenu.customparts.lobby_view.LobbyRecyclerViewAdapter;
 import com.pockerstad.mainmenu.util.NavigationHost;
@@ -90,6 +93,6 @@ public class ChooseLobbyFragment extends Fragment implements LobbyRecyclerViewAd
 
     @Override
     public void onLobbyClicked(Lobby lobby) {
-        ((NavigationHost) getActivity()).navigateTo(new GameViewFragment(), false);
+        startActivity(new Intent(getContext(), GameActivity.class));
     }
 }

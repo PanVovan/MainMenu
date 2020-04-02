@@ -7,11 +7,10 @@
     tools:context=".fragments.GameViewFragment"
     tools:ignore="ExtraText">
 
-    <SurfaceView
+    <com.pockerstad.mainmenu.grafic.surfaceview.GameAnimationView
         android:id="@+id/gameAnimationView"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        tools:layout_editor_absoluteX="2dp" />
+        android:layout_height="match_parent" />
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
