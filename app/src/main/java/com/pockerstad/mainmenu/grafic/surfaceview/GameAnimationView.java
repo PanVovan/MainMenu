@@ -6,48 +6,38 @@ import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 
 
-public class GameAnimationView extends SurfaceView implements SurfaceHolder.Callback {
+public class GameAnimationView extends SurfaceView implements Runnable {
 
-    AnimationThread animationThread;
+    private boolean mustRunning;
+    private Thread gameThread = null;
+    private SurfaceHolder holder;
 
     public GameAnimationView(Context context) {
         super(context);
-        getHolder().addCallback(this);
+        holder=getHolder();
     }
 
     public GameAnimationView(Context context, AttributeSet attr) {
         super(context, attr);
-        getHolder().addCallback(this);
-    }
-
-
-    @Override
-    public void surfaceCreated(SurfaceHolder holder) {
-        animationThread = new AnimationThread(getHolder());
-        animationThread.setRunning(false);
-        animationThread.start();
-
+        holder = getHolder();
     }
 
     @Override
-    public void surfaceChanged(SurfaceHolder holder, int format, int width, int height) {
-
+    public void run() {
     }
 
-    @Override
-    public void surfaceDestroyed(SurfaceHolder holder) {
-        boolean retry = true;
-        animationThread.setRunning(false); //останавливает процесс
-
-        while(retry) {
-            try {
-                animationThread.join(); //ждет окончательной остановки процесса
-                retry = false;
-            }
-            catch (InterruptedException e) {
-                //не более чем формальность
-            }
+    public void pause() {
+        mustRunning = false;
+        try {
+            // Stop the thread == rejoin the main thread.
+            gameThread.join();
+        } catch (InterruptedException e) {
         }
+    }
 
+    public void resume() {
+        mustRunning = true;
+        gameThread = new Thread(this);
+        gameThread.start();
     }
 }

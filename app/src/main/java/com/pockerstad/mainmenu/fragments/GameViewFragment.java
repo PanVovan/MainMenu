@@ -1,13 +1,11 @@
 package com.pockerstad.mainmenu.fragments;
 
 import android.os.Bundle;
-
-import androidx.fragment.app.Fragment;
-
 import android.view.LayoutInflater;
-import android.view.SurfaceView;
 import android.view.View;
 import android.view.ViewGroup;
+
+import androidx.fragment.app.Fragment;
 
 import com.pockerstad.mainmenu.R;
 import com.pockerstad.mainmenu.grafic.surfaceview.GameAnimationView;
@@ -19,6 +17,7 @@ public class GameViewFragment extends Fragment {
 
     GameAnimationView gameAnimationView;
 
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -27,5 +26,17 @@ public class GameViewFragment extends Fragment {
         gameAnimationView = (GameAnimationView) view.findViewById(R.id.gameAnimationView);
 
         return view;
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        gameAnimationView.resume();
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        gameAnimationView.pause();
     }
 }

@@ -15,7 +15,6 @@ import android.widget.ImageView;
 
 import com.pockerstad.mainmenu.R;
 import com.pockerstad.mainmenu.activity.GameActivity;
-import com.pockerstad.mainmenu.activity.MainActivity;
 import com.pockerstad.mainmenu.customparts.lobby_view.Lobby;
 import com.pockerstad.mainmenu.customparts.lobby_view.LobbyRecyclerViewAdapter;
 import com.pockerstad.mainmenu.util.NavigationHost;
@@ -59,7 +58,9 @@ public class ChooseLobbyFragment extends Fragment implements LobbyRecyclerViewAd
         label = view.findViewById(R.id.stat_of_menu);
 
         ImageButton exitBtn = view.findViewById(R.id.btnExit);
-        exitBtn.setOnClickListener(v -> ((NavigationHost) getActivity()).navigateTo(new MainMenuFragment(), false));
+        exitBtn.setOnClickListener(v ->
+                ((NavigationHost) getActivity()).navigateTo(new MainMenuFragment(), false)
+        );
 
         privateButton = view.findViewById(R.id.private_games);
         privateButton.setOnClickListener(new View.OnClickListener() {
