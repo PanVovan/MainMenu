@@ -1,12 +1,11 @@
 package com.pockerstad.mainmenu.activity;
 
 
+import android.os.Bundle;
+
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
-
-import android.content.pm.ActivityInfo;
-import android.os.Bundle;
 
 import com.pockerstad.mainmenu.R;
 import com.pockerstad.mainmenu.fragments.MainMenuFragment;
@@ -18,9 +17,6 @@ public class MainActivity extends AppCompatActivity implements NavigationHost {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        //задаем горизонтальную ориентацию
-        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_USER_LANDSCAPE);
-
 
         //если активность пустая, то отображаем главное меню (пока не придумали что делать с регистрацией)
         if (savedInstanceState == null) {

@@ -9,7 +9,19 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.SortedSet;
 
-import static com.pockerstad.mainmenu.logic.card.Rank.*;
+import static com.pockerstad.mainmenu.logic.card.Rank.ACE;
+import static com.pockerstad.mainmenu.logic.card.Rank.EIGHT;
+import static com.pockerstad.mainmenu.logic.card.Rank.FIVE;
+import static com.pockerstad.mainmenu.logic.card.Rank.FOUR;
+import static com.pockerstad.mainmenu.logic.card.Rank.JACK;
+import static com.pockerstad.mainmenu.logic.card.Rank.KING;
+import static com.pockerstad.mainmenu.logic.card.Rank.NINE;
+import static com.pockerstad.mainmenu.logic.card.Rank.QUEEN;
+import static com.pockerstad.mainmenu.logic.card.Rank.SEVEN;
+import static com.pockerstad.mainmenu.logic.card.Rank.SIX;
+import static com.pockerstad.mainmenu.logic.card.Rank.TEN;
+import static com.pockerstad.mainmenu.logic.card.Rank.THREE;
+import static com.pockerstad.mainmenu.logic.card.Rank.TWO;
 
 public enum PokerHandUtils {
     ;   //no instance

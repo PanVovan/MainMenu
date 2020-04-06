@@ -1,9 +1,6 @@
 package com.pockerstad.mainmenu.logic.combimation;
 
-import android.os.Build;
-
-import androidx.annotation.RequiresApi;
-
+import com.annimon.stream.Collectors;
 import com.annimon.stream.Stream;
 import com.pockerstad.mainmenu.logic.card.Card;
 import com.pockerstad.mainmenu.logic.card.Suit;
@@ -14,7 +11,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.SortedSet;
 import java.util.TreeMap;
-import com.annimon.stream.Collectors;
 
 //Реализуем Iterable чтоб можно было использовать этот класс в foreach
 public class SuitGroup implements Iterable<Map.Entry<Suit, List<Card>>> {
