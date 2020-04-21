@@ -1,20 +1,18 @@
 package com.pockerstad.mainmenu.logic.card;
 
-//Масти карт
-
 public enum Suit {
     DIAMONDS(1),
     CLUBS(2),
     HEARTS(3),
     SPADES(4);
 
-    private final int suitValue;
+    private int suit_val;
 
-    Suit(final int suitValue) {
-        this.suitValue = suitValue;
+    Suit(int suit) {
+        this.suit_val = suit;
     }
 
-    public int getSuitValue() {
-        return this.suitValue;
+    public int getSuit_val() {
+        return this.suit_val;
     }
 }

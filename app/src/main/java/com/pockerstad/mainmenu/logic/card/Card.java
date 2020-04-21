@@ -1,14 +1,16 @@
 package com.pockerstad.mainmenu.logic.card;
 
-public class Card implements Comparable<Card>{
+import java.io.Serializable;
 
+public class Card implements Comparable<Card>, Serializable {
     private Rank rank;
     private Suit suit;
 
-    public Card(Rank rank, Suit suit) {
-        this.rank = rank;
-        this.suit = suit;
+    public Card (Rank r, Suit s){
+        this.rank = r;
+        this.suit = s;
     }
+    //специальный конструктор для работы с кодами карт
 
     public Card(int card){
         switch (card%100){
@@ -34,52 +36,22 @@ public class Card implements Comparable<Card>{
         }
     }
 
+    public Integer getCode(){
+        return this.suit.getSuit_val()*100+this.rank.getRank_val();
+    }
+
     public Rank getRank() {
-        return this.rank;
+        return rank;
     }
 
     public Suit getSuit() {
-        return this.suit;
-    }
-
-    private static String cardKey(final Rank rank,
-                                  final Suit suit) {
-        return rank + " of " + suit;
-    }
-
-    //Метод для сравнения
-    @Override
-    public int compareTo(final Card o) {
-        final int rankComparison = Integer.compare(this.rank.getRankValue(), o.rank.getRankValue());
-        return rankComparison != 0 ? rankComparison : Integer.compare(this.suit.getSuitValue(), o.suit.getSuitValue());
-    }
-
-    //Переопределяем (для удобства) методы Object
-    @Override
-    public String toString() {
-        return String.format("%s of %s", this.rank, this.suit);
+        return suit;
     }
 
     @Override
-    public boolean equals(final Object o) {
-        if (this == o) {
-            return true;
-        }
-        if (o == null || getClass() != o.getClass()) {
-            return false;
-        }
-        final Card card = (Card) o;
-        return this.rank == card.rank && this.suit == card.suit;
-    }
-
-    @Override
-    public int hashCode() {
-        int result = this.rank != null ? this.rank.hashCode() : 0;
-        result = 31 * result + (this.suit != null ? this.suit.hashCode() : 0);
-        return result;
-    }
-
-    public Integer getCardCode(){
-        return this.rank.getRankValue() + this.suit.getSuitValue()*100;
+    public int compareTo(Card o) {
+        final int rankComparison = Integer.compare(this.rank.getRank_val(), o.rank.getRank_val());
+        return rankComparison != 0 ? rankComparison : Integer.compare(this.suit.getSuit_val(), o.suit.getSuit_val());
     }
 }
+

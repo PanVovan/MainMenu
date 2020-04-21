@@ -1,25 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
+<FrameLayout android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+
     tools:context=".fragments.GameViewFragment"
     tools:ignore="ExtraText">
 
-
-
-    <com.pockerstad.mainmenu.grafic.surfaceview.GameAnimationView
-        android:id="@+id/gameAnimationView"
+    <com.pockerstad.mainmenu.grafic.GameView
+        android:id="@+id/game_view_surface"
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        android:layout_height="match_parent">
 
-    <androidx.constraintlayout.widget.ConstraintLayout
+    </com.pockerstad.mainmenu.grafic.GameView>
+
+    <androidx.constraintlayout.widget.ConstraintLayout xmlns:app="http://schemas.android.com/apk/res-auto"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        tools:layout_editor_absoluteX="0dp"
-        tools:layout_editor_absoluteY="0dp">
-
+        android:layout_height="match_parent">
         <ImageButton
             android:id="@+id/exit_button"
 
@@ -103,5 +100,58 @@
             android:background="@drawable/button"
             app:layout_constraintBottom_toTopOf="@+id/fold_button"
             app:layout_constraintEnd_toEndOf="parent" />
-    </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <LinearLayout
+            android:id="@+id/seekbar_with_text_layout"
+            android:layout_width="40dp"
+            android:layout_height="265dp"
+            android:layout_above="@+id/fold_button"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
+            android:layout_marginEnd="16dp"
+            android:orientation="vertical"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.496">
+
+            <!-- Кнопка "принять" - Картинка сообщения - текст
+
+                    android:text="100"-->
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:id="@+id/seekbar_text_view"
+                    android:layout_width="match_parent"
+                    android:layout_height="40dp"
+                    android:layout_gravity="center_horizontal|center_vertical"
+                    android:background="@drawable/button"
+                    android:text="100"
+                    android:textSize="10dp" />
+            </FrameLayout>
+
+            <!-- Сикбар вместе с бекнраундом -->
+            <FrameLayout
+                android:layout_width="38dp"
+                android:layout_height="match_parent"
+                android:background="@drawable/scrollbar1">
+
+
+                <com.pockerstad.mainmenu.customparts.seek_bar.RaiseSeekBar
+                    android:id="@+id/seekbar_id"
+                    android:layout_width="match_parent"
+                    android:layout_height="130dp"
+                    android:layout_gravity="center_vertical"
+                    android:max="100"
+                    android:overScrollMode="never"
+                    android:progress="20"
+                    android:thumb="@drawable/thumb" />
+            </FrameLayout>
+        </LinearLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
+
 </FrameLayout>

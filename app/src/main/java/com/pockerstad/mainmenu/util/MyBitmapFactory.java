@@ -2,10 +2,12 @@ package com.pockerstad.mainmenu.util;
 
 import android.content.Context;
 import android.graphics.Bitmap;
+import android.util.Log;
 
 import androidx.annotation.DrawableRes;
 
 import com.bumptech.glide.Glide;
+
 
 final public class MyBitmapFactory {
 
@@ -19,6 +21,8 @@ final public class MyBitmapFactory {
                     .centerCrop()
                     .submit()
                     .get();
+
+            Log.d("  rr", "   f");
 
         } catch (Exception e) {
             e.printStackTrace();
