@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    tools:context=".players.MainPlayerFragment">
+
+    <FrameLayout
+        android:id="@+id/player_frame"
+        android:layout_width="145dp"
+        android:layout_height="187dp"
+        tools:ignore="MissingConstraints"
+        android:background="@drawable/frame_gamer">
+
+        <ImageView
+            android:layout_width="77dp"
+            android:layout_height="116dp"
+            android:layout_gravity="center_vertical|center_horizontal" />
+    </FrameLayout>
+
+    <ImageView
+        android:id="@+id/first_hole_card"
+        android:layout_width="84dp"
+        android:layout_height="113dp"
+        tools:layout_editor_absoluteX="179dp"
+        tools:layout_editor_absoluteY="2dp"
+        tools:ignore="MissingConstraints" />
+
+    <ImageView
+        android:id="@+id/second_hole_card"
+        android:layout_width="84dp"
+        android:layout_height="113dp"
+        tools:layout_editor_absoluteX="295dp"
+        tools:layout_editor_absoluteY="2dp"
+        tools:ignore="MissingConstraints" />
+
+    <LinearLayout
+        android:layout_width="205dp"
+        android:layout_height="100dp"
+        android:background="@drawable/button"
+        tools:layout_editor_absoluteX="179dp"
+        tools:layout_editor_absoluteY="29dp"
+        tools:ignore="MissingConstraints"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/name_in_player_fragment"
+            android:layout_width="match_parent"
+            android:layout_height="33dp"/>
+
+        <TextView
+            android:id="@+id/money_in_player_fragment"
+            android:layout_width="167dp"
+            android:layout_height="38dp" />
+
+    </LinearLayout>
+
+    <ProgressBar
+        android:id="@+id/player_combination_progress_bar"
+        style="@style/Widget.AppCompat.ProgressBar.Horizontal"
+        android:layout_width="235dp"
+        android:layout_height="50dp"
+        android:layout_marginTop="144dp"
+        android:background="@color/myTransparent"
+
+        android:indeterminate="true"
+        android:indeterminateTint="@color/combination_progress_bar"
+        android:indeterminateTintMode="src_atop"
+        android:max="18"
+        android:progress="20"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

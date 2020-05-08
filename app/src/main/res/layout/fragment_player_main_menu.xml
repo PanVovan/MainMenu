@@ -12,10 +12,13 @@
         android:id="@+id/money"
         android:layout_width="100dp"
         android:layout_height="32dp"
-        android:layout_marginBottom="100dp"
+        android:layout_marginStart="88dp"
+        android:layout_marginBottom="96dp"
         android:text="TextView"
         app:layout_constraintBottom_toTopOf="@+id/rating"
-        tools:layout_editor_absoluteX="89dp" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="1.0" />
 
     <TextView
         android:id="@+id/rating"

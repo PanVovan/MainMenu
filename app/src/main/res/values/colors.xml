@@ -7,4 +7,9 @@
     <color name="lobby_code_text">#554F4F</color>
     <color name="lobby_players_text">#000000</color>
     <color name="lobby_name_text">#000000</color>
+
+
+    <color name="myTransparent">#00000000</color>
+    <color name="combination_progress_bar">#FF9B08</color>
+
 </resources>
