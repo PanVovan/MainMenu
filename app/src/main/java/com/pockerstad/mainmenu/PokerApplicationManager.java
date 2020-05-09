@@ -9,7 +9,7 @@ import io.socket.client.IO;
 import io.socket.client.Socket;
 
 
-public class PokerApplication extends Application {
+public class PokerApplicationManager extends Application {
     private Socket socket;
 
     public Socket getSocket() throws URISyntaxException {
@@ -21,5 +21,11 @@ public class PokerApplication extends Application {
         }
     }
 
-    SharedPreferences preferences;
+    public SharedPreferences getPreferences(){
+        return getSharedPreferences("MainPrefs", MODE_PRIVATE);
+    }
+
+    
+
+
 }

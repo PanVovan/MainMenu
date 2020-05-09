@@ -1,22 +1,21 @@
-package com.pockerstad.mainmenu.customparts.seek_bar;
+package com.pockerstad.mainmenu.customparts.seekbar;
 
 import android.content.Context;
 import android.graphics.Canvas;
 import android.util.AttributeSet;
 import android.view.MotionEvent;
 
-import com.bumptech.glide.Glide;
-import com.pockerstad.mainmenu.R;
-
-import java.util.concurrent.ExecutionException;
-
 
 public class RaiseSeekBar extends androidx.appcompat.widget.AppCompatSeekBar {
 
     private int value;
 
-    public int getValue(){
+    public Integer getValue(){
         return this.value;
+    }
+
+    public void setValue(int value) {
+        this.value = value;
     }
 
     public RaiseSeekBar(Context context) {

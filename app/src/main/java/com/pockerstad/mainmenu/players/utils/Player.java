@@ -1,11 +1,26 @@
-package com.pockerstad.mainmenu;
+package com.pockerstad.mainmenu.players.utils;
 
 
-public class Player {
+import com.pockerstad.mainmenu.logic.card.Card;
+
+import java.io.Serializable;
+import java.util.List;
+
+public class Player implements Serializable {
     private String name;
     private int money;
     private int numOfPicture;
     private int pos;
+
+    private List<Integer> cards;
+
+    public List<Integer> getCards() {
+        return cards;
+    }
+
+    public void setCards(List<Integer> cards) {
+        this.cards = cards;
+    }
 
     public String getName() {
         return name;

@@ -11,7 +11,7 @@
         android:supportsRtl="true"
         android:usesCleartextTraffic="true"
         android:theme="@style/AppTheme"
-        android:name=".PokerApplication">
+        android:name=".PokerApplicationManager">
         <activity
             android:name=".activity.GameActivity"
             android:screenOrientation="userLandscape"></activity>
