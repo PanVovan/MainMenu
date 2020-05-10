@@ -1,7 +1,7 @@
-package com.poker.holdem.logic.combination.util;
+package com.poker.holdem.handlogic.combination.util;
 
-import com.poker.holdem.logic.card.Card;
-import com.poker.holdem.logic.combination.Combination;
+import com.poker.holdem.handlogic.card.Card;
+import com.poker.holdem.handlogic.combination.Combination;
 
 import java.util.SortedSet;
 

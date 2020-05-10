@@ -1,7 +1,7 @@
-package com.poker.holdem.logic.combination;
+package com.poker.holdem.handlogic.combination;
 
-import com.poker.holdem.logic.card.Card;
-import com.poker.holdem.logic.card.Suit;
+import com.poker.holdem.handlogic.card.Card;
+import com.poker.holdem.handlogic.card.Suit;
 
 import java.util.HashMap;
 import java.util.List;

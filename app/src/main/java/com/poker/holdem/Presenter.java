@@ -2,11 +2,11 @@ package com.poker.holdem;
 
 public class Presenter implements GameContract.Presenter {
     private GameContract.View mView;
-    private GameContract.Model mModel;
+    private GameContract.Logic mLogic;
 
     Presenter(GameContract.View view){
         this.mView = view;
-        this.mModel = new Model();
+        this.mLogic = new GameLogic();
     }
 
     @Override
@@ -21,7 +21,7 @@ public class Presenter implements GameContract.Presenter {
 
     @Override
     public void raiseButtonClicked(int rate) {
-        mModel.sendMessageOnServerRaise(rate);
+        mLogic.sendMessageOnServerRaise(rate);
     }
 
     @Override

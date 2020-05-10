@@ -26,7 +26,7 @@ public interface GameContract {
         void setOpponent();
     }
 
-    interface Model{
+    interface Logic {
         //Получить данные из логики
         int getCard();
         Player getPlayer();
@@ -36,6 +36,15 @@ public interface GameContract {
         void sendMessageOnServerFold();
         void sendMessageOnServerCheck();
         void sendMessageOnServerRaise(int rate);
-        void sendMessageOnServerExit();
+        void sendMessageOnServerAllIn();
+        void sendMessageOnServerLeave();
+        void sendMessageOnServerStop();
+        void sendMessageOnServerRestore();
+        void sendMessageOnServerRegister();
+        void sendMessageOnServerAuth();
+        void sendMessageOnServerHandPower();
+        void sendMessageOnServerEnterLobby();
+        void sendMessageOnServerGetLobbies();
+
     }
 }

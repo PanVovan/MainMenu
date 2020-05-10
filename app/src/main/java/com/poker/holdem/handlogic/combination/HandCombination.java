@@ -1,4 +1,4 @@
-package com.poker.holdem.logic.combination;
+package com.poker.holdem.handlogic.combination;
 
 public enum HandCombination {
     NO_CARDS(0),
