@@ -25,7 +25,7 @@ public class Presenter implements GameContract.Presenter {
 
     @Override
     public void exitButtonClicked() {
-        mLogic.sendMessageOnServerExit();
+        mLogic.sendMessageOnServerLeave();
     }
 
     @Override
