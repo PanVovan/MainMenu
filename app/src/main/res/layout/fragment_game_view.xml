@@ -585,7 +585,7 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent">
 
-            <com.pockerstad.mainmenu.view.customparts.seekbar.RaiseSeekBar
+            <com.poker.holdem.view.customparts.seekbar.RaiseSeekBar
                 android:id="@+id/raise_seekbar"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"

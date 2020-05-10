@@ -60,7 +60,7 @@
         app:layout_constraintStart_toEndOf="@+id/private_games" />
 
     <ImageButton
-        android:id="@+id/btnExit"
+        android:id="@+id/btn_navigate_to_main_menu"
         android:layout_width="60dp"
         android:layout_height="60dp"
         android:adjustViewBounds="true"

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    package="com.pockerstad.mainmenu">
+    package="com.poker.holdem">
     <uses-permission android:name="android.permission.INTERNET"/>
     <application
         android:allowBackup="true"
@@ -11,12 +11,12 @@
         android:supportsRtl="true"
         android:usesCleartextTraffic="true"
         android:theme="@style/AppTheme"
-        android:name=".PokerApplicationManager">
+        android:name="com.poker.holdem.PokerApplicationManager">
         <activity
-            android:name=".view.activity.GameActivity"
-            android:screenOrientation="userLandscape"></activity>
+            android:name="com.poker.holdem.view.activity.GameActivity"
+            android:screenOrientation="userLandscape" />
         <activity
-            android:name=".view.activity.MainActivity"
+            android:name="com.poker.holdem.view.activity.MainActivity"
             android:screenOrientation="userLandscape">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
