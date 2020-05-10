@@ -113,7 +113,6 @@ public class GameViewFragment extends Fragment implements GameContract.View {
         }
         else {
             setRateLayout.setVisibility(View.INVISIBLE);
-            playerMoney.setText(getContext().getSharedPreferences("Test", 0).getString("Name", ""));
         }
     }
 
