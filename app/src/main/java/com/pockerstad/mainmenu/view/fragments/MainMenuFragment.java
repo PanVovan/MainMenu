@@ -1,4 +1,4 @@
-package com.pockerstad.mainmenu.fragments;
+package com.pockerstad.mainmenu.view.fragments;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -10,7 +10,7 @@ import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 
 import com.pockerstad.mainmenu.R;
-import com.pockerstad.mainmenu.util.NavigationHost;
+import com.pockerstad.mainmenu.view.util.NavigationHost;
 
 
 /**

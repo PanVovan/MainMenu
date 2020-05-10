@@ -1,4 +1,4 @@
-package com.pockerstad.mainmenu.grafic;
+package com.pockerstad.mainmenu.view.grafic;
 
 import android.content.Context;
 import android.graphics.drawable.Drawable;

@@ -1,4 +1,4 @@
-package com.pockerstad.mainmenu.customparts.lobby_view;
+package com.pockerstad.mainmenu.view.customparts.lobby_view;
 
 import android.view.LayoutInflater;
 import android.view.View;

@@ -1,4 +1,4 @@
-package com.pockerstad.mainmenu.activity;
+package com.pockerstad.mainmenu.view.activity;
 
 import android.os.Bundle;
 
@@ -7,8 +7,8 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
 import com.pockerstad.mainmenu.R;
-import com.pockerstad.mainmenu.fragments.GameViewFragment;
-import com.pockerstad.mainmenu.util.NavigationHost;
+import com.pockerstad.mainmenu.view.fragments.GameViewFragment;
+import com.pockerstad.mainmenu.view.util.NavigationHost;
 
 public class GameActivity extends AppCompatActivity implements NavigationHost {
 

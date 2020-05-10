@@ -1,4 +1,4 @@
-package com.pockerstad.mainmenu.customparts.seekbar;
+package com.pockerstad.mainmenu.view.customparts.seekbar;
 
 import android.content.Context;
 import android.graphics.Canvas;

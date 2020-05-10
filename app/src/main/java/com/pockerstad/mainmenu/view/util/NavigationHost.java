@@ -1,4 +1,4 @@
-package com.pockerstad.mainmenu.util;
+package com.pockerstad.mainmenu.view.util;
 
 import androidx.fragment.app.Fragment;
 

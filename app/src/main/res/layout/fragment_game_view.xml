@@ -8,7 +8,7 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:background="@drawable/background_casino"
-    tools:context=".fragments.GameViewFragment">
+    tools:context=".view.fragments.GameViewFragment">
 
     <ImageButton
         android:id="@+id/exit_button"
@@ -159,7 +159,8 @@
         android:layout_marginStart="32dp"
         android:layout_marginBottom="168dp"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent">
+        app:layout_constraintStart_toStartOf="parent"
+        android:visibility="invisible">
 
         <FrameLayout
             android:layout_width="@dimen/opponent_frame_width"
@@ -250,7 +251,8 @@
         android:layout_marginStart="108dp"
         android:layout_marginBottom="320dp"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent">
+        app:layout_constraintStart_toStartOf="parent"
+        android:visibility="invisible">
 
         <FrameLayout
             android:layout_width="@dimen/opponent_frame_width"
@@ -336,7 +338,8 @@
         android:layout_marginStart="460dp"
         android:layout_marginBottom="320dp"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent">
+        app:layout_constraintStart_toStartOf="parent"
+        android:visibility="invisible">
 
         <FrameLayout
             android:layout_width="@dimen/opponent_frame_width"
@@ -424,7 +427,8 @@
         android:layout_marginStart="530dp"
         android:layout_marginBottom="168dp"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent">
+        app:layout_constraintStart_toStartOf="parent"
+        android:visibility="invisible">
 
         <FrameLayout
             android:layout_width="@dimen/opponent_frame_width"
@@ -581,7 +585,7 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent">
 
-            <com.pockerstad.mainmenu.customparts.seekbar.RaiseSeekBar
+            <com.pockerstad.mainmenu.view.customparts.seekbar.RaiseSeekBar
                 android:id="@+id/raise_seekbar"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"

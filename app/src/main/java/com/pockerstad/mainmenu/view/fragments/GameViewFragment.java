@@ -1,12 +1,10 @@
-package com.pockerstad.mainmenu.fragments;
+package com.pockerstad.mainmenu.view.fragments;
 
-import android.annotation.SuppressLint;
 import android.content.Context;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.SeekBar;
@@ -16,16 +14,19 @@ import androidx.annotation.Nullable;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.fragment.app.Fragment;
 
+import com.pockerstad.mainmenu.GameContract;
 import com.pockerstad.mainmenu.R;
-import com.pockerstad.mainmenu.customparts.seekbar.RaiseSeekBar;
-import com.pockerstad.mainmenu.grafic.CardView;
-import com.pockerstad.mainmenu.util.ViewControllerActionCode;
+import com.pockerstad.mainmenu.view.customparts.seekbar.RaiseSeekBar;
+import com.pockerstad.mainmenu.view.grafic.CardView;
+import com.pockerstad.mainmenu.view.util.ViewControllerActionCode;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
-public class GameViewFragment extends Fragment {
+public class GameViewFragment extends Fragment implements GameContract.View {
+
+    GameContract.Presenter presenter;
 
     //Кнопки
     @BindView(R.id.exit_button)                 ImageButton exitButton;
@@ -121,7 +122,12 @@ public class GameViewFragment extends Fragment {
             setRateLayout.setVisibility(View.INVISIBLE);
             setRateTextView.setText("");
             youRate.setText(raiseSeekBar.getValue().toString());
+            presenter.raiseButtonClicked(raiseSeekBar.getValue());
         }
+    }
+
+    @OnClick(R.id.game_info_button)
+    void info(){
     }
 
 
@@ -150,6 +156,105 @@ public class GameViewFragment extends Fragment {
         if(setRateLayout.getVisibility() == View.VISIBLE && getView().getId() != R.id.set_rate_layout){
             setRateLayout.setVisibility(View.INVISIBLE);
         }
+    }
+
+
+    @Override
+    public void clearCards(int typeOfClear) {
+        switch (typeOfClear) {
+            case ViewControllerActionCode.CLEAR_PLAYER_CARDS:
+                firstHoleCard.setBackground(null);
+                secondHoleCard.setBackground(null);
+                break;
+            case ViewControllerActionCode.CLEAR_FIRST_OPPONENT_CARDS:
+                firstOpponentFirstCard.setBackground(null);
+                firstOpponentSecondCard.setBackground(null);
+                break;
+            case ViewControllerActionCode.CLEAR_SECOND_OPPONENT_CARDS:
+                secondOpponentFirstCard.setBackground(null);
+                secondOpponentSecondCard.setBackground(null);
+                break;
+            case ViewControllerActionCode.CLEAR_THIRD_OPPONENT_CARDS:
+                thirdOpponentFirstCard.setBackground(null);
+                thirdOpponentSecondCard.setBackground(null);
+                break;
+            case ViewControllerActionCode.CLEAR_FOURTH_OPPONENT_CARDS:
+                fourthOpponentFirstCard.setBackground(null);
+                fourthOpponentSecondCard.setBackground(null);
+                break;
+            case ViewControllerActionCode.CLEAR_COMMUNITY_CARDS:
+                firstCommunityCard.setBackground(null);
+                secondCommunityCard.setBackground(null);
+                thirdCommunityCard.setBackground(null);
+                fourthCommunityCard.setBackground(null);
+                fifthCommunityCard.setBackground(null);
+                break;
+            case ViewControllerActionCode.CLEAR_ALL_CARDS:
+                    clearAllCards();
+                    break;
+        }
+    }
+
+    @Override
+    public void setCardView(int action, int card) {
+        if (card == ViewControllerActionCode.NONE){
+            setInvisibleOpponentCard(action);
+        } else if (action < 10){
+            setYouCard(action, card);
+        } else if (action < 100){
+            setOpponentCard(action, card);
+        } else if(action < 200){
+            setCommunityCard(action, card);
+        }
+    }
+
+    @Override
+    public void setOpponentView(int pos, String name, Integer money, int picture){
+        switch (pos){
+            case 1:
+                firstOpponentLayout.setVisibility(View.VISIBLE);
+                firstOpponentName.setText(name);
+                firstOpponentMoney.setText(money.toString());
+                break;
+            case 2:
+                secondOpponentLayout.setVisibility(View.VISIBLE);
+                secondOpponentName.setText(name);
+                secondOpponentMoney.setText(money.toString());
+                break;
+            case 3:
+                thirdOpponentLayout.setVisibility(View.VISIBLE);
+                thirdOpponentName.setText(name);
+                thirdOpponentMoney.setText(money.toString());
+                break;
+            case 4:
+                fourthOpponentLayout.setVisibility(View.VISIBLE);
+                fourthOpponentName.setText(name);
+                fourthOpponentMoney.setText(money.toString());
+                break;
+        }
+    }
+
+    @Override
+    public void setPlayerView(Integer money, int picture) {
+        playerMoney.setText(money.toString());
+    }
+
+    private void clearAllCards(){
+        firstHoleCard.setBackground(null);
+        secondHoleCard.setBackground(null);
+        firstOpponentFirstCard.setBackground(null);
+        firstOpponentSecondCard.setBackground(null);
+        secondOpponentFirstCard.setBackground(null);
+        secondOpponentSecondCard.setBackground(null);
+        thirdOpponentFirstCard.setBackground(null);
+        thirdOpponentSecondCard.setBackground(null);
+        fourthOpponentFirstCard.setBackground(null);
+        fourthOpponentSecondCard.setBackground(null);
+        firstCommunityCard.setBackground(null);
+        secondCommunityCard.setBackground(null);
+        thirdCommunityCard.setBackground(null);
+        fourthCommunityCard.setBackground(null);
+        fifthCommunityCard.setBackground(null);
     }
 
     private void setCommunityCard(int action, int card){
@@ -241,59 +346,6 @@ public class GameViewFragment extends Fragment {
                 fourthOpponentSecondCard.setBackground(CardView.initDrawableInvisibleCard(context));
                 break;
         }
-    }
-
-    private void clearCards(int typeOfClear) {
-        switch (typeOfClear) {
-            case ViewControllerActionCode.CLEAR_PLAYER_CARDS:
-                firstHoleCard.setBackground(null);
-                secondHoleCard.setBackground(null);
-                break;
-            case ViewControllerActionCode.CLEAR_FIRST_OPPONENT_CARDS:
-                firstOpponentFirstCard.setBackground(null);
-                firstOpponentSecondCard.setBackground(null);
-                break;
-            case ViewControllerActionCode.CLEAR_SECOND_OPPONENT_CARDS:
-                secondOpponentFirstCard.setBackground(null);
-                secondOpponentSecondCard.setBackground(null);
-                break;
-            case ViewControllerActionCode.CLEAR_THIRD_OPPONENT_CARDS:
-                thirdOpponentFirstCard.setBackground(null);
-                thirdOpponentSecondCard.setBackground(null);
-                break;
-            case ViewControllerActionCode.CLEAR_FOURTH_OPPONENT_CARDS:
-                fourthOpponentFirstCard.setBackground(null);
-                fourthOpponentSecondCard.setBackground(null);
-                break;
-            case ViewControllerActionCode.CLEAR_COMMUNITY_CARDS:
-                firstCommunityCard.setBackground(null);
-                secondCommunityCard.setBackground(null);
-                thirdCommunityCard.setBackground(null);
-                fourthCommunityCard.setBackground(null);
-                fifthCommunityCard.setBackground(null);
-                break;
-            case ViewControllerActionCode.CLEAR_ALL_CARDS:
-                    clearAllCards();
-                    break;
-        }
-    }
-
-    private void clearAllCards(){
-        firstHoleCard.setBackground(null);
-        secondHoleCard.setBackground(null);
-        firstOpponentFirstCard.setBackground(null);
-        firstOpponentSecondCard.setBackground(null);
-        secondOpponentFirstCard.setBackground(null);
-        secondOpponentSecondCard.setBackground(null);
-        thirdOpponentFirstCard.setBackground(null);
-        thirdOpponentSecondCard.setBackground(null);
-        fourthOpponentFirstCard.setBackground(null);
-        fourthOpponentSecondCard.setBackground(null);
-        firstCommunityCard.setBackground(null);
-        secondCommunityCard.setBackground(null);
-        thirdCommunityCard.setBackground(null);
-        fourthCommunityCard.setBackground(null);
-        fifthCommunityCard.setBackground(null);
     }
 
 }

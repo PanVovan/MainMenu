@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:background="@drawable/lobby_background"
     android:orientation="horizontal"
-    tools:context=".fragments.ChooseLobbyFragment">
+    tools:context=".view.fragments.ChooseLobbyFragment">
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/lobby_container"

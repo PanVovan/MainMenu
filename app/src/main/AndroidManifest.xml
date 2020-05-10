@@ -13,10 +13,10 @@
         android:theme="@style/AppTheme"
         android:name=".PokerApplicationManager">
         <activity
-            android:name=".activity.GameActivity"
+            android:name=".view.activity.GameActivity"
             android:screenOrientation="userLandscape"></activity>
         <activity
-            android:name=".activity.MainActivity"
+            android:name=".view.activity.MainActivity"
             android:screenOrientation="userLandscape">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

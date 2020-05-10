@@ -1,6 +1,6 @@
-package com.pockerstad.mainmenu.util;
+package com.pockerstad.mainmenu.view.util;
 
-public final class ViewControllerActionCode {
+public class ViewControllerActionCode {
 
     //Ничего не делать
     public static final int NONE = 0;

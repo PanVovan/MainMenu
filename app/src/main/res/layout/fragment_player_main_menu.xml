@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:orientation="horizontal"
     android:background="@drawable/player"
-    tools:context=".fragments.PlayerMain" >
+    tools:context=".view.fragments.PlayerMain" >
 
     <TextView
         android:id="@+id/money"

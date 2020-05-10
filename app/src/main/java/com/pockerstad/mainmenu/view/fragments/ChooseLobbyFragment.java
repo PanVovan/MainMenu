@@ -1,4 +1,4 @@
-package com.pockerstad.mainmenu.fragments;
+package com.pockerstad.mainmenu.view.fragments;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -13,10 +13,9 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.pockerstad.mainmenu.R;
-import com.pockerstad.mainmenu.activity.GameActivity;
-import com.pockerstad.mainmenu.customparts.lobby_view.Lobby;
-import com.pockerstad.mainmenu.customparts.lobby_view.LobbyRecyclerViewAdapter;
-import com.pockerstad.mainmenu.util.NavigationHost;
+import com.pockerstad.mainmenu.view.customparts.lobby_view.Lobby;
+import com.pockerstad.mainmenu.view.customparts.lobby_view.LobbyRecyclerViewAdapter;
+import com.pockerstad.mainmenu.view.util.NavigationHost;
 
 import java.util.ArrayList;
 

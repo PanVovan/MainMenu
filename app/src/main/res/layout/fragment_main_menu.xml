@@ -5,7 +5,7 @@
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="horizontal"
-    tools:context=".fragments.MainMenuFragment">
+    tools:context=".view.fragments.MainMenuFragment">
 
     <!-- TODO: Update blank fragment layout -->
 
@@ -67,7 +67,7 @@
 
     <fragment
         android:id="@+id/fragment"
-        android:name="com.pockerstad.mainmenu.fragments.PlayerMain"
+        android:name="com.pockerstad.mainmenu.view.fragments.PlayerMain"
         android:layout_width="200dp"
         android:layout_height="139dp"
         app:layout_constraintEnd_toEndOf="parent"

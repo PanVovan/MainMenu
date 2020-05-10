@@ -1,4 +1,4 @@
-package com.pockerstad.mainmenu.fragments;
+package com.pockerstad.mainmenu.view.fragments;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -12,12 +12,13 @@ import com.pockerstad.mainmenu.R;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class PlayerMain extends Fragment {
+public class SettingsFragment extends Fragment {
+
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_player_main_menu, container, false);
+        return inflater.inflate(R.layout.fragment_settings_main_menu, container, false);
     }
 }
