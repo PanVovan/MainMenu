@@ -12,4 +12,9 @@
     <color name="myTransparent">#00000000</color>
     <color name="combination_progress_bar">#FF9B08</color>
 
+
+    <!--color name="myGold">@color/combination_progress_bar</color-->
+    <color name="splash_primairy">#f3ae50</color>
+    <color name="splash_background">#000000</color>
+
 </resources>
