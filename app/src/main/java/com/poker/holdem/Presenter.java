@@ -4,19 +4,18 @@ public class Presenter implements GameContract.Presenter {
     private GameContract.View mView;
     private GameContract.Logic mLogic;
 
-    Presenter(GameContract.View view){
+    public Presenter(GameContract.View view){
         this.mView = view;
         this.mLogic = new GameLogic();
     }
 
     @Override
     public void foldButtonClicked() {
-
+        mLogic.sendMessageOnServerFold();
     }
-
     @Override
     public void checkButtonClicked() {
-
+        mLogic.sendMessageOnServerCheck();
     }
 
     @Override
@@ -26,7 +25,7 @@ public class Presenter implements GameContract.Presenter {
 
     @Override
     public void exitButtonClicked() {
-
+        mLogic.sendMessageOnServerExit();
     }
 
     @Override

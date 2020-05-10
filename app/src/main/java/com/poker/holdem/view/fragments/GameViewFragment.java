@@ -15,6 +15,7 @@ import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.fragment.app.Fragment;
 
 import com.poker.holdem.GameContract;
+import com.poker.holdem.Presenter;
 import com.poker.holdem.R;
 import com.poker.holdem.view.customparts.seekbar.RaiseSeekBar;
 import com.poker.holdem.view.grafic.CardView;
@@ -26,7 +27,7 @@ import butterknife.OnClick;
 
 public class GameViewFragment extends Fragment implements GameContract.View {
 
-    GameContract.Presenter presenter;
+    private GameContract.Presenter presenter;
 
     //Кнопки
     @BindView(R.id.exit_button)                 ImageButton exitButton;
@@ -104,6 +105,7 @@ public class GameViewFragment extends Fragment implements GameContract.View {
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setRetainInstance(true);
+        presenter = new Presenter(this);
     }
 
     @OnClick(R.id.raise_button)
@@ -113,7 +115,6 @@ public class GameViewFragment extends Fragment implements GameContract.View {
         }
         else {
             setRateLayout.setVisibility(View.INVISIBLE);
-            playerMoney.setText(getContext().getSharedPreferences("Test", 0).getString("Name", ""));
         }
     }
 
@@ -123,7 +124,6 @@ public class GameViewFragment extends Fragment implements GameContract.View {
             setRateLayout.setVisibility(View.INVISIBLE);
             setRateTextView.setText("");
             youRate.setText(raiseSeekBar.getValue().toString());
-            //presenter.raiseButtonClicked(raiseSeekBar.getValue());
         }
     }
 
@@ -157,6 +157,11 @@ public class GameViewFragment extends Fragment implements GameContract.View {
         if(setRateLayout.getVisibility() == View.VISIBLE && getView().getId() != R.id.set_rate_layout){
             setRateLayout.setVisibility(View.INVISIBLE);
         }
+    }
+
+    @OnClick(R.id.exit_button)
+    void exit(){
+        presenter.exitButtonClicked();
     }
 
 
