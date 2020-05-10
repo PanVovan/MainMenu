@@ -2,7 +2,7 @@ package com.poker.holdem;
 
 import com.poker.holdem.players.utils.Player;
 
-public class Model implements GameContract.Model {
+public class Model implements GameContract.Logic {
     @Override
     public int getCard() {
 

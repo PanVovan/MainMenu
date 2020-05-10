@@ -26,7 +26,7 @@ public interface GameContract {
         void setOpponent();
     }
 
-    interface Model{
+    interface Logic {
         //Получить данные из логики
         int getCard();
         Player getPlayer();
