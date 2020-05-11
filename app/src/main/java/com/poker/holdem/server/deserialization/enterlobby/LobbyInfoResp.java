@@ -3,6 +3,7 @@ package com.poker.holdem.server.deserialization.enterlobby;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class LobbyInfoResp {
@@ -24,10 +25,10 @@ public class LobbyInfoResp {
     private LobbyCardsResp cards;
     @SerializedName("playersingame")
     @Expose
-    private List<LobbyPlayerResp> playersingame = null;
+    private List<LobbyPlayerResp> playersingame =  new ArrayList<>();
     @SerializedName("allplayers")
     @Expose
-    private List<LobbyPlayerResp> allplayers = null;
+    private List<LobbyPlayerResp> allplayers = new ArrayList<>();
 
     public Integer getBank() {
         return bank;

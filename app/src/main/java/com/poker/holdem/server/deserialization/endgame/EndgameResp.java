@@ -3,6 +3,7 @@ package com.poker.holdem.server.deserialization.endgame;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class EndgameResp {
@@ -11,7 +12,7 @@ public class EndgameResp {
     private Integer winVal;
     @SerializedName("winners")
     @Expose
-    private List<String> winners = null;
+    private List<String> winners = new ArrayList<>();
 
     public void addWinner(String winner){
         this.winners.add(winner);

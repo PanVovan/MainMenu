@@ -3,6 +3,7 @@ package com.poker.holdem.server.deserialization.gamestarts;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class GameStartsRoomParams {
@@ -25,10 +26,10 @@ public class GameStartsRoomParams {
     private GameStartsRPCards cards;
     @SerializedName("playersingame")
     @Expose
-    private List<GameStartsRPPlayer> playersingame = null;
+    private List<GameStartsRPPlayer> playersingame = new ArrayList<>();
     @SerializedName("allplayers")
     @Expose
-    private List<GameStartsRPPlayer> allplayers = null;
+    private List<GameStartsRPPlayer> allplayers =  new ArrayList<>();
 
     public Integer getBank() {
         return bank;

@@ -13,13 +13,18 @@ public class PokerApplicationManager extends Application {
 
     private Socket socket;
 
-    public Socket getSocket() throws URISyntaxException {
+    public Socket getSocket(){
         if (socket != null){
             return socket;
         }
         else {
-            socket = IO.socket(SERVER_ADDR);
-            return socket;
+            try {
+                socket = IO.socket(SERVER_ADDR);
+                return socket;
+            } catch (URISyntaxException e) {
+                e.printStackTrace();
+            }
+            return null;
         }
     }
 }

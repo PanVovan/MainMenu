@@ -4,12 +4,13 @@ import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 
 public class RespRooms {
     @SerializedName("rooms")
     @Expose
-    private List<RespRoom> rooms = null;
+    private List<RespRoom> rooms = new ArrayList<>();
 
     public void addRoom(RespRoom respRoom){
         this.rooms.add(respRoom);

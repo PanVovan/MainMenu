@@ -11,8 +11,8 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.poker.holdem.lobby.Room;
 import com.poker.holdem.R;
+import com.poker.holdem.server.deserialization.getlobbies.RespRoom;
 import com.poker.holdem.view.activity.GameActivity;
 
 import java.util.ArrayList;
@@ -25,10 +25,10 @@ public class RoomRecyclerViewAdapter extends RecyclerView.Adapter<RoomRecyclerVi
 
     SharedPreferences prefs;
 
-    private ArrayList<Room> rooms;
+    private ArrayList<RespRoom> rooms;
     private Context context;
 
-    public RoomRecyclerViewAdapter(ArrayList<Room> rooms, Context context) {
+    public RoomRecyclerViewAdapter(ArrayList<RespRoom> rooms, Context context) {
         this.context = context;
         this.rooms = rooms;
     }
@@ -42,9 +42,9 @@ public class RoomRecyclerViewAdapter extends RecyclerView.Adapter<RoomRecyclerVi
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        Room room = rooms.get(position);
-        holder.playersActive.setText(room.getLength().toString());
-        holder.minRate.setText(room.getRate().toString());
+        RespRoom room = rooms.get(position);
+        holder.playersActive.setText(room.getLength());
+        holder.minRate.setText(room.getRate());
         holder.lobbyName.setText(room.getName());
 
     }

@@ -3,6 +3,7 @@ package com.poker.holdem.server.deserialization.restore;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class RestoreRoomParams {
@@ -25,10 +26,10 @@ public class RestoreRoomParams {
     private RestoreRPCards cards;
     @SerializedName("playersingame")
     @Expose
-    private List<RestoreRPPlayer> playersingame = null;
+    private List<RestoreRPPlayer> playersingame =  new ArrayList<>();
     @SerializedName("allplayers")
     @Expose
-    private List<RestoreRPPlayer> allplayers = null;
+    private List<RestoreRPPlayer> allplayers =  new ArrayList<>();
 
     public Integer getBank() {
         return bank;
