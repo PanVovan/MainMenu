@@ -12,7 +12,7 @@ public class HandClassifier {
     private long classificationPower;
 
 
-    public void setClassificationPower (final SortedSet<Card> cards){
+    private void setClassificationPower(final SortedSet<Card> cards){
 
 
         final HandRanks rankGroup = new HandRanks(cards);

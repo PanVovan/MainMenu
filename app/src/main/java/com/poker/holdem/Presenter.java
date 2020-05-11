@@ -1,52 +1,78 @@
 package com.poker.holdem;
 
-import com.poker.holdem.logic.GameLogic;
-
 public class Presenter implements GameContract.Presenter {
-    private GameContract.View mView;
-    private GameContract.Logic mLogic;
+
+    private GameContract.View gameView;
+    private GameContract.Server serverController;
 
     public Presenter(GameContract.View view){
-        this.mView = view;
-        this.mLogic = new GameLogic();
+
+        this.serverController = new ServerController(this) ;
+        this.gameView = view;
+    }
+
+
+
+    //Тут то, что мы получаем от GameViewFragment
+    @Override
+    public void foldButtonClicked() {
+        serverController.sendMessageOnServerFold();
     }
 
     @Override
-    public void foldButtonClicked() {
-        mLogic.sendMessageOnServerFold();
-    }
-    @Override
     public void checkButtonClicked() {
-        mLogic.sendMessageOnServerCheck();
+        serverController.sendMessageOnServerCheck();
     }
 
     @Override
     public void raiseButtonClicked(int rate) {
-        mLogic.sendMessageOnServerRaise(rate);
+        serverController.sendMessageOnServerRaise(rate);
     }
 
     @Override
     public void exitButtonClicked() {
-        mLogic.sendMessageOnServerLeave();
+        serverController.sendMessageOnServerLeave();
     }
 
-    @Override
-    public void setCard(int action, int card) {
 
-    }
-
+    //То, что мы получаем от сервера
     @Override
-    public void clearCards(int typeOfClear) {
-        mView.clearCards(typeOfClear);
-    }
-
-    @Override
-    public void setPlayer() {
+    public void acceptMessageFromServerNewPlayerJoin() {
 
     }
 
     @Override
-    public void setOpponent() {
+    public void acceptMessageFromServerOpponentCheck(String name) {
+
+    }
+
+    @Override
+    public void acceptMessageFromServerOpponentRaise(String name) {
+
+    }
+
+    @Override
+    public void acceptMessageFromServerOpponentAllIn(String name) {
+
+    }
+
+    @Override
+    public void acceptMessageFromServerOpponentFold(String name) {
+
+    }
+
+    @Override
+    public void acceptMessageFromServerOpponentLeft(String name) {
+
+    }
+
+    @Override
+    public void acceptMessageFromServerAddCommunityCard(int card) {
+
+    }
+
+    @Override
+    public void acceptMessageFromServerAddCard(int player, int card) {
 
     }
 }

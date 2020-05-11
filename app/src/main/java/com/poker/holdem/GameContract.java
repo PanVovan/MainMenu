@@ -1,6 +1,8 @@
 package com.poker.holdem;
+/*
+* Функционал будет дополнятся в зависимости от методов
+*/
 
-import com.poker.holdem.logic.player.Player;
 
 public interface GameContract {
     interface View {
@@ -19,20 +21,19 @@ public interface GameContract {
         void raiseButtonClicked(int rate);
         void exitButtonClicked();
 
-        //Передача сообщений от сервера во View
-        void setCard(int action, int card);
-        void clearCards(int typeOfClear);
-        void setPlayer();
-        void setOpponent();
+        //Если чето с сервера приходит
+        void acceptMessageFromServerNewPlayerJoin();  //Там по ходу посмотрим что передается
+        void acceptMessageFromServerOpponentCheck(String name);
+        void acceptMessageFromServerOpponentRaise(String name);
+        void acceptMessageFromServerOpponentAllIn(String name);
+        void acceptMessageFromServerOpponentFold(String name);
+        void acceptMessageFromServerOpponentLeft(String name);
+        void acceptMessageFromServerAddCommunityCard(int card);
+        void acceptMessageFromServerAddCard(int player, int card);
     }
 
-    interface Logic {
-        //Получить данные из логики
-        int getCard();
-        Player getPlayer();
 
-
-        //отправить данные на сервер
+    interface Server{
         void sendMessageOnServerFold();
         void sendMessageOnServerCheck();
         void sendMessageOnServerRaise(int rate);
@@ -43,6 +44,7 @@ public interface GameContract {
         void sendMessageOnServerHandPower();
         void sendMessageOnServerEnterLobby();
     }
+
 
 
 }

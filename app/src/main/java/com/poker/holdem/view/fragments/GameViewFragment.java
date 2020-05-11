@@ -101,7 +101,6 @@ public class GameViewFragment extends Fragment implements GameContract.View {
         return view;
     }
 
-    @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setRetainInstance(true);
@@ -161,11 +160,10 @@ public class GameViewFragment extends Fragment implements GameContract.View {
 
     @OnClick(R.id.exit_button)
     void exit(){
-        presenter.exitButtonClicked();
+
     }
 
 
-    @Override
     public void clearCards(int typeOfClear) {
         switch (typeOfClear) {
             case ViewControllerActionCode.CLEAR_PLAYER_CARDS:
@@ -201,7 +199,6 @@ public class GameViewFragment extends Fragment implements GameContract.View {
         }
     }
 
-    @Override
     public void setCardView(int action, int card) {
         if (card == ViewControllerActionCode.NONE){
             setInvisibleOpponentCard(action);
@@ -214,7 +211,6 @@ public class GameViewFragment extends Fragment implements GameContract.View {
         }
     }
 
-    @Override
     public void setOpponentView(int pos, String name, Integer money, int picture){
         switch (pos){
             case 1:
@@ -240,7 +236,6 @@ public class GameViewFragment extends Fragment implements GameContract.View {
         }
     }
 
-    @Override
     public void setPlayerView(Integer money, int picture) {
         playerMoney.setText(money.toString());
     }
