@@ -2,6 +2,8 @@ package com.poker.holdem;
 
 import android.app.Application;
 
+import com.poker.holdem.constants.Constants;
+
 import java.net.URISyntaxException;
 
 import io.socket.client.IO;
@@ -9,7 +11,6 @@ import io.socket.client.Socket;
 
 
 public class PokerApplicationManager extends Application {
-    private static final String SERVER_ADDR = "https://tryserv1.herokuapp.com";
 
     private Socket socket;
     private static PokerApplicationManager singleton;
@@ -20,7 +21,7 @@ public class PokerApplicationManager extends Application {
         }
         else {
             try {
-                socket = IO.socket(SERVER_ADDR);
+                socket = IO.socket(Constants.SERVER_ADDR);
                 return socket;
             } catch (URISyntaxException e) {
                 e.printStackTrace();
