@@ -9,6 +9,8 @@ import io.socket.client.Socket;
 
 
 public class PokerApplicationManager extends Application {
+    private static final String SERVER_ADDR = "https://tryserv1.herokuapp.com";
+
     private Socket socket;
 
     public Socket getSocket() throws URISyntaxException {
@@ -16,7 +18,7 @@ public class PokerApplicationManager extends Application {
             return socket;
         }
         else {
-            socket = IO.socket("http://s-my-poker.herokuapp.com");
+            socket = IO.socket(SERVER_ADDR);
             return socket;
         }
     }

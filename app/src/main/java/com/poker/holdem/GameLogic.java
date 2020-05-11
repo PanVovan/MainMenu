@@ -50,27 +50,12 @@ public class GameLogic implements GameContract.Logic {
     }
 
     @Override
-    public void sendMessageOnServerRegister() {
-
-    }
-
-    @Override
-    public void sendMessageOnServerAuth() {
-
-    }
-
-    @Override
     public void sendMessageOnServerHandPower() {
 
     }
 
     @Override
     public void sendMessageOnServerEnterLobby() {
-
-    }
-
-    @Override
-    public void sendMessageOnServerGetLobbies() {
 
     }
 }
