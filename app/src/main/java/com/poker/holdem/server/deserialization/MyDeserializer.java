@@ -145,7 +145,6 @@ public class MyDeserializer {
         return gson.fromJson(resp, RestoreResp.class);
     }
 
-
     public static EndgameResp desEndgameResp(String resp){
         Gson gson = new GsonBuilder()
                 .registerTypeAdapter(EndgameResp.class, new DesEndGameResp())
