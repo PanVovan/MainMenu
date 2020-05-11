@@ -1,17 +1,16 @@
-package com.poker.holdem.server.deserialization.getlobbies;
+package com.poker.holdem.server.deserialization.playerraise;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-import java.io.Serializable;
+public class PlayerRaiseResp {
 
-public class RespRoom {
     @SerializedName("name")
     @Expose
     private String name;
-    @SerializedName("length")
+    @SerializedName("lobbyname")
     @Expose
-    private Integer length;
+    private String newlead;
     @SerializedName("rate")
     @Expose
     private Integer rate;
@@ -24,12 +23,12 @@ public class RespRoom {
         this.name = name;
     }
 
-    public Integer getLength() {
-        return length;
+    public String getNewlead() {
+        return newlead;
     }
 
-    public void setLength(Integer length) {
-        this.length = length;
+    public void setNewlead(String newlead) {
+        this.newlead = newlead;
     }
 
     public Integer getRate() {

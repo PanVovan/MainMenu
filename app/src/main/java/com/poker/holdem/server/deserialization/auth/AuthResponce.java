@@ -3,9 +3,8 @@ package com.poker.holdem.server.deserialization.auth;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-import java.io.Serializable;
-
-public class AuthResponce implements Serializable {
+//Класс сгенерирован сайтом jsonschema2pojo
+public class AuthResponce {
     @SerializedName("flag")
     @Expose
     private Boolean flag;

@@ -15,9 +15,16 @@ public class DesAuthResponce implements JsonDeserializer<AuthResponce> {
         AuthResponce authResponce = new AuthResponce();
 
         authResponce.setFlag(jsonObject.get("flag").getAsBoolean());
+        //Если мы авторизацию не прошли, то флаг будет false,
+        //а поля item, newauthtoken и token будут пустыми. Если мы попытаемся десериализовать
+        //пустое поле, то возникнет ошибка, поэтому мы смотрим на флаг
+        //перед десериализацией item, newauthtoken и token
         if(authResponce.getFlag()){
             authResponce.setNewauthtoken(jsonObject.get("newauthtoken").getAsString());
             authResponce.setToken(jsonObject.get("token").getAsString());
+            //Тут свершается магия - мы передаём объекту десериализвтора Gson gson
+            //item, которую он уже умеет понимать(см MyDeserializer GsonBuilder)
+            //и класс, который должен получиться.
             AuthPlayer item = context.deserialize(jsonObject.get("item").getAsJsonObject(), AuthPlayer.class);
             authResponce.setAuthPlayer(item);
         }

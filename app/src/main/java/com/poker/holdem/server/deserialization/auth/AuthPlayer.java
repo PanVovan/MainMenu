@@ -3,9 +3,8 @@ package com.poker.holdem.server.deserialization.auth;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-import java.io.Serializable;
-
-public class AuthPlayer implements Serializable {
+//Класс сгенерирован сайтом jsonschema2pojo
+public class AuthPlayer {
     @SerializedName("id")
     @Expose
     private Integer id;

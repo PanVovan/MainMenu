@@ -40,11 +40,16 @@ public interface GameContract {
         void sendMessageOnServerLeave();
         void sendMessageOnServerStop();
         void sendMessageOnServerRestore();
-        void sendMessageOnServerRegister();
-        void sendMessageOnServerAuth();
         void sendMessageOnServerHandPower();
         void sendMessageOnServerEnterLobby();
-        void sendMessageOnServerGetLobbies();
+    }
 
+    interface MenuLobbies{
+        void sendMessageOnServerGetLobbies();
+    }
+
+    interface Registrator{
+        void sendMessageOnServerRegister();
+        void sendMessageOnServerAuth();
     }
 }
