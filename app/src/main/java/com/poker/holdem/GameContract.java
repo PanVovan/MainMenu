@@ -44,12 +44,5 @@ public interface GameContract {
         void sendMessageOnServerEnterLobby();
     }
 
-    interface MenuLobbies{
-        void sendMessageOnServerGetLobbies();
-    }
 
-    interface Registrator{
-        void sendMessageOnServerRegister();
-        void sendMessageOnServerAuth();
-    }
 }
