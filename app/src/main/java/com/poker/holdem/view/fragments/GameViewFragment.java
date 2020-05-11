@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.SeekBar;
@@ -30,12 +31,12 @@ public class GameViewFragment extends Fragment implements GameContract.View {
     private GameContract.Presenter presenter;
 
     //Кнопки
-    @BindView(R.id.exit_button)                 ImageButton exitButton;
-    @BindView(R.id.check_button)                ImageButton checkButton;
-    @BindView(R.id.game_info_button)            ImageButton gameInfoButton;
-    @BindView(R.id.raise_button)                ImageButton raiseButton;
-    @BindView(R.id.fold_button)                 ImageButton foldButton;
-    @BindView(R.id.set_rate_button)             ImageButton setRateButton;
+    @BindView(R.id.exit_button)                 Button exitButton;
+    @BindView(R.id.check_button)                Button checkButton;
+    @BindView(R.id.game_info_button)            Button gameInfoButton;
+    @BindView(R.id.raise_button)                Button raiseButton;
+    @BindView(R.id.fold_button)                 Button foldButton;
+    @BindView(R.id.set_rate_button)             Button setRateButton;
 
     //карты
     @BindView(R.id.first_community_card)        ImageView firstCommunityCard;

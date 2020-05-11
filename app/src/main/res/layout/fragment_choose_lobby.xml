@@ -28,7 +28,7 @@
         tools:ignore="MissingConstraints"
         tools:layout_editor_absoluteY="-9dp" />
 
-    <ImageButton
+    <Button
         android:id="@+id/public_games"
         android:layout_width="138dp"
         android:layout_height="55dp"
@@ -37,7 +37,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
 
-    <ImageButton
+    <Button
         android:id="@+id/private_games"
         android:layout_width="138dp"
         android:layout_height="55dp"
@@ -48,7 +48,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toEndOf="@+id/public_games" />
 
-    <ImageButton
+    <Button
         android:id="@+id/new_lobby"
         android:layout_width="138dp"
         android:layout_height="55dp"
@@ -59,7 +59,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toEndOf="@+id/private_games" />
 
-    <ImageButton
+    <Button
         android:id="@+id/btn_navigate_to_main_menu"
         android:layout_width="60dp"
         android:layout_height="60dp"

@@ -12,6 +12,7 @@ public class PokerApplicationManager extends Application {
     private static final String SERVER_ADDR = "https://tryserv1.herokuapp.com";
 
     private Socket socket;
+    private static PokerApplicationManager singleton;
 
     public Socket getSocket(){
         if (socket != null){
@@ -26,5 +27,15 @@ public class PokerApplicationManager extends Application {
             }
             return null;
         }
+    }
+
+    public static PokerApplicationManager getInstance() {
+        return singleton;
+    }
+
+    @Override
+    public final void onCreate() {
+        super.onCreate();
+        singleton = this;
     }
 }

@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 
@@ -38,24 +39,23 @@ public class ChooseLobbyFragment extends Fragment implements LobbyContract.MenuL
     private Logger logger = Logger.getAnonymousLogger();
 
     @BindView(R.id.stat_of_menu) ImageView label;
-    @BindView(R.id.private_games) ImageButton privateButton;
-    @BindView(R.id.public_games) ImageButton publicButton;
-    @BindView(R.id.btn_navigate_to_main_menu) ImageButton exitBtn;
+    @BindView(R.id.private_games) Button privateButton;
+    @BindView(R.id.public_games) Button publicButton;
+    @BindView(R.id.btn_navigate_to_main_menu) Button exitBtn;
 
     private ArrayList<RespRoom> lobbies = new ArrayList<>();
 
     @BindView(R.id.lobby_container) RecyclerView recyclerView;
     private RoomRecyclerViewAdapter adapter;
 
-    private View view;
     private Socket socket;
 
-    LinearLayoutManager layoutManager;
+    private LinearLayoutManager layoutManager;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        view = inflater.inflate(R.layout.fragment_choose_lobby, container, false);
+        View view = inflater.inflate(R.layout.fragment_choose_lobby, container, false);
         ButterKnife.bind(this, view);
 
 
@@ -74,9 +74,9 @@ public class ChooseLobbyFragment extends Fragment implements LobbyContract.MenuL
     }
 
     private void setLobbies(){
-        //здесь нужно отобразить лобби на экране
-        //но происходит ошибка
-        //android.view.ViewRootImpl$CalledFromWrongThreadException: Only the original thread that created a view hierarchy can touch its views.
+        adapter.setRooms(lobbies);
+        recyclerView.setAdapter(adapter);
+        recyclerView.setLayoutManager(layoutManager);
     }
 
     @OnClick(R.id.public_games)
@@ -108,9 +108,7 @@ public class ChooseLobbyFragment extends Fragment implements LobbyContract.MenuL
                 RespRooms roomsObject = MyDeserializer.desGetLobbiesResponce(args[0].toString());
                 lobbies.addAll(roomsObject.getRooms());
                 logger.info("<-------------got responce"+roomsObject.getRooms().get(0).getName());
-                adapter.setRooms(lobbies);
-                recyclerView.setAdapter(adapter);
-                recyclerView.setLayoutManager(layoutManager);
+                setLobbies();
             });
         }
     };

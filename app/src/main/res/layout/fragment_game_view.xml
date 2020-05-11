@@ -10,7 +10,7 @@
     android:background="@drawable/background_casino"
     tools:context=".view.fragments.GameViewFragment">
 
-    <ImageButton
+    <Button
         android:id="@+id/exit_button"
         android:layout_width="60dp"
         android:layout_height="60dp"
@@ -22,7 +22,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         tools:ignore="MissingConstraints" />
-    <ImageButton
+    <Button
         android:id="@+id/game_info_button"
         android:layout_width="60dp"
         android:layout_height="60dp"
@@ -34,7 +34,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         tools:ignore="MissingConstraints" />
-    <ImageButton
+    <Button
         android:id="@+id/check_button"
         android:layout_width="100dp"
         android:layout_height="25dp"
@@ -48,7 +48,7 @@
         android:background="@drawable/button"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
-    <ImageButton
+    <Button
         android:id="@+id/fold_button"
         android:layout_width="100dp"
         android:layout_height="25dp"
@@ -60,7 +60,7 @@
         android:background="@drawable/button"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/check_button" />
-    <ImageButton
+    <Button
         android:id="@+id/raise_button"
         android:layout_width="100dp"
         android:layout_height="25dp"
@@ -610,7 +610,7 @@
                 android:layout_gravity="center_vertical|center_horizontal"/>
         </FrameLayout>
 
-        <ImageButton
+        <Button
 
 
             android:id="@+id/set_rate_button"
