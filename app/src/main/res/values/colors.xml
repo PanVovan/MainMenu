@@ -16,5 +16,7 @@
     <!--color name="myGold">@color/combination_progress_bar</color-->
     <color name="splash_primairy">#f3ae50</color>
     <color name="splash_background">#000000</color>
+    <color name="my_black">#000000</color>
+    <color name="action_window_background">#98423C</color>
 
 </resources>

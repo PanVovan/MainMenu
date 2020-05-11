@@ -8,6 +8,7 @@ public interface LobbyContract {
 
     interface Registrator{
         void sendMessageOnServerRegister();
-        void sendMessageOnServerAuth();
+        void sendMessageOnServerAuthToken(String name, String authToken);
+        void sendMessageOnServerAuthPassword(String name, String password);
     }
 }

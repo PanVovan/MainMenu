@@ -63,11 +63,9 @@ public class RoomRecyclerViewAdapter extends RecyclerView.Adapter<RoomRecyclerVi
         @BindView(R.id.min_rate) TextView minRate;
         @BindView(R.id.lobby_name) TextView lobbyName;
 
-
         ViewHolder(@NonNull View itemView) {
             super(itemView);
             ButterKnife.bind(this, itemView);
-
         }
 
         @OnClick

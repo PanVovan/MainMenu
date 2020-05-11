@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".view.fragments.AuthFragment"
+    android:background="@drawable/main_menu_background">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="@dimen/auth_data_not_found_window_width"
+        android:layout_height="@dimen/auth_data_not_found_window_height"
+        android:layout_gravity="center"
+        android:orientation="vertical"
+        android:background="@drawable/button"
+        >
+        <TextView
+            android:id="@+id/auth_not_found"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            android:layout_marginTop="20dp"
+            android:gravity="center_horizontal|top"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/auth_data_not_found_text_field_height"
+            android:text="@string/auth_data_not_found"
+            android:textAlignment="center"
+            android:textSize="@dimen/auth_data_not_found_text_size"
+        />
+        <Button
+            android:id="@+id/create_account_btn"
+            android:layout_width="@dimen/create_account_button_width"
+            android:layout_height="@dimen/create_account_button_height"
+            android:layout_gravity="center"
+            app:layout_constraintTop_toBottomOf="@id/auth_not_found"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            android:layout_marginTop="@dimen/create_account_button_margin_top"
+            android:text="@string/create_acoount"
+            android:textColor="@color/my_black"
+            android:background="@drawable/button"
+            android:textSize="@dimen/create_account_button_text_size"
+            />
+        <Button
+            android:id="@+id/sign_in_btn"
+            android:layout_width="@dimen/sign_in_button_width"
+            android:layout_height="@dimen/sign_in_button_height"
+            android:background="@drawable/button"
+            app:layout_constraintTop_toBottomOf="@+id/create_account_btn"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            android:layout_marginTop="@dimen/sign_in_button_margin_top"
+            android:text="@string/sign_in"
+            android:textColor="@color/my_black"
+            android:textSize="@dimen/sign_in_button_text_size"
+            />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+
+</FrameLayout>
