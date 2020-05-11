@@ -1,4 +1,4 @@
-package com.poker.holdem.handlogic.card;
+package com.poker.holdem.logic.handlogic.card;
 
 import java.io.Serializable;
 

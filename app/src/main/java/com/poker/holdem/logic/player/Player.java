@@ -1,23 +1,13 @@
-package com.poker.holdem.players.utils;
+package com.poker.holdem.logic.player;
 
-
-import java.io.Serializable;
-import java.util.List;
-
-public class Player implements Serializable {
+public class Player{
     private String name;
     private int money;
     private int numOfPicture;
-    private int pos;
+    private boolean active;
 
-    private List<Integer> cards;
-
-    public List<Integer> getCards() {
-        return cards;
-    }
-
-    public void setCards(List<Integer> cards) {
-        this.cards = cards;
+    public boolean isActive() {
+        return active;
     }
 
     public String getName() {
@@ -44,12 +34,5 @@ public class Player implements Serializable {
         this.numOfPicture = numOfPicture;
     }
 
-    public int getPos() {
-        return pos;
-    }
-
-    public void setPos(int pos) {
-        this.pos = pos;
-    }
 
 }

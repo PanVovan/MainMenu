@@ -1,6 +1,8 @@
-package com.poker.holdem;
+package com.poker.holdem.logic;
 
-import com.poker.holdem.players.utils.Player;
+import com.poker.holdem.GameContract;
+import com.poker.holdem.PokerApplicationManager;
+import com.poker.holdem.logic.player.Player;
 
 import io.socket.client.Socket;
 
@@ -9,7 +11,7 @@ public class GameLogic implements GameContract.Logic {
 
     private Socket socket;
 
-    GameLogic(){
+    public GameLogic(){
         socket = PokerApplicationManager.getInstance().getSocket();
     }
 

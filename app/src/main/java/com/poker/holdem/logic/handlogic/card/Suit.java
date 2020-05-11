@@ -1,4 +1,4 @@
-package com.poker.holdem.handlogic.card;
+package com.poker.holdem.logic.handlogic.card;
 
 public enum Suit {
     DIAMONDS(1),

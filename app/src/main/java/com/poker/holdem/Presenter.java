@@ -1,5 +1,7 @@
 package com.poker.holdem;
 
+import com.poker.holdem.logic.GameLogic;
+
 public class Presenter implements GameContract.Presenter {
     private GameContract.View mView;
     private GameContract.Logic mLogic;

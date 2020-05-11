@@ -1,4 +1,4 @@
-package com.poker.holdem;
+package com.poker.holdem.logic;
 
 import android.os.Handler;
 import android.os.HandlerThread;

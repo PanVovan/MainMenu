@@ -1,6 +1,6 @@
 package com.poker.holdem;
 
-import com.poker.holdem.players.utils.Player;
+import com.poker.holdem.logic.player.Player;
 
 public interface GameContract {
     interface View {

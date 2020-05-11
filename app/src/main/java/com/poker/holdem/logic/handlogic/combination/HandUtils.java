@@ -1,8 +1,8 @@
-package com.poker.holdem.handlogic.combination;
+package com.poker.holdem.logic.handlogic.combination;
 
 
-import com.poker.holdem.handlogic.card.Card;
-import com.poker.holdem.handlogic.card.Rank;
+import com.poker.holdem.logic.handlogic.card.Card;
+import com.poker.holdem.logic.handlogic.card.Rank;
 
 import java.util.ArrayList;
 import java.util.Arrays;
