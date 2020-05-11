@@ -58,4 +58,5 @@ public class GameLogic implements GameContract.Logic {
     public void sendMessageOnServerEnterLobby() {
 
     }
+
 }
