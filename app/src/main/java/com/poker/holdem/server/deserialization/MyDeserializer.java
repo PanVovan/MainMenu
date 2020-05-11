@@ -7,6 +7,7 @@ import com.google.gson.JsonDeserializer;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParseException;
+import com.google.gson.internal.$Gson$Preconditions;
 import com.poker.holdem.server.deserialization.auth.AuthPlayer;
 import com.poker.holdem.server.deserialization.auth.AuthResponce;
 import com.poker.holdem.server.deserialization.auth.DesAuthPlayer;
@@ -37,6 +38,8 @@ import com.poker.holdem.server.deserialization.getlobbies.DesRespRoom;
 import com.poker.holdem.server.deserialization.getlobbies.DesRespRooms;
 import com.poker.holdem.server.deserialization.getlobbies.RespRoom;
 import com.poker.holdem.server.deserialization.getlobbies.RespRooms;
+import com.poker.holdem.server.deserialization.newplayerjoin.DesNewPlayerJoinResp;
+import com.poker.holdem.server.deserialization.newplayerjoin.NewPlayerJoinResp;
 import com.poker.holdem.server.deserialization.playerallin.PlayerAllInResp;
 import com.poker.holdem.server.deserialization.playercheck.DesPlayerCheckResp;
 import com.poker.holdem.server.deserialization.playercheck.PlayerCheckResp;
@@ -123,6 +126,14 @@ public class MyDeserializer {
     }
 
 
+    public static NewPlayerJoinResp desNewPlayerJoinResp(String resp){
+        Gson gson = new GsonBuilder()
+                .registerTypeAdapter(NewPlayerJoinResp.class, new DesNewPlayerJoinResp())
+                .create();
+        return gson.fromJson(resp, NewPlayerJoinResp.class);
+    }
+
+
     public static GameStartsResp desGameStartsResponce(String resp){
         Gson gson = new GsonBuilder()
                 .registerTypeAdapter(GameStartsResp.class, new DesGSResp())
@@ -134,6 +145,7 @@ public class MyDeserializer {
         return gson.fromJson(resp, GameStartsResp.class);
     }
 
+
     public static RestoreResp desRestoreResp(String resp){
         Gson gson = new GsonBuilder()
                 .registerTypeAdapter(RestoreResp.class, new DesRestoreResp())
@@ -144,6 +156,7 @@ public class MyDeserializer {
                 .create();
         return gson.fromJson(resp, RestoreResp.class);
     }
+
 
     public static EndgameResp desEndgameResp(String resp){
         Gson gson = new GsonBuilder()
