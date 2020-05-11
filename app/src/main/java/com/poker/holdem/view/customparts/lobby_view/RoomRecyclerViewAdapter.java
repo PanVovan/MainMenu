@@ -33,6 +33,10 @@ public class RoomRecyclerViewAdapter extends RecyclerView.Adapter<RoomRecyclerVi
         this.rooms = rooms;
     }
 
+    public void setRooms(ArrayList<RespRoom> rooms) {
+        this.rooms = rooms;
+    }
+
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
@@ -43,8 +47,8 @@ public class RoomRecyclerViewAdapter extends RecyclerView.Adapter<RoomRecyclerVi
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         RespRoom room = rooms.get(position);
-        holder.playersActive.setText(room.getLength());
-        holder.minRate.setText(room.getRate());
+        holder.playersActive.setText(room.getLength().toString());
+        holder.minRate.setText(room.getRate().toString());
         holder.lobbyName.setText(room.getName());
 
     }

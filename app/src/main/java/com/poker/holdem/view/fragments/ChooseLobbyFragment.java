@@ -50,17 +50,20 @@ public class ChooseLobbyFragment extends Fragment implements LobbyContract.MenuL
     private View view;
     private Socket socket;
 
+    LinearLayoutManager layoutManager;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.fragment_choose_lobby, container, false);
         ButterKnife.bind(this, view);
 
-        adapter = new RoomRecyclerViewAdapter(lobbies, getContext());
-        recyclerView.setAdapter(adapter);
-        recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
 
+        adapter = new RoomRecyclerViewAdapter(lobbies, getContext());
+        layoutManager = new LinearLayoutManager(getContext());
         sendMessageOnServerGetLobbies();
+
+
 
         return view;
     }
@@ -74,7 +77,6 @@ public class ChooseLobbyFragment extends Fragment implements LobbyContract.MenuL
         //здесь нужно отобразить лобби на экране
         //но происходит ошибка
         //android.view.ViewRootImpl$CalledFromWrongThreadException: Only the original thread that created a view hierarchy can touch its views.
-
     }
 
     @OnClick(R.id.public_games)
@@ -102,10 +104,14 @@ public class ChooseLobbyFragment extends Fragment implements LobbyContract.MenuL
     private Emitter.Listener onGetLobbies = new Emitter.Listener() {
         @Override
         public void call(Object... args) {
-            RespRooms roomsObject = MyDeserializer.desGetLobbiesResponce(args[0].toString());
-            lobbies.addAll(roomsObject.getRooms());
-            logger.info("<-------------got responce"+roomsObject.getRooms().get(0).getName());
-            setLobbies();
+            getActivity().runOnUiThread(() -> {
+                RespRooms roomsObject = MyDeserializer.desGetLobbiesResponce(args[0].toString());
+                lobbies.addAll(roomsObject.getRooms());
+                logger.info("<-------------got responce"+roomsObject.getRooms().get(0).getName());
+                adapter.setRooms(lobbies);
+                recyclerView.setAdapter(adapter);
+                recyclerView.setLayoutManager(layoutManager);
+            });
         }
     };
 }
