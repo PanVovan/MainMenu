@@ -1,5 +1,8 @@
 package com.poker.holdem;
 
+import android.content.Context;
+
+import com.poker.holdem.constants.Constants;
 import com.poker.holdem.logic.handlogic.Hand;
 import com.poker.holdem.logic.handlogic.card.Card;
 import com.poker.holdem.view.util.ViewControllerActionCode;
@@ -99,12 +102,16 @@ public class Presenter implements GameContract.Presenter {
         }
     }
 
-    }
 
     //TODO: извлечь из префов имя игрока, или как что то еще в зависимость от сервера
+    //имя извлечено
     @Override
     public void acceptMessageFromServerAddCard(String name, int card) {
-        if (name.equals("Имя игрока")){
+        String playername = PokerApplicationManager
+                .getInstance()
+                .getSharedPreferences(Constants.PREFS_NAME, Context.MODE_PRIVATE)
+                .getString(Constants.PLAYER_NAME, "");
+        if (name.equals(playername)){
             handBuilder.addHoleCard(Optional.of(new Card(card)));
             //Тут мы смотрим лист кард, и в зависимости от его заполненности генерируем комманду для вью
             gameView.setCardView(ViewControllerActionCode.ADD_FIRST_PLAYER_CARD, card);
