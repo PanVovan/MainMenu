@@ -4,6 +4,10 @@ package com.poker.holdem;
 */
 
 
+import com.poker.holdem.logic.player.Player;
+
+import java.util.List;
+
 public interface GameContract {
     interface View {
         //установить значения
@@ -24,12 +28,13 @@ public interface GameContract {
         //Если чето с сервера приходит
         void acceptMessageFromServerNewPlayerJoin();  //Там по ходу посмотрим что передается, как и везде
         void acceptMessageFromServerOpponentCheck(String name);
-        void acceptMessageFromServerOpponentRaise(String name);
+        void acceptMessageFromServerOpponentRaise(String name, int rate);
         void acceptMessageFromServerOpponentAllIn(String name);
         void acceptMessageFromServerOpponentFold(String name);
         void acceptMessageFromServerOpponentLeft(String name);
         void acceptMessageFromServerAddCommunityCard(int card);
         void acceptMessageFromServerAddCard(String playerName, int card);
+        void acceptMessageFromServerEnterLobby(List<Player> players, List<Integer> deck, String lead, Integer base_rate);
     }
 
 
@@ -41,8 +46,8 @@ public interface GameContract {
         void sendMessageOnServerLeave();
         void sendMessageOnServerStop();
         void sendMessageOnServerRestore();
-        void sendMessageOnServerHandPower(long power);
-        void sendMessageOnServerEnterLobby(String roomName);
+        void sendMessageOnServerHandPower();
+        void sendMessageOnServerEnterLobby();
     }
 
 

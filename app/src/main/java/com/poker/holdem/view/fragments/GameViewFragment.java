@@ -325,28 +325,28 @@ public class GameViewFragment extends Fragment implements GameContract.View {
     private void setInvisibleOpponentCard(int action){
         Context context = getContext();
         switch (action) {
-            case ViewControllerActionCode.ADD_FIRST_OPPONENT_INVISIBLE_FIRST_CARD:
+            case ViewControllerActionCode.ADD_FIRST_OPPONENT_FIRST_CARD:
                 firstOpponentFirstCard.setBackground(CardView.initDrawableInvisibleCard(context));
                 break;
-            case ViewControllerActionCode.ADD_FIRST_OPPONENT_INVISIBLE_SECOND_CARD:
+            case ViewControllerActionCode.ADD_FIRST_OPPONENT_SECOND_CARD:
                 firstOpponentSecondCard.setBackground(CardView.initDrawableInvisibleCard(context));
                 break;
-            case ViewControllerActionCode.ADD_SECOND_OPPONENT_INVISIBLE_FIRST_CARD:
+            case ViewControllerActionCode.ADD_SECOND_OPPONENT_FIRST_CARD:
                 secondOpponentFirstCard.setBackground(CardView.initDrawableInvisibleCard(context));
                 break;
-            case ViewControllerActionCode.ADD_SECOND_OPPONENT_INVISIBLE_SECOND_CARD:
+            case ViewControllerActionCode.ADD_SECOND_OPPONENT_SECOND_CARD:
                 secondOpponentSecondCard.setBackground(CardView.initDrawableInvisibleCard(context));
                 break;
-            case ViewControllerActionCode.ADD_THIRD_OPPONENT_INVISIBLE_FIRST_CARD:
+            case ViewControllerActionCode.ADD_THIRD_OPPONENT_FIRST_CARD:
                 thirdOpponentFirstCard.setBackground(CardView.initDrawableInvisibleCard(context));
                 break;
-            case ViewControllerActionCode.ADD_THIRD_OPPONENT_INVISIBLE_SECOND_CARD:
+            case ViewControllerActionCode.ADD_THIRD_OPPONENT_SECOND_CARD:
                 thirdOpponentSecondCard.setBackground(CardView.initDrawableInvisibleCard(context));
                 break;
-            case ViewControllerActionCode.ADD_FOURTH_OPPONENT_INVISIBLE_FIRST_CARD:
+            case ViewControllerActionCode.ADD_FOURTH_OPPONENT_FIRST_CARD:
                 fourthOpponentFirstCard.setBackground(CardView.initDrawableInvisibleCard(context));
                 break;
-            case ViewControllerActionCode.ADD_FOURTH_OPPONENT_INVISIBLE_SECOND_CARD:
+            case ViewControllerActionCode.ADD_FOURTH_OPPONENT_SECOND_CARD:
                 fourthOpponentSecondCard.setBackground(CardView.initDrawableInvisibleCard(context));
                 break;
         }

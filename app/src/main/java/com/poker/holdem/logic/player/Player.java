@@ -1,10 +1,27 @@
 package com.poker.holdem.logic.player;
 
+import java.util.List;
+
 public class Player{
+
     private String name;
     private int money;
     private int numOfPicture;
     private boolean active;
+    private List<Integer> cards;
+
+
+    public void setActive(boolean active) {
+        this.active = active;
+    }
+
+    public List<Integer> getCards() {
+        return cards;
+    }
+
+    public void setCards(List<Integer> cards) {
+        this.cards = cards;
+    }
 
     public boolean isActive() {
         return active;

@@ -45,7 +45,7 @@ public class Hand {
             return this;
         }
 
-        private SortedSet<Card> build() {
+        public SortedSet<Card> build() {
             return Collections.unmodifiableSortedSet(init(holeCards, communityCards));
         }
 
@@ -60,6 +60,8 @@ public class Hand {
         public SortedSet<Card> getCommunityCards() {
             return communityCards;
         }
+
+
     }
 
 

@@ -5,9 +5,12 @@ import android.content.Context;
 import com.poker.holdem.constants.Constants;
 import com.poker.holdem.logic.handlogic.Hand;
 import com.poker.holdem.logic.handlogic.card.Card;
+import com.poker.holdem.logic.player.Player;
 import com.poker.holdem.view.util.ViewControllerActionCode;
 
+import java.util.List;
 import java.util.Optional;
+
 
 public class Presenter implements GameContract.Presenter {
 
@@ -15,6 +18,9 @@ public class Presenter implements GameContract.Presenter {
     private GameContract.Server serverController;
 
     private Hand.Builder handBuilder;
+    private Player player;
+
+    private List<Player> players;
 
 
 
@@ -60,7 +66,7 @@ public class Presenter implements GameContract.Presenter {
     }
 
     @Override
-    public void acceptMessageFromServerOpponentRaise(String name) {
+    public void acceptMessageFromServerOpponentRaise(String name, int rate) {
 
     }
 
@@ -113,10 +119,69 @@ public class Presenter implements GameContract.Presenter {
                 .getString(Constants.PLAYER_NAME, "");
         if (name.equals(playername)){
             handBuilder.addHoleCard(Optional.of(new Card(card)));
-            //Тут мы смотрим лист кард, и в зависимости от его заполненности генерируем комманду для вью
-            gameView.setCardView(ViewControllerActionCode.ADD_FIRST_PLAYER_CARD, card);
-            gameView.setCardView(ViewControllerActionCode.ADD_SECOND_PLAYER_CARD, card);
+            switch (handBuilder.build().size()){
+                case 1:
+                    gameView.setCardView(ViewControllerActionCode.ADD_FIRST_PLAYER_CARD, card);
+                    break;
+                case 2:
+                    gameView.setCardView(ViewControllerActionCode.ADD_SECOND_PLAYER_CARD, card);
+                    break;
+            }
         }
-        //Тут мы проходим массив игрока
+        //Тут мы проходим массив игроков
+        else {
+            for (int i = 0; i < players.size(); i++){
+                if (players.get(i).getName().equals(name)){
+                    players.get(i).getCards().add(card);
+                    switch (i) {
+                        case 0:
+                            switch (players.get(i).getCards().size()){
+                                case 1:
+                                    gameView.setCardView(ViewControllerActionCode.ADD_FIRST_OPPONENT_FIRST_CARD, card);
+                                    break;
+                                case 2:
+                                    gameView.setCardView(ViewControllerActionCode.ADD_FIRST_OPPONENT_SECOND_CARD, card);
+                                    break;
+                            }
+                            break;
+                        case 1:
+                            switch (players.get(i).getCards().size()){
+                                case 1:
+                                    gameView.setCardView(ViewControllerActionCode.ADD_SECOND_OPPONENT_FIRST_CARD, card);
+                                    break;
+                                case 2:
+                                    gameView.setCardView(ViewControllerActionCode.ADD_SECOND_OPPONENT_SECOND_CARD, card);
+                                    break;
+                            }
+                            break;
+                        case 2:
+                            switch (players.get(i).getCards().size()){
+                                case 1:
+                                    gameView.setCardView(ViewControllerActionCode.ADD_THIRD_OPPONENT_FIRST_CARD, card);
+                                    break;
+                                case 2:
+                                    gameView.setCardView(ViewControllerActionCode.ADD_THIRD_OPPONENT_SECOND_CARD, card);
+                                    break;
+                            }
+                            break;
+                        case 3:
+                            switch (players.get(i).getCards().size()){
+                                case 1:
+                                    gameView.setCardView(ViewControllerActionCode.ADD_FOURTH_OPPONENT_FIRST_CARD, card);
+                                    break;
+                                case 2:
+                                    gameView.setCardView(ViewControllerActionCode.ADD_FOURTH_OPPONENT_SECOND_CARD, card);
+                                    break;
+                            }
+                            break;
+                    }
+                }
+            }
+        }
+    }
+
+    @Override
+    public void acceptMessageFromServerEnterLobby(List<Player> players, List<Integer> deck, String lead, Integer base_rate) {
+
     }
 }

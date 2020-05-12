@@ -70,10 +70,6 @@ public class RoomRecyclerViewAdapter extends RecyclerView.Adapter<RoomRecyclerVi
 
         @OnClick
         public void onClick() {
-            prefs = context.getSharedPreferences("Test", 0);
-            SharedPreferences.Editor editor= prefs.edit();
-            editor.putString("Name", lobbyName.getText().toString());
-            editor.apply();
             context.startActivity(new Intent(context, GameActivity.class));
         }
 
