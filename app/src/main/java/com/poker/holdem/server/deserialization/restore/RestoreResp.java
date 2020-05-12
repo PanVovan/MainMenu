@@ -28,7 +28,7 @@ public class RestoreResp {
             Map.Entry<String, List<Integer>> buf = new Map.Entry<String, List<Integer>>() {
                 @Override
                 public String getKey() {
-                    return i.getPlayername()
+                    return i.getPlayername();
                 }
 
                 @Override
@@ -41,10 +41,10 @@ public class RestoreResp {
                     return i.getCards();
                 }
             };
-
+            result.put(i.getPlayername(), i.getCards());
         }
 
-        return null;
+        return result;
     }
 
     public ArrayList<Player> getAllAsPlayers(){
