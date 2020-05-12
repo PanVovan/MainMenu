@@ -41,8 +41,8 @@ public interface GameContract {
         void sendMessageOnServerLeave();
         void sendMessageOnServerStop();
         void sendMessageOnServerRestore();
-        void sendMessageOnServerHandPower();
-        void sendMessageOnServerEnterLobby();
+        void sendMessageOnServerHandPower(long power);
+        void sendMessageOnServerEnterLobby(String roomName);
     }
 
 

@@ -45,6 +45,8 @@ import com.poker.holdem.server.deserialization.playercheck.DesPlayerCheckResp;
 import com.poker.holdem.server.deserialization.playercheck.PlayerCheckResp;
 import com.poker.holdem.server.deserialization.playerfold.PlayerFoldResp;
 import com.poker.holdem.server.deserialization.playerleft.PlayerLeftResp;
+import com.poker.holdem.server.deserialization.playerraise.DesPlayerRaiseResp;
+import com.poker.holdem.server.deserialization.playerraise.PlayerRaiseResp;
 import com.poker.holdem.server.deserialization.registration.DesRegResp;
 import com.poker.holdem.server.deserialization.registration.RegResp;
 import com.poker.holdem.server.deserialization.restore.DesRCards;
@@ -239,6 +241,13 @@ public class MyDeserializer {
                 .registerTypeAdapter(PlayerCheckResp.class, new DesPlayerCheckResp())
                 .create();
         return gson.fromJson(resp, PlayerLeftResp.class);
+    }
+
+    public static PlayerRaiseResp desPlayerRaiseResp(String resp){
+        Gson gson = new GsonBuilder()
+                .registerTypeAdapter(PlayerRaiseResp.class, new DesPlayerRaiseResp())
+                .create();
+        return gson.fromJson(resp, PlayerRaiseResp.class);
     }
 
 

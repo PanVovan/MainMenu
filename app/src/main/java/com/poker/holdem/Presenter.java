@@ -5,9 +5,9 @@ public class Presenter implements GameContract.Presenter {
     private GameContract.View gameView;
     private GameContract.Server serverController;
 
-    public Presenter(GameContract.View view){
 
-        this.serverController = new ServerController(this) ;
+    public Presenter(GameContract.View view){
+        this.serverController = new ServerController(this);
         this.gameView = view;
     }
 

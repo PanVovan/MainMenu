@@ -12,6 +12,9 @@ public class RestoreResp {
     @SerializedName("roomparams")
     @Expose
     private RestoreRoomParams roomparams = null;
+    @SerializedName("token")
+    @Expose
+    private String token;
 
     public void setDidrestore (boolean didrestore){
         this.didrestore = didrestore;
@@ -25,5 +28,13 @@ public class RestoreResp {
     }
     public RestoreRoomParams getRoomparams(){
         return this.roomparams;
+    }
+
+    public String getToken() {
+        return token;
+    }
+
+    public void setToken(String token) {
+        this.token = token;
     }
 }

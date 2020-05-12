@@ -15,6 +15,7 @@ public class DesRestoreResp implements JsonDeserializer<RestoreResp> {
         RestoreResp restoreResp = new RestoreResp();
         restoreResp.setDidrestore(jsonObject.get("didrestore").getAsBoolean());
         if(restoreResp.getDidrestore())
+            restoreResp.setToken(jsonObject.get("token").getAsString());
             restoreResp.setRoomparams(
                     context.deserialize(jsonObject.get("roomparams").getAsJsonObject(), RestoreRoomParams.class)
             );
