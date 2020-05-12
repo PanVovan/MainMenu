@@ -1,7 +1,6 @@
 package com.poker.holdem.view.fragments;
 
 import android.content.Context;
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -18,7 +17,6 @@ import androidx.fragment.app.Fragment;
 import com.poker.holdem.GameContract;
 import com.poker.holdem.Presenter;
 import com.poker.holdem.R;
-import com.poker.holdem.constants.Constants;
 import com.poker.holdem.view.customparts.seekbar.RaiseSeekBar;
 import com.poker.holdem.view.grafic.CardView;
 import com.poker.holdem.view.util.ViewControllerActionCode;

@@ -9,6 +9,7 @@ import com.poker.holdem.logic.player.Player;
 import com.poker.holdem.view.util.ViewControllerActionCode;
 
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 public class Presenter implements GameContract.Presenter {
@@ -60,30 +61,40 @@ public class Presenter implements GameContract.Presenter {
     }
 
     @Override
-    public void acceptMessageFromServerOpponentCheck(String name) {
+    public void acceptMessageFromServerOpponentCheck(String name, String newLead) {
 
     }
 
     @Override
-    public void acceptMessageFromServerOpponentRaise(String name, Integer rate) {
-
-    }
-
-
-    @Override
-    public void acceptMessageFromServerOpponentAllIn(String name) {
+    public void acceptMessageFromServerOpponentRaise(String name, Integer rate, String newLead) {
 
     }
 
     @Override
-    public void acceptMessageFromServerOpponentFold(String name) {
+    public void acceptMessageFromServerOpponentAllIn(String name, String newLead) {
 
     }
 
     @Override
-    public void acceptMessageFromServerOpponentLeft(String name) {
+    public void acceptMessageFromServerOpponentFold(String name, String newLead) {
 
     }
+
+    @Override
+    public void acceptMessageFromServerOpponentLeft(String name, String newLead) {
+
+    }
+
+    @Override
+    public void acceptMessageFromServerOpponentStop(String name) {
+
+    }
+
+    @Override
+    public void acceptMessageFromServerOpponentRestore(String name) {
+
+    }
+
 
     //TODO: сделать нормально
     @Override
@@ -132,7 +143,9 @@ public class Presenter implements GameContract.Presenter {
         else {
             for (int i = 0; i < players.size(); i++){
                 if (players.get(i).getName().equals(name)){
-                    players.get(i).getCards().add(card);
+                    if(card != ViewControllerActionCode.NONE) {
+                        players.get(i).getCards().add(card);
+                    }
                     switch (i) {
                         case 0:
                             switch (players.get(i).getCards().size()){
@@ -181,12 +194,12 @@ public class Presenter implements GameContract.Presenter {
     }
 
     @Override
-    public void acceptMessageFromServerEnterLobby(List<Player> players, List<Integer> deck, String lead, Integer base_rate) {
+    public void acceptMessageFromServerEnterLobby(List<Player> allplayers, List<Player> gameplayers, List<Integer> deck, Map<String, List<Integer>> playersCardsMap, String lead, Integer base_rate) {
 
     }
 
     @Override
-    public void acceptMessageFromServerEnterLobby(List<Player> players, List<Integer> deck, String lead, Integer base_rate) {
+    public void acceptMessageFromServerRestore(List<Player> allplayers, List<Player> gameplayers, List<Integer> deck, Map<String, List<Integer>> playersCardsMap, String lead, Integer base_rate) {
 
     }
 }

@@ -5,7 +5,6 @@ import com.google.gson.JsonDeserializer;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParseException;
-import com.poker.holdem.server.deserialization.getlobbies.RespRoom;
 
 import java.lang.reflect.Type;
 

@@ -1,10 +1,9 @@
 package com.poker.holdem.view.activity;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Intent;
-import android.content.pm.ActivityInfo;
 import android.os.Bundle;
+
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.poker.holdem.R;
 

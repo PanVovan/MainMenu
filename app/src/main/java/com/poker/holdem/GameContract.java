@@ -9,10 +9,6 @@ import com.poker.holdem.logic.player.Player;
 import java.util.List;
 import java.util.Map;
 
-import com.poker.holdem.logic.player.Player;
-
-import java.util.List;
-
 public interface GameContract {
     interface View {
         //установить значения

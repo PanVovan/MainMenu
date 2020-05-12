@@ -3,7 +3,15 @@ package com.poker.holdem.logic.handlogic.combination;
 import com.poker.holdem.logic.handlogic.card.Card;
 import com.poker.holdem.logic.handlogic.card.Rank;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.Iterator;
+import java.util.LinkedHashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.SortedSet;
+import java.util.TreeSet;
 import java.util.logging.Logger;
 import java.util.stream.Collectors;
 

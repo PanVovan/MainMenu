@@ -1,7 +1,6 @@
 package com.poker.holdem;
 
 import android.content.Context;
-import android.content.Intent;
 import android.content.SharedPreferences;
 
 import com.poker.holdem.constants.Constants;
@@ -23,9 +22,6 @@ import com.poker.holdem.server.deserialization.youfold.YouFoldResp;
 import com.poker.holdem.server.deserialization.youraise.YouRaiseResp;
 import com.poker.holdem.server.serialization.GetJSON;
 
-import java.net.URISyntaxException;
-
-import io.socket.client.IO;
 import io.socket.client.Socket;
 import io.socket.emitter.Emitter;
 
