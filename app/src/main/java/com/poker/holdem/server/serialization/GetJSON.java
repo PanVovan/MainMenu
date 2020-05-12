@@ -55,7 +55,7 @@ public class GetJSON {
             String name
             ,String lobbyname
             ,String token
-            ,String rate
+            ,Integer rate
     ){
         String result = "{\"name\":\"";
         result += name;

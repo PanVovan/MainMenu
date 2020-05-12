@@ -5,8 +5,10 @@ import android.content.Context;
 import com.poker.holdem.constants.Constants;
 import com.poker.holdem.logic.handlogic.Hand;
 import com.poker.holdem.logic.handlogic.card.Card;
+import com.poker.holdem.logic.player.Player;
 import com.poker.holdem.view.util.ViewControllerActionCode;
 
+import java.util.List;
 import java.util.Optional;
 
 public class Presenter implements GameContract.Presenter {
@@ -50,7 +52,7 @@ public class Presenter implements GameContract.Presenter {
 
     //То, что мы получаем от сервера
     @Override
-    public void acceptMessageFromServerNewPlayerJoin() {
+    public void acceptMessageFromServerNewPlayerJoin(Player player) {
 
     }
 
@@ -60,9 +62,10 @@ public class Presenter implements GameContract.Presenter {
     }
 
     @Override
-    public void acceptMessageFromServerOpponentRaise(String name) {
+    public void acceptMessageFromServerOpponentRaise(String name, Integer rate) {
 
     }
+
 
     @Override
     public void acceptMessageFromServerOpponentAllIn(String name) {
@@ -118,5 +121,10 @@ public class Presenter implements GameContract.Presenter {
             gameView.setCardView(ViewControllerActionCode.ADD_SECOND_PLAYER_CARD, card);
         }
         //Тут мы проходим массив игрока
+    }
+
+    @Override
+    public void acceptMessageFromServerEnterLobby(List<Player> players, List<Integer> deck, String lead, Integer base_rate) {
+
     }
 }
