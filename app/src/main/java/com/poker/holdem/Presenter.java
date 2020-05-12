@@ -9,6 +9,7 @@ import com.poker.holdem.logic.player.Player;
 import com.poker.holdem.view.util.ViewControllerActionCode;
 
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 public class Presenter implements GameContract.Presenter {
@@ -57,28 +58,42 @@ public class Presenter implements GameContract.Presenter {
     }
 
     @Override
-    public void acceptMessageFromServerOpponentCheck(String name) {
+    public void acceptMessageFromServerOpponentCheck(String name, String nextLead) {
 
     }
 
     @Override
-    public void acceptMessageFromServerOpponentRaise(String name, Integer rate) {
-
-    }
-
-
-    @Override
-    public void acceptMessageFromServerOpponentAllIn(String name) {
+    public void acceptMessageFromServerOpponentRaise(String name, Integer rate, String nextLead) {
 
     }
 
     @Override
-    public void acceptMessageFromServerOpponentFold(String name) {
+    public void acceptMessageFromServerOpponentAllIn(String name, String nextLead) {
 
     }
 
     @Override
-    public void acceptMessageFromServerOpponentLeft(String name) {
+    public void acceptMessageFromServerOpponentFold(String name, String nextLead) {
+
+    }
+
+    @Override
+    public void acceptMessageFromServerOpponentLeft(String name, String nextLead) {
+
+    }
+
+    @Override
+    public void acceptMessageFromServerOpponentStop(String name) {
+
+    }
+
+    @Override
+    public void acceptMessageFromServerOpponentRestore(String name) {
+
+    }
+
+    @Override
+    public void acceptMessageFromServerEndGame(Integer winVal, List<String> winners) {
 
     }
 
@@ -124,7 +139,18 @@ public class Presenter implements GameContract.Presenter {
     }
 
     @Override
-    public void acceptMessageFromServerEnterLobby(List<Player> players, List<Integer> deck, String lead, Integer base_rate) {
+    public void acceptMessageFromServerEnterLobby(List<Player> allplayers, List<Player> gameplayers, List<Integer> deck, Map<String, List<Integer>> playersCardsMap, String lead, Integer base_rate) {
 
     }
+
+    @Override
+    public void acceptMessageFromServerRestore(List<Player> allplayers, List<Player> gameplayers, List<Integer> deck, Map<String, List<Integer>> playersCardsMap, String lead, Integer base_rate) {
+
+    }
+
+    @Override
+    public void acceptMessageFromServerGameStarts(List<Player> allplayers, List<Player> gameplayers, List<Integer> deck, Map<String, List<Integer>> playersCardsMap, String lead, Integer base_rate) {
+
+    }
+
 }

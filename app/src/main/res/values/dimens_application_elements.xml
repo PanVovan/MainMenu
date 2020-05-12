@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <dimen name="auth_data_not_found_window_width">440dp</dimen>
-    <dimen name="auth_data_not_found_window_height">250dp</dimen>
+    <dimen name="login_fragments_window_width">440dp</dimen>
+    <dimen name="login_fragments_window_height">250dp</dimen>
     <dimen name="auth_data_not_found_text_field_height">80dp</dimen>
     <dimen name="auth_data_not_found_text_field_width"></dimen>
     <dimen name="auth_data_not_found_text_size">22sp</dimen>
@@ -35,4 +35,8 @@
 
     <dimen name="sign_in_window_et_width">250dp</dimen>
     <dimen name="sign_in_window_et_text_size">20sp</dimen>
+
+    <dimen name="create_account_image_with">200dp</dimen>
+    <dimen name="create_account_image_heigth">300dp</dimen>
+    <dimen name="create_account_image_"></dimen>
 </resources>

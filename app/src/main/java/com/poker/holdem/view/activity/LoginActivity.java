@@ -8,6 +8,8 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.widget.FrameLayout;
+import android.widget.Toast;
 
 import com.poker.holdem.LobbyContract;
 import com.poker.holdem.PokerApplicationManager;
@@ -15,8 +17,10 @@ import com.poker.holdem.R;
 import com.poker.holdem.constants.Constants;
 import com.poker.holdem.server.deserialization.MyDeserializer;
 import com.poker.holdem.server.deserialization.auth.AuthResponce;
+import com.poker.holdem.server.deserialization.registration.RegResp;
 import com.poker.holdem.server.serialization.GetJSON;
 import com.poker.holdem.view.fragments.AuthFragment;
+import com.poker.holdem.view.fragments.CreateAccFragment;
 import com.poker.holdem.view.fragments.MainMenuFragment;
 import com.poker.holdem.view.util.NavigationHost;
 
@@ -30,6 +34,7 @@ public class LoginActivity extends AppCompatActivity implements LobbyContract.Re
 
     private String playerName;
     private String authToken;
+    private String playerPassword;
 
     private Socket socket;
 
@@ -48,6 +53,7 @@ public class LoginActivity extends AppCompatActivity implements LobbyContract.Re
         if(applicationManager.getSocket() != null){
             socket = applicationManager.getSocket();
             socket.on("auth", onAuthListener);
+            socket.on("registration", onRegListener);
             socket.connect();
         }
 
@@ -64,12 +70,38 @@ public class LoginActivity extends AppCompatActivity implements LobbyContract.Re
         }
     }
 
-    private void startAuthFragment(){
-
-    }
-
     @Override
-    public void sendMessageOnServerRegister() {
+    public void sendMessageOnServerRegister(String name, String password, Integer picture, Fragment fragment) {
+        //FragmentTransaction transaction =
+        //        getSupportFragmentManager()
+        //                .beginTransaction()
+        //                .hide(fragment);
+        //transaction.addToBackStack(null);
+        //transaction.commit();
+        if(!name.equals("")&&!password.equals("")){
+            Logger.getAnonymousLogger().info(name+"<------------->"+password);
+            playerPassword = password;
+            playerName = name;
+            Logger.getAnonymousLogger().info(playerName+"<------------->"+playerPassword);
+            prefs = getSharedPreferences(Constants.PREFS_NAME, Context.MODE_PRIVATE);
+            prefsEditor = prefs.edit();
+            prefsEditor.putString(Constants.PLAYER_NAME, playerName);
+            prefsEditor.apply();
+            socket.emit("registration"
+                    ,GetJSON.namePasswordPicture(
+                            playerName
+                            ,playerPassword
+                            ,picture
+                    )
+            );
+        }else
+            runOnUiThread(() -> {
+                Toast.makeText(
+                        getApplication()
+                        , "Name and password fields can't be empty!"
+                        , Toast.LENGTH_LONG
+                ).show();
+            });
 
     }
 
@@ -80,7 +112,6 @@ public class LoginActivity extends AppCompatActivity implements LobbyContract.Re
 
     @Override
     public void sendMessageOnServerAuthPassword(String name, String password) {
-        Logger.getAnonymousLogger().info("<--------sending "+GetJSON.namePassword(name, password));
         socket.emit("auth", GetJSON.namePassword(name, password));
     }
 
@@ -116,16 +147,27 @@ public class LoginActivity extends AppCompatActivity implements LobbyContract.Re
                 intent.putExtra("name", responce.getAuthPlayer().getName());
                 intent.putExtra("money", responce.getAuthPlayer().getMoney());
                 startActivity(intent);
-
-            }else{
-
+            }else
                 navigateTo(new AuthFragment(), true);
-                //TODO:сделать фрагмент авторизации
-                //getSupportFragmentManager()
-                //            .beginTransaction()
-                //            .add(R.id.login_activity, new AuthFragment())
-                //            .commit();
-            }
+        }
+    };
+
+    private Emitter.Listener onRegListener = new Emitter.Listener() {
+        @Override
+        public void call(Object... args) {
+            Logger.getAnonymousLogger().info("<--------"+args[0].toString());
+            RegResp regResp = MyDeserializer.desRegistrationResponce(args[0].toString());
+            runOnUiThread(() -> {
+                if(!regResp.getIsReg())
+                    sendMessageOnServerAuthPassword(playerName, playerPassword);
+                else {
+                    Toast.makeText(
+                            getApplication()
+                            , "Player with this name alreadt exists!"
+                            , Toast.LENGTH_LONG
+                    ).show();
+                }
+            });
         }
     };
 }

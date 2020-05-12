@@ -14,7 +14,7 @@ public class DesRegResp implements JsonDeserializer<RegResp> {
     public RegResp deserialize(JsonElement json, Type typeOfT, JsonDeserializationContext context) throws JsonParseException {
         JsonObject jsonObject = json.getAsJsonObject();
         RegResp respRoom = new RegResp();
-        respRoom.setIsReg(jsonObject.get("is_red").getAsBoolean());
-        return null;
+        respRoom.setIsReg(jsonObject.get("is_reg").getAsBoolean());
+        return respRoom;
     }
 }

@@ -1,5 +1,8 @@
 package com.poker.holdem;
 
+import androidx.fragment.app.Fragment;
+
+
 public interface LobbyContract {
 
     interface MenuLobbies{
@@ -7,7 +10,7 @@ public interface LobbyContract {
     }
 
     interface Registrator{
-        void sendMessageOnServerRegister();
+        void sendMessageOnServerRegister(String name, String password, Integer picture, Fragment fragment);
         void sendMessageOnServerAuthToken(String name, String authToken);
         void sendMessageOnServerAuthPassword(String name, String password);
     }

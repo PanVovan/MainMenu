@@ -87,7 +87,6 @@ public class ServerController implements GameContract.Server {
         this.socket.connect();
     }
 
-    //TODO: расписать листенеры
     private Emitter.Listener onEnterLobby = new Emitter.Listener() {
         @Override
         public void call(Object... args) {
