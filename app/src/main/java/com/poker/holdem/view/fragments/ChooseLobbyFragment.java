@@ -97,8 +97,6 @@ public class ChooseLobbyFragment extends Fragment implements LobbyContract.MenuL
             socket.on("getlobbies", onGetLobbies);
             socket.emit("getlobbies");
             socket.connect();
-
-
         }else
             Logger.getAnonymousLogger().info("PokerApplicationManager return null object! ChooseLobby");
     }
@@ -111,7 +109,6 @@ public class ChooseLobbyFragment extends Fragment implements LobbyContract.MenuL
                 lobbies.addAll(roomsObject.getRooms());
                 logger.info("<-------------got responce"+roomsObject.getRooms().get(0).getName());
                 setLobbies();
-
             });
         }
     };

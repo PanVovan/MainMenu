@@ -5,6 +5,7 @@ public class Player{
     private int money;
     private int numOfPicture;
     private boolean active;
+    private int[] cards;
 
     public boolean isActive() {
         return active;

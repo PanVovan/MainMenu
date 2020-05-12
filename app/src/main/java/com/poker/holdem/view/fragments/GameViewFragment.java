@@ -31,67 +31,11 @@ public class GameViewFragment extends Fragment implements GameContract.View {
 
     private GameContract.Presenter presenter;
 
-    //Кнопки
-    @BindView(R.id.exit_button)                 Button exitButton;
-    @BindView(R.id.check_button)                Button checkButton;
-    @BindView(R.id.game_info_button)            Button gameInfoButton;
-    @BindView(R.id.raise_button)                Button raiseButton;
-    @BindView(R.id.fold_button)                 Button foldButton;
-    @BindView(R.id.set_rate_button)             Button setRateButton;
+    private String ROOM_NAME = "";
 
-    //карты
-    @BindView(R.id.first_community_card)        ImageView firstCommunityCard;
-    @BindView(R.id.second_community_card)       ImageView secondCommunityCard;
-    @BindView(R.id.third_community_card)        ImageView thirdCommunityCard;
-    @BindView(R.id.fourth_community_card)       ImageView fourthCommunityCard;
-    @BindView(R.id.fifth_community_card)        ImageView fifthCommunityCard;
-    @BindView(R.id.first_hole_card)             ImageView firstHoleCard;
-    @BindView(R.id.second_hole_card)            ImageView secondHoleCard;
-    @BindView(R.id.first_opponent_first_card)   ImageView firstOpponentFirstCard;
-    @BindView(R.id.first_opponent_second_card)  ImageView firstOpponentSecondCard;
-    @BindView(R.id.second_opponent_first_card)  ImageView secondOpponentFirstCard;
-    @BindView(R.id.second_opponent_second_card) ImageView secondOpponentSecondCard;
-    @BindView(R.id.third_opponent_first_card)   ImageView thirdOpponentFirstCard;
-    @BindView(R.id.third_opponent_second_card)  ImageView thirdOpponentSecondCard;
-    @BindView(R.id.fourth_opponent_first_card)  ImageView fourthOpponentFirstCard;
-    @BindView(R.id.fourth_opponent_second_card) ImageView fourthOpponentSecondCard;
-
-    //Имена оппонентов
-    @BindView(R.id.first_opponent_name)         TextView firstOpponentName;
-    @BindView(R.id.second_opponent_name)        TextView secondOpponentName;
-    @BindView(R.id.third_opponent_name)         TextView thirdOpponentName;
-    @BindView(R.id.fourth_opponent_name)        TextView fourthOpponentName;
-
-    //Деньги
-    @BindView(R.id.first_opponent_money)        TextView firstOpponentMoney;
-    @BindView(R.id.second_opponent_money)       TextView secondOpponentMoney;
-    @BindView(R.id.third_opponent_money)        TextView thirdOpponentMoney;
-    @BindView(R.id.fourth_opponent_money)       TextView fourthOpponentMoney;
-    @BindView(R.id.player_money_textview)       TextView playerMoney;
-
-    //Отображения
-    @BindView(R.id.player_icon)                 ImageView playerIcon;
-    @BindView(R.id.first_opponent_icon)         ImageView firstOpponentIcon;
-    @BindView(R.id.second_opponent_icon)        ImageView secondOpponentIcon;
-    @BindView(R.id.third_opponent_icon)         ImageView thirdOpponentIcon;
-    @BindView(R.id.fourth_opponent_icon)        ImageView fourthOpponentIcon;
-
-    //Банк
-    @BindView(R.id.bank_textview)               TextView bankTextView;
-
-    //Ставка
-    @BindView(R.id.set_rate_textview)           TextView setRateTextView;
-    @BindView(R.id.raise_seekbar)               RaiseSeekBar raiseSeekBar;
-    @BindView(R.id.you_rate)                    TextView youRate;
-
-    //Лейауты
-    @BindView(R.id.first_opponent_layout)       ConstraintLayout firstOpponentLayout;
-    @BindView(R.id.second_opponent_layout)      ConstraintLayout secondOpponentLayout;
-    @BindView(R.id.third_opponent_layout)       ConstraintLayout thirdOpponentLayout;
-    @BindView(R.id.fourth_opponent_layout)      ConstraintLayout fourthOpponentLayout;
-
-    @BindView(R.id.set_rate_layout)             ConstraintLayout setRateLayout;
-
+    public GameViewFragment(String roomName){
+        this.ROOM_NAME = roomName;
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -99,15 +43,14 @@ public class GameViewFragment extends Fragment implements GameContract.View {
         View view = inflater.inflate(R.layout.fragment_game_view, container, false);
         ButterKnife.bind(this, view);
         raiseSeekBar.setOnSeekBarChangeListener(changeListener());
-
         return view;
     }
 
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setRetainInstance(true);
-        presenter = new Presenter(this);
-
+        presenter = new Presenter(this, this.ROOM_NAME);
+        //presenter.setRoomName(this.ROOM_NAME);
     }
 
     @OnClick(R.id.raise_button)
@@ -133,7 +76,6 @@ public class GameViewFragment extends Fragment implements GameContract.View {
     void info(){
     }
 
-
     private SeekBar.OnSeekBarChangeListener changeListener(){
         return new SeekBar.OnSeekBarChangeListener() {
             @Override
@@ -141,12 +83,10 @@ public class GameViewFragment extends Fragment implements GameContract.View {
                 setRateTextView.setText(Integer.toString(progress));
                 raiseSeekBar.setValue(progress);
             }
-
             @Override
             public void onStartTrackingTouch(SeekBar seekBar) {
 
             }
-
             @Override
             public void onStopTrackingTouch(SeekBar seekBar) {
 
@@ -156,16 +96,14 @@ public class GameViewFragment extends Fragment implements GameContract.View {
 
     @OnClick(R.id.game_container)
     void clickOnContainer(){
-        if(setRateLayout.getVisibility() == View.VISIBLE && getView().getId() != R.id.set_rate_layout){
+        if(setRateLayout.getVisibility() == View.VISIBLE && getView().getId() != R.id.set_rate_layout)
             setRateLayout.setVisibility(View.INVISIBLE);
-        }
     }
 
     @OnClick(R.id.exit_button)
     void exit(){
 
     }
-
 
     public void clearCards(int typeOfClear) {
         switch (typeOfClear) {
@@ -239,9 +177,7 @@ public class GameViewFragment extends Fragment implements GameContract.View {
         }
     }
 
-    public void setPlayerView(Integer money, int picture) {
-        playerMoney.setText(money.toString());
-    }
+    public void setPlayerView(Integer money, int picture) { playerMoney.setText(money.toString()); }
 
     private void clearAllCards(){
         firstHoleCard.setBackground(null);
@@ -351,5 +287,67 @@ public class GameViewFragment extends Fragment implements GameContract.View {
                 break;
         }
     }
+
+    //перенёс, чтобы не мешалось
+    //Кнопки
+    @BindView(R.id.exit_button)                 Button exitButton;
+    @BindView(R.id.check_button)                Button checkButton;
+    @BindView(R.id.game_info_button)            Button gameInfoButton;
+    @BindView(R.id.raise_button)                Button raiseButton;
+    @BindView(R.id.fold_button)                 Button foldButton;
+    @BindView(R.id.set_rate_button)             Button setRateButton;
+
+    //карты
+    @BindView(R.id.first_community_card)        ImageView firstCommunityCard;
+    @BindView(R.id.second_community_card)       ImageView secondCommunityCard;
+    @BindView(R.id.third_community_card)        ImageView thirdCommunityCard;
+    @BindView(R.id.fourth_community_card)       ImageView fourthCommunityCard;
+    @BindView(R.id.fifth_community_card)        ImageView fifthCommunityCard;
+    @BindView(R.id.first_hole_card)             ImageView firstHoleCard;
+    @BindView(R.id.second_hole_card)            ImageView secondHoleCard;
+    @BindView(R.id.first_opponent_first_card)   ImageView firstOpponentFirstCard;
+    @BindView(R.id.first_opponent_second_card)  ImageView firstOpponentSecondCard;
+    @BindView(R.id.second_opponent_first_card)  ImageView secondOpponentFirstCard;
+    @BindView(R.id.second_opponent_second_card) ImageView secondOpponentSecondCard;
+    @BindView(R.id.third_opponent_first_card)   ImageView thirdOpponentFirstCard;
+    @BindView(R.id.third_opponent_second_card)  ImageView thirdOpponentSecondCard;
+    @BindView(R.id.fourth_opponent_first_card)  ImageView fourthOpponentFirstCard;
+    @BindView(R.id.fourth_opponent_second_card) ImageView fourthOpponentSecondCard;
+
+    //Имена оппонентов
+    @BindView(R.id.first_opponent_name)         TextView firstOpponentName;
+    @BindView(R.id.second_opponent_name)        TextView secondOpponentName;
+    @BindView(R.id.third_opponent_name)         TextView thirdOpponentName;
+    @BindView(R.id.fourth_opponent_name)        TextView fourthOpponentName;
+
+    //Деньги
+    @BindView(R.id.first_opponent_money)        TextView firstOpponentMoney;
+    @BindView(R.id.second_opponent_money)       TextView secondOpponentMoney;
+    @BindView(R.id.third_opponent_money)        TextView thirdOpponentMoney;
+    @BindView(R.id.fourth_opponent_money)       TextView fourthOpponentMoney;
+    @BindView(R.id.player_money_textview)       TextView playerMoney;
+
+    //Отображения
+    @BindView(R.id.player_icon)                 ImageView playerIcon;
+    @BindView(R.id.first_opponent_icon)         ImageView firstOpponentIcon;
+    @BindView(R.id.second_opponent_icon)        ImageView secondOpponentIcon;
+    @BindView(R.id.third_opponent_icon)         ImageView thirdOpponentIcon;
+    @BindView(R.id.fourth_opponent_icon)        ImageView fourthOpponentIcon;
+
+    //Банк
+    @BindView(R.id.bank_textview)               TextView bankTextView;
+
+    //Ставка
+    @BindView(R.id.set_rate_textview)           TextView setRateTextView;
+    @BindView(R.id.raise_seekbar)               RaiseSeekBar raiseSeekBar;
+    @BindView(R.id.you_rate)                    TextView youRate;
+
+    //Лейауты
+    @BindView(R.id.first_opponent_layout)       ConstraintLayout firstOpponentLayout;
+    @BindView(R.id.second_opponent_layout)      ConstraintLayout secondOpponentLayout;
+    @BindView(R.id.third_opponent_layout)       ConstraintLayout thirdOpponentLayout;
+    @BindView(R.id.fourth_opponent_layout)      ConstraintLayout fourthOpponentLayout;
+
+    @BindView(R.id.set_rate_layout)             ConstraintLayout setRateLayout;
 
 }

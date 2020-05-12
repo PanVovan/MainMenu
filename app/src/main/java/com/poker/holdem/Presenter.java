@@ -8,6 +8,7 @@ import com.poker.holdem.logic.handlogic.card.Card;
 import com.poker.holdem.logic.player.Player;
 import com.poker.holdem.view.util.ViewControllerActionCode;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
@@ -19,15 +20,18 @@ public class Presenter implements GameContract.Presenter {
 
     private Hand.Builder handBuilder;
 
+    private String ROOM_NAME = "";
 
+    private GameStatsHolder stats;
 
-    public Presenter(GameContract.View view){
+    public Presenter(GameContract.View view, String roomName){
+        this.ROOM_NAME = roomName;
         this.handBuilder = new Hand.Builder();
         this.serverController = new ServerController(this) ;
         this.gameView = view;
+        this.serverController.sendMessageOnServerEnterLobby(this.ROOM_NAME);
+        stats = new GameStatsHolder();
     }
-
-
 
     //Тут то, что мы получаем от GameViewFragment
     @Override
@@ -56,47 +60,38 @@ public class Presenter implements GameContract.Presenter {
     public void acceptMessageFromServerNewPlayerJoin(Player player) {
 
     }
-
     @Override
     public void acceptMessageFromServerOpponentCheck(String name, String nextLead) {
 
     }
-
     @Override
     public void acceptMessageFromServerOpponentRaise(String name, Integer rate, String nextLead) {
 
     }
-
     @Override
     public void acceptMessageFromServerOpponentAllIn(String name, String nextLead) {
 
     }
-
     @Override
     public void acceptMessageFromServerOpponentFold(String name, String nextLead) {
 
     }
-
     @Override
     public void acceptMessageFromServerOpponentLeft(String name, String nextLead) {
 
     }
-
     @Override
     public void acceptMessageFromServerOpponentStop(String name) {
 
     }
-
     @Override
     public void acceptMessageFromServerOpponentRestore(String name) {
 
     }
-
     @Override
     public void acceptMessageFromServerEndGame(Integer winVal, List<String> winners) {
 
     }
-
     //TODO: сделать нормально
     @Override
     public void acceptMessageFromServerAddCommunityCard(int card) {
@@ -120,7 +115,6 @@ public class Presenter implements GameContract.Presenter {
         }
     }
 
-
     //TODO: извлечь из префов имя игрока, или как что то еще в зависимость от сервера
     //имя извлечено
     @Override
@@ -137,20 +131,85 @@ public class Presenter implements GameContract.Presenter {
         }
         //Тут мы проходим массив игрока
     }
-
     @Override
-    public void acceptMessageFromServerEnterLobby(List<Player> allplayers, List<Player> gameplayers, List<Integer> deck, Map<String, List<Integer>> playersCardsMap, String lead, Integer base_rate) {
+    public void acceptMessageFromServerEnterLobby(
+            List<Player> allplayers
+            ,List<Player> gameplayers
+            ,List<Integer> deck
+            ,Map<String, List<Integer>> playersCardsMap
+            ,String lead
+            ,Integer base_rate
+    ) {
+
+    }
+    @Override
+    public void acceptMessageFromServerRestore(
+            List<Player> allplayers
+            ,List<Player> gameplayers
+            ,List<Integer> deck
+            ,Map<String, List<Integer>> playersCardsMap
+            ,String lead
+            ,Integer base_rate
+    ) {
+
+    }
+    @Override
+    public void acceptMessageFromServerGameStarts(
+            List<Player> allplayers
+            ,List<Player> gameplayers
+            ,List<Integer> deck,Map<String
+            ,List<Integer>> playersCardsMap
+            ,String lead
+            ,Integer base_rate
+    ) {
 
     }
 
-    @Override
-    public void acceptMessageFromServerRestore(List<Player> allplayers, List<Player> gameplayers, List<Integer> deck, Map<String, List<Integer>> playersCardsMap, String lead, Integer base_rate) {
+    private class GameStatsHolder{
+        private List<Player> allPlayers;
+        private List<Player> gamePlayers;
+        private Integer bank;
+        private Integer rate;
+        private String lead;
 
+        public List<Player> getAllPlayers() {
+            return allPlayers;
+        }
+
+        public void setAllPlayers(List<Player> allPlayers) {
+            this.allPlayers = allPlayers;
+        }
+
+        public List<Player> getGamePlayers() {
+            return gamePlayers;
+        }
+
+        public void setGamePlayers(List<Player> gamePlayers) {
+            this.gamePlayers = gamePlayers;
+        }
+
+        public Integer getBank() {
+            return bank;
+        }
+
+        public void setBank(Integer bank) {
+            this.bank = bank;
+        }
+
+        public Integer getRate() {
+            return rate;
+        }
+
+        public void setRate(Integer rate) {
+            this.rate = rate;
+        }
+
+        public String getLead() {
+            return lead;
+        }
+
+        public void setLead(String lead) {
+            this.lead = lead;
+        }
     }
-
-    @Override
-    public void acceptMessageFromServerGameStarts(List<Player> allplayers, List<Player> gameplayers, List<Integer> deck, Map<String, List<Integer>> playersCardsMap, String lead, Integer base_rate) {
-
-    }
-
 }

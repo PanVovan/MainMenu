@@ -16,10 +16,10 @@ public interface GameContract {
         void setCardView (int action, int card);
         void setOpponentView (int pos, String name, Integer money, int picture);
         void setPlayerView (Integer money, int picture);
-
     }
 
     interface Presenter{
+
         //Обработчик нажатий кнопок
         void foldButtonClicked();
         void checkButtonClicked();

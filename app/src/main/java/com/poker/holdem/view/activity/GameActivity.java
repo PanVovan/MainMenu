@@ -21,7 +21,7 @@ public class GameActivity extends AppCompatActivity implements NavigationHost, G
         if (savedInstanceState == null) {
             getSupportFragmentManager()
                     .beginTransaction()
-                    .add(R.id.container_game, new GameViewFragment())
+                    .add(R.id.container_game, new GameViewFragment(getIntent().getStringExtra("room")))
                     .commit();
         }
     }
