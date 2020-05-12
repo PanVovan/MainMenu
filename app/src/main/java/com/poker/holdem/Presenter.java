@@ -11,7 +11,6 @@ import com.poker.holdem.view.util.ViewControllerActionCode;
 import java.util.List;
 import java.util.Optional;
 
-
 public class Presenter implements GameContract.Presenter {
 
     private GameContract.View gameView;
@@ -56,7 +55,7 @@ public class Presenter implements GameContract.Presenter {
 
     //То, что мы получаем от сервера
     @Override
-    public void acceptMessageFromServerNewPlayerJoin() {
+    public void acceptMessageFromServerNewPlayerJoin(Player player) {
 
     }
 
@@ -66,9 +65,10 @@ public class Presenter implements GameContract.Presenter {
     }
 
     @Override
-    public void acceptMessageFromServerOpponentRaise(String name, int rate) {
+    public void acceptMessageFromServerOpponentRaise(String name, Integer rate) {
 
     }
+
 
     @Override
     public void acceptMessageFromServerOpponentAllIn(String name) {
@@ -178,6 +178,11 @@ public class Presenter implements GameContract.Presenter {
                 }
             }
         }
+    }
+
+    @Override
+    public void acceptMessageFromServerEnterLobby(List<Player> players, List<Integer> deck, String lead, Integer base_rate) {
+
     }
 
     @Override

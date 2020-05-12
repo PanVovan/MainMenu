@@ -7,6 +7,11 @@ package com.poker.holdem;
 import com.poker.holdem.logic.player.Player;
 
 import java.util.List;
+import java.util.Map;
+
+import com.poker.holdem.logic.player.Player;
+
+import java.util.List;
 
 public interface GameContract {
     interface View {
@@ -26,15 +31,33 @@ public interface GameContract {
         void exitButtonClicked();
 
         //Если чето с сервера приходит
-        void acceptMessageFromServerNewPlayerJoin();  //Там по ходу посмотрим что передается, как и везде
-        void acceptMessageFromServerOpponentCheck(String name);
-        void acceptMessageFromServerOpponentRaise(String name, int rate);
-        void acceptMessageFromServerOpponentAllIn(String name);
-        void acceptMessageFromServerOpponentFold(String name);
-        void acceptMessageFromServerOpponentLeft(String name);
+        void acceptMessageFromServerNewPlayerJoin(Player player);  //Там по ходу посмотрим что передается, как и везде
+        void acceptMessageFromServerOpponentCheck(String name, String newLead);
+        void acceptMessageFromServerOpponentRaise(String name, Integer rate, String newLead);
+        void acceptMessageFromServerOpponentAllIn(String name, String newLead);
+        void acceptMessageFromServerOpponentFold(String name, String newLead);
+        void acceptMessageFromServerOpponentLeft(String name, String newLead);
+        void acceptMessageFromServerOpponentStop(String name);
+        void acceptMessageFromServerOpponentRestore(String name);
         void acceptMessageFromServerAddCommunityCard(int card);
         void acceptMessageFromServerAddCard(String playerName, int card);
-        void acceptMessageFromServerEnterLobby(List<Player> players, List<Integer> deck, String lead, Integer base_rate);
+        void acceptMessageFromServerEnterLobby(
+                List<Player> allplayers
+                ,List<Player> gameplayers
+                ,List<Integer> deck
+                ,Map<String, List<Integer>> playersCardsMap
+                ,String lead
+                ,Integer base_rate
+        );
+        void acceptMessageFromServerRestore(
+                List<Player> allplayers
+                ,List<Player> gameplayers
+                ,List<Integer> deck
+                ,Map<String, List<Integer>> playersCardsMap
+                ,String lead
+                ,Integer base_rate
+        );
+
     }
 
 
@@ -46,8 +69,8 @@ public interface GameContract {
         void sendMessageOnServerLeave();
         void sendMessageOnServerStop();
         void sendMessageOnServerRestore();
-        void sendMessageOnServerHandPower();
-        void sendMessageOnServerEnterLobby();
+        void sendMessageOnServerHandPower(long power);
+        void sendMessageOnServerEnterLobby(String roomName);
     }
 
 
