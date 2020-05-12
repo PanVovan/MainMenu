@@ -8,7 +8,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.widget.FrameLayout;
 import android.widget.Toast;
 
 import com.poker.holdem.LobbyContract;

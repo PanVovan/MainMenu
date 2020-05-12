@@ -2,7 +2,11 @@ package com.poker.holdem.logic.handlogic;
 
 import com.poker.holdem.logic.handlogic.card.Card;
 
-import java.util.*;
+import java.util.Collections;
+import java.util.Optional;
+import java.util.Set;
+import java.util.SortedSet;
+import java.util.TreeSet;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -45,7 +49,7 @@ public class Hand {
             return this;
         }
 
-        private SortedSet<Card> build() {
+        public SortedSet<Card> build() {
             return Collections.unmodifiableSortedSet(init(holeCards, communityCards));
         }
 
@@ -60,6 +64,8 @@ public class Hand {
         public SortedSet<Card> getCommunityCards() {
             return communityCards;
         }
+
+
     }
 
 

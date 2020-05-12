@@ -19,6 +19,9 @@ public class Presenter implements GameContract.Presenter {
     private GameContract.Server serverController;
 
     private Hand.Builder handBuilder;
+    private Player player;
+
+    private List<Player> players;
 
     private String ROOM_NAME = "";
 
@@ -61,23 +64,23 @@ public class Presenter implements GameContract.Presenter {
 
     }
     @Override
-    public void acceptMessageFromServerOpponentCheck(String name, String nextLead) {
+    public void acceptMessageFromServerOpponentCheck(String name, String newLead) {
 
     }
     @Override
-    public void acceptMessageFromServerOpponentRaise(String name, Integer rate, String nextLead) {
+    public void acceptMessageFromServerOpponentRaise(String name, Integer rate, String newLead) {
 
     }
     @Override
-    public void acceptMessageFromServerOpponentAllIn(String name, String nextLead) {
+    public void acceptMessageFromServerOpponentAllIn(String name, String newLead) {
 
     }
     @Override
-    public void acceptMessageFromServerOpponentFold(String name, String nextLead) {
+    public void acceptMessageFromServerOpponentFold(String name, String newLead) {
 
     }
     @Override
-    public void acceptMessageFromServerOpponentLeft(String name, String nextLead) {
+    public void acceptMessageFromServerOpponentLeft(String name, String newLead) {
 
     }
     @Override
@@ -125,11 +128,67 @@ public class Presenter implements GameContract.Presenter {
                 .getString(Constants.PLAYER_NAME, "");
         if (name.equals(playername)){
             handBuilder.addHoleCard(Optional.of(new Card(card)));
-            //Тут мы смотрим лист кард, и в зависимости от его заполненности генерируем комманду для вью
-            gameView.setCardView(ViewControllerActionCode.ADD_FIRST_PLAYER_CARD, card);
-            gameView.setCardView(ViewControllerActionCode.ADD_SECOND_PLAYER_CARD, card);
+            switch (handBuilder.build().size()){
+                case 1:
+                    gameView.setCardView(ViewControllerActionCode.ADD_FIRST_PLAYER_CARD, card);
+                    break;
+                case 2:
+                    gameView.setCardView(ViewControllerActionCode.ADD_SECOND_PLAYER_CARD, card);
+                    break;
+            }
         }
-        //Тут мы проходим массив игрока
+        //Тут мы проходим массив игроков
+        else {
+            for (int i = 0; i < players.size(); i++){
+                if (players.get(i).getName().equals(name)){
+                    if(card != ViewControllerActionCode.NONE) {
+                        players.get(i).getCards().add(card);
+                    }
+                    switch (i) {
+                        case 0:
+                            switch (players.get(i).getCards().size()){
+                                case 1:
+                                    gameView.setCardView(ViewControllerActionCode.ADD_FIRST_OPPONENT_FIRST_CARD, card);
+                                    break;
+                                case 2:
+                                    gameView.setCardView(ViewControllerActionCode.ADD_FIRST_OPPONENT_SECOND_CARD, card);
+                                    break;
+                            }
+                            break;
+                        case 1:
+                            switch (players.get(i).getCards().size()){
+                                case 1:
+                                    gameView.setCardView(ViewControllerActionCode.ADD_SECOND_OPPONENT_FIRST_CARD, card);
+                                    break;
+                                case 2:
+                                    gameView.setCardView(ViewControllerActionCode.ADD_SECOND_OPPONENT_SECOND_CARD, card);
+                                    break;
+                            }
+                            break;
+                        case 2:
+                            switch (players.get(i).getCards().size()){
+                                case 1:
+                                    gameView.setCardView(ViewControllerActionCode.ADD_THIRD_OPPONENT_FIRST_CARD, card);
+                                    break;
+                                case 2:
+                                    gameView.setCardView(ViewControllerActionCode.ADD_THIRD_OPPONENT_SECOND_CARD, card);
+                                    break;
+                            }
+                            break;
+                        case 3:
+                            switch (players.get(i).getCards().size()){
+                                case 1:
+                                    gameView.setCardView(ViewControllerActionCode.ADD_FOURTH_OPPONENT_FIRST_CARD, card);
+                                    break;
+                                case 2:
+                                    gameView.setCardView(ViewControllerActionCode.ADD_FOURTH_OPPONENT_SECOND_CARD, card);
+                                    break;
+                            }
+                            break;
+                    }
+                }
+            }
+        }
     }
     @Override
     public void acceptMessageFromServerEnterLobby(

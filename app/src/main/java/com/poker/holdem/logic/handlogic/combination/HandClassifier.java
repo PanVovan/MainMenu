@@ -4,7 +4,13 @@ import com.poker.holdem.logic.handlogic.card.Card;
 import com.poker.holdem.logic.handlogic.card.Rank;
 import com.poker.holdem.logic.handlogic.card.Suit;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
+import java.util.SortedSet;
+import java.util.TreeSet;
 
 public class HandClassifier {
 

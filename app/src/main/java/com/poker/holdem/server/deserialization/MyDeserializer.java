@@ -2,12 +2,8 @@ package com.poker.holdem.server.deserialization;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-import com.google.gson.JsonDeserializationContext;
 import com.google.gson.JsonDeserializer;
-import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
-import com.google.gson.JsonParseException;
-import com.google.gson.internal.$Gson$Preconditions;
 import com.poker.holdem.server.deserialization.auth.AuthPlayer;
 import com.poker.holdem.server.deserialization.auth.AuthResponce;
 import com.poker.holdem.server.deserialization.auth.DesAuthPlayer;
@@ -64,8 +60,6 @@ import com.poker.holdem.server.deserialization.youcheck.DesYouCheckResp;
 import com.poker.holdem.server.deserialization.youcheck.YouCheckResp;
 import com.poker.holdem.server.deserialization.youfold.YouFoldResp;
 import com.poker.holdem.server.deserialization.youraise.YouRaiseResp;
-
-import java.lang.reflect.Type;
 
 public class MyDeserializer {
     //эту десериализацию я сделал первой, так что комментирую только её
