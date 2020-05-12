@@ -1,12 +1,22 @@
 package com.poker.holdem;
 
+import com.poker.holdem.logic.handlogic.Hand;
+import com.poker.holdem.logic.handlogic.card.Card;
+import com.poker.holdem.view.util.ViewControllerActionCode;
+
+import java.util.Optional;
+
 public class Presenter implements GameContract.Presenter {
 
     private GameContract.View gameView;
     private GameContract.Server serverController;
 
-    public Presenter(GameContract.View view){
+    private Hand.Builder handBuilder;
 
+
+
+    public Presenter(GameContract.View view){
+        this.handBuilder = new Hand.Builder();
         this.serverController = new ServerController(this) ;
         this.gameView = view;
     }
@@ -66,13 +76,39 @@ public class Presenter implements GameContract.Presenter {
 
     }
 
+    //TODO: сделать нормально
     @Override
     public void acceptMessageFromServerAddCommunityCard(int card) {
-
+        handBuilder.addCommunityCard(Optional.of(new Card(card)));
+        switch (handBuilder.getCommunityCards().size()){
+            case 1:
+                gameView.setCardView(ViewControllerActionCode.ADD_COMMUNITY_CARD_FIRST, card);
+                break;
+            case 2:
+                gameView.setCardView(ViewControllerActionCode.ADD_COMMUNITY_CARD_SECOND, card);
+                break;
+            case 3:
+                gameView.setCardView(ViewControllerActionCode.ADD_COMMUNITY_CARD_THIRD, card);
+                break;
+            case 4:
+                gameView.setCardView(ViewControllerActionCode.ADD_COMMUNITY_CARD_FOURTH, card);
+                break;
+            case 5:
+                gameView.setCardView(ViewControllerActionCode.ADD_COMMUNITY_CARD_FIFTH, card);
+                break;
+        }
     }
 
-    @Override
-    public void acceptMessageFromServerAddCard(int player, int card) {
 
+    //TODO: извлечь из префов имя игрока, или как что то еще в зависимость от сервера
+    @Override
+    public void acceptMessageFromServerAddCard(String name, int card) {
+        if (name.equals("Имя игрока")){
+            handBuilder.addHoleCard(Optional.of(new Card(card)));
+            //Тут мы смотрим лист кард, и в зависимости от его заполненности генерируем комманду для вью
+            gameView.setCardView(ViewControllerActionCode.ADD_FIRST_PLAYER_CARD, card);
+            gameView.setCardView(ViewControllerActionCode.ADD_SECOND_PLAYER_CARD, card);
+        }
+        //Тут мы проходим массив игрока
     }
 }
