@@ -22,14 +22,14 @@ public interface GameContract {
         void exitButtonClicked();
 
         //Если чето с сервера приходит
-        void acceptMessageFromServerNewPlayerJoin();  //Там по ходу посмотрим что передается
+        void acceptMessageFromServerNewPlayerJoin();  //Там по ходу посмотрим что передается, как и везде
         void acceptMessageFromServerOpponentCheck(String name);
         void acceptMessageFromServerOpponentRaise(String name);
         void acceptMessageFromServerOpponentAllIn(String name);
         void acceptMessageFromServerOpponentFold(String name);
         void acceptMessageFromServerOpponentLeft(String name);
         void acceptMessageFromServerAddCommunityCard(int card);
-        void acceptMessageFromServerAddCard(int player, int card);
+        void acceptMessageFromServerAddCard(String playerName, int card);
     }
 
 

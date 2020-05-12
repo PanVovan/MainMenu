@@ -31,7 +31,7 @@ import io.socket.emitter.Emitter;
 
 public class ServerController implements GameContract.Server {
 
-    GameContract.Presenter presenter;
+    private GameContract.Presenter presenter;
     private MyThread handlerThread;
 
     ////Скорее всего он понадобится для прослушивания, но может и нет, я не шарю как это работает
