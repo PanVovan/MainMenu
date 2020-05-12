@@ -29,6 +29,9 @@ public class LobbyInfoResp {
     @SerializedName("allplayers")
     @Expose
     private List<LobbyPlayerResp> allplayers = new ArrayList<>();
+    @SerializedName("lead")
+    @Expose
+    private String lead;
 
     public Integer getBank() {
         return bank;
@@ -84,5 +87,13 @@ public class LobbyInfoResp {
 
     public void setAllplayers(List<LobbyPlayerResp> allplayers) {
         this.allplayers = allplayers;
+    }
+
+    public String getLead() {
+        return lead;
+    }
+
+    public void setLead(String lead) {
+        this.lead = lead;
     }
 }

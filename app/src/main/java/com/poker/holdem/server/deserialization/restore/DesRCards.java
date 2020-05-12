@@ -11,22 +11,22 @@ import com.poker.holdem.server.deserialization.gamestarts.GameStartsRPCardsPlaye
 import java.lang.reflect.Type;
 import java.util.ArrayList;
 
-public class DesRCards implements JsonDeserializer<GameStartsRPCards> {
+public class DesRCards implements JsonDeserializer<RestoreRPCards> {
     @Override
-    public GameStartsRPCards deserialize(JsonElement json, Type typeOfT, JsonDeserializationContext context) throws JsonParseException {
+    public RestoreRPCards deserialize(JsonElement json, Type typeOfT, JsonDeserializationContext context) throws JsonParseException {
         JsonObject jsonObject = json.getAsJsonObject();
-        GameStartsRPCards gameStartsRPCards = new GameStartsRPCards();
+        RestoreRPCards restoreRPCards = new RestoreRPCards();
 
         ArrayList<Integer> deck = new ArrayList<>();
         for(JsonElement i: jsonObject.get("deck").getAsJsonArray())
             deck.add(i.getAsInt());
-        gameStartsRPCards.setDeck(deck);
+        restoreRPCards.setDeck(deck);
 
-        ArrayList<GameStartsRPCardsPlayer> players = new ArrayList<>();
+        ArrayList<RestoreRPCardsPlayer> players = new ArrayList<>();
         for(JsonElement i: jsonObject.get("players").getAsJsonArray())
-            players.add(context.deserialize(i.getAsJsonObject(), GameStartsRPCardsPlayer.class));
-        gameStartsRPCards.setPlayers(players);
+            players.add(context.deserialize(i.getAsJsonObject(), RestoreRPCardsPlayer.class));
+        restoreRPCards.setPlayers(players);
 
-        return gameStartsRPCards;
+        return restoreRPCards;
     }
 }

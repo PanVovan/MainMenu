@@ -30,6 +30,17 @@ public class RestoreRoomParams {
     @SerializedName("allplayers")
     @Expose
     private List<RestoreRPPlayer> allplayers =  new ArrayList<>();
+    @SerializedName("lead")
+    @Expose
+    private String lead;
+
+    public String getLead() {
+        return lead;
+    }
+
+    public void setLead(String lead) {
+        this.lead = lead;
+    }
 
     public Integer getBank() {
         return bank;

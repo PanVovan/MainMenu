@@ -9,17 +9,17 @@ import com.poker.holdem.server.deserialization.gamestarts.GameStartsRPPlayer;
 
 import java.lang.reflect.Type;
 
-public class DesRRPPlayer implements JsonDeserializer<GameStartsRPPlayer> {
+public class DesRRPPlayer implements JsonDeserializer<RestoreRPPlayer> {
     @Override
-    public GameStartsRPPlayer deserialize(JsonElement json, Type typeOfT, JsonDeserializationContext context) throws JsonParseException {
+    public RestoreRPPlayer deserialize(JsonElement json, Type typeOfT, JsonDeserializationContext context) throws JsonParseException {
         JsonObject jsonObject = json.getAsJsonObject();
-        GameStartsRPPlayer gameStartsRPPlayer = new GameStartsRPPlayer();
+        RestoreRPPlayer restoreRPPlayer = new RestoreRPPlayer();
 
-        gameStartsRPPlayer.setMoney(jsonObject.get("money").getAsInt());
-        gameStartsRPPlayer.setName(jsonObject.get("name").getAsString());
-        gameStartsRPPlayer.setPicture(jsonObject.get("picture").getAsInt());
+        restoreRPPlayer.setMoney(jsonObject.get("money").getAsInt());
+        restoreRPPlayer.setName(jsonObject.get("name").getAsString());
+        restoreRPPlayer.setPicture(jsonObject.get("picture").getAsInt());
 
 
-        return gameStartsRPPlayer;
+        return restoreRPPlayer;
     }
 }
