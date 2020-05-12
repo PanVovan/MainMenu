@@ -25,6 +25,7 @@ import com.poker.holdem.server.deserialization.youraise.YouRaiseResp;
 import com.poker.holdem.server.serialization.GetJSON;
 
 import java.net.URISyntaxException;
+import java.util.logging.Logger;
 
 import io.socket.client.IO;
 import io.socket.client.Socket;
@@ -91,14 +92,31 @@ public class ServerController implements GameContract.Server {
         @Override
         public void call(Object... args) {
             EnterResp enterResp = MyDeserializer.desEnterLobbyResponce(args[0].toString());
-            //this.presenter.acceptMessageFromServerEnterLobby(enterResp)
+            if (enterResp.getDidenter())
+                presenter.acceptMessageFromServerRestore(
+                        enterResp.getAllAsPlayers()
+                        ,enterResp.getGamePlayersAsPlayers()
+                        ,enterResp.getLobbyinfo().getCards().getDeck()
+                        ,enterResp.getPlayersCardsAsMap()
+                        ,enterResp.getLobbyinfo().getLead()
+                        ,enterResp.getLobbyinfo().getRate()
+                );
+            else
+                Logger.getAnonymousLogger().info("<-----Didn't manage to Enter!");
         }
     };
     private Emitter.Listener onGameStarts = new Emitter.Listener() {
         @Override
         public void call(Object... args) {
             GameStartsResp gameStartsResp = MyDeserializer.desGameStartsResponce(args[0].toString());
-
+            presenter.acceptMessageFromServerRestore(
+                    gameStartsResp.getAllAsPlayers()
+                    ,gameStartsResp.getGamePlayersAsPlayers()
+                    ,gameStartsResp.getRoomparams().getCards().getDeck()
+                    ,gameStartsResp.getPlayersCardsAsMap()
+                    ,gameStartsResp.getLead()
+                    ,gameStartsResp.getRoomparams().getRate()
+            );
         }
     };
     private Emitter.Listener onNewPlayerJoin = new Emitter.Listener() {
@@ -174,55 +192,70 @@ public class ServerController implements GameContract.Server {
                     .putString(Constants.SESSION_TOKEN
                             ,restoreResp.getToken()
                     ).apply();
-            //if (restoreResp.getDidrestore()) {
-            //    presenter.acceptMessageFromServerRestore(
-            //            restoreResp.getAllAsPlayers()
-            //            ,restoreResp.getGamePlayersAsPlayers()
-            //            ,
-            //    );
-            //}
+            if (restoreResp.getDidrestore())
+                presenter.acceptMessageFromServerRestore(
+                        restoreResp.getAllAsPlayers()
+                        ,restoreResp.getGamePlayersAsPlayers()
+                        ,restoreResp.getRoomparams().getCards().getDeck()
+                        ,restoreResp.getPlayersCardsAsMap()
+                        ,restoreResp.getRoomparams().getLead()
+                        ,restoreResp.getRoomparams().getRate()
+                );
+            else
+                Logger.getAnonymousLogger().info("<-----Didn't manage to Restore!");
         }
     };
     private Emitter.Listener onYouAllIn = new Emitter.Listener() {
         @Override
         public void call(Object... args) {
             YouAllInResp youAllInResp = MyDeserializer.desYouAllInResp(args[0].toString());
-
+            if(!youAllInResp.getFlag()){
+                Logger.getAnonymousLogger().info("<-----Didn't manage to AllIn!");
+            }
         }
     };
     private Emitter.Listener onYouCheck = new Emitter.Listener() {
         @Override
         public void call(Object... args) {
             YouCheckResp youCheckResp = MyDeserializer.desYouCheckResp(args[0].toString());
-
+            if(!youCheckResp.getFlag()){
+                Logger.getAnonymousLogger().info("<-----Didn't manage to Check!");
+            }
         }
     };
     private Emitter.Listener onYouFold = new Emitter.Listener() {
         @Override
         public void call(Object... args) {
             YouFoldResp youFoldResp = MyDeserializer.desYouFoldResp(args[0].toString());
-
+            if(!youFoldResp.getFlag()){
+                Logger.getAnonymousLogger().info("<-----Didn't manage to Fold!");
+            }
         }
     };
     private Emitter.Listener onYouRaise = new Emitter.Listener() {
         @Override
         public void call(Object... args) {
             YouRaiseResp youRaiseResp = MyDeserializer.desYouRaiseResp(args[0].toString());
-
+            if(!youRaiseResp.getFlag()){
+                Logger.getAnonymousLogger().info("<-----Didn't manage to Raise!");
+            }
         }
     };
     private Emitter.Listener onYouLeft = new Emitter.Listener() {
         @Override
         public void call(Object... args) {
             Integer myMoney = MyDeserializer.desYouLeft(args[0].toString());
-
+            Logger.getAnonymousLogger().info("<--------In controller. I quit. My money: "+myMoney);
         }
     };
     private Emitter.Listener onEndGame = new Emitter.Listener() {
         @Override
         public void call(Object... args) {
             EndgameResp endgameResp = MyDeserializer.desEndgameResp(args[0].toString());
-
+            presenter.acceptMessageFromServerEndGame(
+                    endgameResp.getWinVal()
+                    ,endgameResp.getWinners()
+            );
         }
     };
 

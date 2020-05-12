@@ -10,19 +10,19 @@ import com.poker.holdem.server.deserialization.gamestarts.GameStartsRPCardsPlaye
 import java.lang.reflect.Type;
 import java.util.ArrayList;
 
-public class DesRRPCardsPlayer implements JsonDeserializer<GameStartsRPCardsPlayer> {
+public class DesRRPCardsPlayer implements JsonDeserializer<RestoreRPCardsPlayer> {
     @Override
-    public GameStartsRPCardsPlayer deserialize(JsonElement json, Type typeOfT, JsonDeserializationContext context) throws JsonParseException {
+    public RestoreRPCardsPlayer deserialize(JsonElement json, Type typeOfT, JsonDeserializationContext context) throws JsonParseException {
         JsonObject jsonObject = new JsonObject();
-        GameStartsRPCardsPlayer gameStartsRPCardsPlayer = new GameStartsRPCardsPlayer();
+        RestoreRPCardsPlayer restoreRPCardsPlayer = new RestoreRPCardsPlayer();
 
-        gameStartsRPCardsPlayer.setPlayername(jsonObject.get("playername").getAsString());
+        restoreRPCardsPlayer.setPlayername(jsonObject.get("playername").getAsString());
 
         ArrayList<Integer> cards = new ArrayList<>();
         for (JsonElement i: jsonObject.get("cards").getAsJsonArray())
             cards.add(i.getAsInt());
-        gameStartsRPCardsPlayer.setCards(cards);
+        restoreRPCardsPlayer.setCards(cards);
 
-        return gameStartsRPCardsPlayer;
+        return restoreRPCardsPlayer;
     }
 }

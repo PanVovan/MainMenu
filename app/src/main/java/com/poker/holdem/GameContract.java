@@ -35,6 +35,7 @@ public interface GameContract {
         void acceptMessageFromServerOpponentLeft(String name, String newLead);
         void acceptMessageFromServerOpponentStop(String name);
         void acceptMessageFromServerOpponentRestore(String name);
+        void acceptMessageFromServerEndGame(Integer winVal, List<String> winners);
         void acceptMessageFromServerAddCommunityCard(int card);
         void acceptMessageFromServerAddCard(String playerName, int card);
         void acceptMessageFromServerEnterLobby(
@@ -46,6 +47,14 @@ public interface GameContract {
                 ,Integer base_rate
         );
         void acceptMessageFromServerRestore(
+                List<Player> allplayers
+                ,List<Player> gameplayers
+                ,List<Integer> deck
+                ,Map<String, List<Integer>> playersCardsMap
+                ,String lead
+                ,Integer base_rate
+        );
+        void acceptMessageFromServerGameStarts(
                 List<Player> allplayers
                 ,List<Player> gameplayers
                 ,List<Integer> deck

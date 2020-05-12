@@ -12,33 +12,34 @@ import com.poker.holdem.server.deserialization.gamestarts.GameStartsRoomParams;
 import java.lang.reflect.Type;
 import java.util.ArrayList;
 
-public class DesRRoomParams implements JsonDeserializer<GameStartsRoomParams> {
+public class DesRRoomParams implements JsonDeserializer<RestoreRoomParams> {
     @Override
-    public GameStartsRoomParams deserialize(JsonElement json, Type typeOfT, JsonDeserializationContext context) throws JsonParseException {
+    public RestoreRoomParams deserialize(JsonElement json, Type typeOfT, JsonDeserializationContext context) throws JsonParseException {
         JsonObject jsonObject = json.getAsJsonObject();
-        GameStartsRoomParams gameStartsRoomParams = new GameStartsRoomParams();
+        RestoreRoomParams restoreRoomParams = new RestoreRoomParams();
 
-        gameStartsRoomParams.setBank(jsonObject.get("bank").getAsInt());
-        gameStartsRoomParams.setRate(jsonObject.get("rate").getAsInt());
+        restoreRoomParams.setBank(jsonObject.get("bank").getAsInt());
+        restoreRoomParams.setRate(jsonObject.get("rate").getAsInt());
+        restoreRoomParams.setLead(jsonObject.get("lead").getAsString());
         //Конечно, с началом игры этот флаг будет true
         //но пока пусть будет
-        gameStartsRoomParams.setIsgamerunning(jsonObject.get("isgamerunning").getAsBoolean());
-        gameStartsRoomParams.setName(jsonObject.get("name").getAsString());
+        restoreRoomParams.setIsgamerunning(jsonObject.get("isgamerunning").getAsBoolean());
+        restoreRoomParams.setName(jsonObject.get("name").getAsString());
 
-        GameStartsRPCards cards = context.deserialize(jsonObject.get("cards").getAsJsonObject(), GameStartsRPCards.class);
-        gameStartsRoomParams.setCards(cards);
+        RestoreRPCards cards = context.deserialize(jsonObject.get("cards").getAsJsonObject(), GameStartsRPCards.class);
+        restoreRoomParams.setCards(cards);
 
-        ArrayList<GameStartsRPPlayer> gamePlayers = new ArrayList<>();
+        ArrayList<RestoreRPPlayer> gamePlayers = new ArrayList<>();
         for (JsonElement i: jsonObject.get("playersingame").getAsJsonArray())
             gamePlayers.add(context.deserialize(i.getAsJsonObject(), GameStartsRPPlayer.class));
-        gameStartsRoomParams.setPlayersingame(gamePlayers);
+        restoreRoomParams.setPlayersingame(gamePlayers);
 
-        ArrayList<GameStartsRPPlayer> allPlayers = new ArrayList<>();
+        ArrayList<RestoreRPPlayer> allPlayers = new ArrayList<>();
         for (JsonElement i: jsonObject.get("allplayers").getAsJsonArray())
             allPlayers.add(context.deserialize(i.getAsJsonObject(), GameStartsRPPlayer.class));
-        gameStartsRoomParams.setPlayersingame(allPlayers);
+        restoreRoomParams.setPlayersingame(allPlayers);
 
 
-        return gameStartsRoomParams;
+        return restoreRoomParams;
     }
 }

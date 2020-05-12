@@ -24,25 +24,8 @@ public class RestoreResp {
 
         Map<String, List<Integer>> result = new HashMap<>();
 
-        for(RestoreRPCardsPlayer i: roomparams.getCards().getPlayers()){
-            Map.Entry<String, List<Integer>> buf = new Map.Entry<String, List<Integer>>() {
-                @Override
-                public String getKey() {
-                    return i.getPlayername();
-                }
-
-                @Override
-                public List<Integer> getValue() {
-                    return i.getCards();
-                }
-
-                @Override
-                public List<Integer> setValue(List<Integer> value) {
-                    return i.getCards();
-                }
-            };
+        for(RestoreRPCardsPlayer i: roomparams.getCards().getPlayers())
             result.put(i.getPlayername(), i.getCards());
-        }
 
         return result;
     }
