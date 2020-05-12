@@ -40,9 +40,8 @@ public class AuthFragment extends Fragment {
         ((NavigationHost)getActivity()).navigateTo(new SignInFragment(), true);
     }
 
-    //TODO:написать фрагмент регистрации
     @OnClick(R.id.create_account_btn)
     void startRegFragment(){
-        //((NavigationHost)getActivity()).navigateTo(new CreateAccFragment(), true);
+        ((NavigationHost)getActivity()).navigateTo(new CreateAccFragment(), true);
     }
 }

@@ -18,9 +18,6 @@ public class Presenter implements GameContract.Presenter {
     private GameContract.Server serverController;
 
     private Hand.Builder handBuilder;
-    private Player player;
-
-    private List<Player> players;
 
 
 
@@ -61,27 +58,27 @@ public class Presenter implements GameContract.Presenter {
     }
 
     @Override
-    public void acceptMessageFromServerOpponentCheck(String name, String newLead) {
+    public void acceptMessageFromServerOpponentCheck(String name, String nextLead) {
 
     }
 
     @Override
-    public void acceptMessageFromServerOpponentRaise(String name, Integer rate, String newLead) {
+    public void acceptMessageFromServerOpponentRaise(String name, Integer rate, String nextLead) {
 
     }
 
     @Override
-    public void acceptMessageFromServerOpponentAllIn(String name, String newLead) {
+    public void acceptMessageFromServerOpponentAllIn(String name, String nextLead) {
 
     }
 
     @Override
-    public void acceptMessageFromServerOpponentFold(String name, String newLead) {
+    public void acceptMessageFromServerOpponentFold(String name, String nextLead) {
 
     }
 
     @Override
-    public void acceptMessageFromServerOpponentLeft(String name, String newLead) {
+    public void acceptMessageFromServerOpponentLeft(String name, String nextLead) {
 
     }
 
@@ -95,6 +92,10 @@ public class Presenter implements GameContract.Presenter {
 
     }
 
+    @Override
+    public void acceptMessageFromServerEndGame(Integer winVal, List<String> winners) {
+
+    }
 
     //TODO: сделать нормально
     @Override
@@ -202,4 +203,10 @@ public class Presenter implements GameContract.Presenter {
     public void acceptMessageFromServerRestore(List<Player> allplayers, List<Player> gameplayers, List<Integer> deck, Map<String, List<Integer>> playersCardsMap, String lead, Integer base_rate) {
 
     }
+
+    @Override
+    public void acceptMessageFromServerGameStarts(List<Player> allplayers, List<Player> gameplayers, List<Integer> deck, Map<String, List<Integer>> playersCardsMap, String lead, Integer base_rate) {
+
+    }
+
 }

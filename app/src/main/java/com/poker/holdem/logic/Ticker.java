@@ -10,7 +10,7 @@ import java.util.Map;
 
 //класс для отсчёта ходов
 //пока не нужен
-public class Ticker implements GameContract.Presenter {
+/*public class Ticker implements GameContract.Presenter {
     private String lead;
     private ArrayList<Integer> deck;
     private Map<String, List<Integer>> playersCards = new HashMap<>();
@@ -87,3 +87,4 @@ public class Ticker implements GameContract.Presenter {
 
     }
 }
+*/

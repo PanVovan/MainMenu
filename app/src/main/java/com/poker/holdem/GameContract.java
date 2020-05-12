@@ -28,11 +28,11 @@ public interface GameContract {
 
         //Если чето с сервера приходит
         void acceptMessageFromServerNewPlayerJoin(Player player);  //Там по ходу посмотрим что передается, как и везде
-        void acceptMessageFromServerOpponentCheck(String name, String newLead);
-        void acceptMessageFromServerOpponentRaise(String name, Integer rate, String newLead);
-        void acceptMessageFromServerOpponentAllIn(String name, String newLead);
-        void acceptMessageFromServerOpponentFold(String name, String newLead);
-        void acceptMessageFromServerOpponentLeft(String name, String newLead);
+        void acceptMessageFromServerOpponentCheck(String name, String nextLead);
+        void acceptMessageFromServerOpponentRaise(String name, Integer rate, String nextLead);
+        void acceptMessageFromServerOpponentAllIn(String name, String nextLead);
+        void acceptMessageFromServerOpponentFold(String name, String nextLead);
+        void acceptMessageFromServerOpponentLeft(String name, String nextLead);
         void acceptMessageFromServerOpponentStop(String name);
         void acceptMessageFromServerOpponentRestore(String name);
         void acceptMessageFromServerEndGame(Integer winVal, List<String> winners);
