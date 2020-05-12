@@ -3,15 +3,20 @@ package com.poker.holdem;
 import android.content.Context;
 
 import com.poker.holdem.constants.Constants;
+import com.poker.holdem.logic.GameStatsHolder;
 import com.poker.holdem.logic.handlogic.Hand;
 import com.poker.holdem.logic.handlogic.card.Card;
 import com.poker.holdem.logic.player.Player;
 import com.poker.holdem.view.util.ViewControllerActionCode;
 
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
+import java.util.Stack;
+import java.util.logging.Logger;
 
 public class Presenter implements GameContract.Presenter {
 
@@ -19,21 +24,27 @@ public class Presenter implements GameContract.Presenter {
     private GameContract.Server serverController;
 
     private Hand.Builder handBuilder;
-    private Player player;
-
-    private List<Player> players;
 
     private String ROOM_NAME = "";
+    private String PLAYER_NAME = "";
 
-    private GameStatsHolder stats;
+    //просто контейнер для кучи значений
+    private GameStatsHolder gameStats;
 
     public Presenter(GameContract.View view, String roomName){
         this.ROOM_NAME = roomName;
+        this.PLAYER_NAME = PokerApplicationManager
+                .getInstance()
+                .getSharedPreferences(
+                        Constants.PREFS_NAME
+                        ,Context.MODE_PRIVATE
+                ).getString(Constants.PLAYER_NAME, "");
         this.handBuilder = new Hand.Builder();
         this.serverController = new ServerController(this) ;
         this.gameView = view;
         this.serverController.sendMessageOnServerEnterLobby(this.ROOM_NAME);
-        stats = new GameStatsHolder();
+
+        gameStats = new GameStatsHolder();
     }
 
     //Тут то, что мы получаем от GameViewFragment
@@ -56,7 +67,6 @@ public class Presenter implements GameContract.Presenter {
     public void exitButtonClicked() {
         serverController.sendMessageOnServerLeave();
     }
-
 
     //То, что мы получаем от сервера
     @Override
@@ -118,11 +128,14 @@ public class Presenter implements GameContract.Presenter {
         }
     }
 
+    //TODO:не знаю, нужен ли этот метод
+    //сервер выдаёт карты большими партиями, и лучше
+    //это VV организовать в acceptMessageFromServerEnterLobby и т.п.
     //TODO: извлечь из префов имя игрока, или как что то еще в зависимость от сервера
     //имя извлечено
     @Override
     public void acceptMessageFromServerAddCard(String name, int card) {
-        String playername = PokerApplicationManager
+        /*String playername = PokerApplicationManager
                 .getInstance()
                 .getSharedPreferences(Constants.PREFS_NAME, Context.MODE_PRIVATE)
                 .getString(Constants.PLAYER_NAME, "");
@@ -188,8 +201,9 @@ public class Presenter implements GameContract.Presenter {
                     }
                 }
             }
-        }
+        }*/
     }
+
     @Override
     public void acceptMessageFromServerEnterLobby(
             List<Player> allplayers
@@ -199,7 +213,35 @@ public class Presenter implements GameContract.Presenter {
             ,String lead
             ,Integer base_rate
     ) {
+        Logger.getAnonymousLogger().info("<--------Entered lobby!");
+        gameStats.setBank(0);
+        gameStats.setLead(lead);
+        gameStats.setRate(base_rate);
+        gameStats.setDeck(deck);
 
+        //сначала сделал отдельными методами, но потом решил вынести
+        gameStats.initPlayers(
+                allplayers
+                ,gameplayers
+                ,playersCardsMap
+                ,this.PLAYER_NAME
+        );
+
+        gameView.setPlayerView(gameStats.getMainPlayer());
+
+        //вот так мы расставляем игроков
+        Stack<Player> opponents = (Stack<Player>) gameStats.getPlayers();
+        //удаляем основного, его уже поставили
+        opponents.remove(gameStats.getMainPlayer());
+        //т.к. мы снимаем сверху, то разворачиваем стек
+        //чтобы игроки располагались по часовой
+        //это влияет на порядок хода
+        Collections.reverse(opponents);
+        for(int i=0; i<4; i++){
+            if(opponents.isEmpty())
+                break;
+            gameView.setOpponentView(i, opponents.pop());
+        }
     }
     @Override
     public void acceptMessageFromServerRestore(
@@ -208,7 +250,7 @@ public class Presenter implements GameContract.Presenter {
             ,List<Integer> deck
             ,Map<String, List<Integer>> playersCardsMap
             ,String lead
-            ,Integer base_rate
+            ,Integer rate
     ) {
 
     }
@@ -222,53 +264,5 @@ public class Presenter implements GameContract.Presenter {
             ,Integer base_rate
     ) {
 
-    }
-
-    private class GameStatsHolder{
-        private List<Player> allPlayers;
-        private List<Player> gamePlayers;
-        private Integer bank;
-        private Integer rate;
-        private String lead;
-
-        public List<Player> getAllPlayers() {
-            return allPlayers;
-        }
-
-        public void setAllPlayers(List<Player> allPlayers) {
-            this.allPlayers = allPlayers;
-        }
-
-        public List<Player> getGamePlayers() {
-            return gamePlayers;
-        }
-
-        public void setGamePlayers(List<Player> gamePlayers) {
-            this.gamePlayers = gamePlayers;
-        }
-
-        public Integer getBank() {
-            return bank;
-        }
-
-        public void setBank(Integer bank) {
-            this.bank = bank;
-        }
-
-        public Integer getRate() {
-            return rate;
-        }
-
-        public void setRate(Integer rate) {
-            this.rate = rate;
-        }
-
-        public String getLead() {
-            return lead;
-        }
-
-        public void setLead(String lead) {
-            this.lead = lead;
-        }
     }
 }

@@ -17,6 +17,7 @@ import androidx.fragment.app.Fragment;
 import com.poker.holdem.GameContract;
 import com.poker.holdem.Presenter;
 import com.poker.holdem.R;
+import com.poker.holdem.logic.player.Player;
 import com.poker.holdem.view.customparts.seekbar.RaiseSeekBar;
 import com.poker.holdem.view.grafic.CardView;
 import com.poker.holdem.view.util.ViewControllerActionCode;
@@ -150,7 +151,10 @@ public class GameViewFragment extends Fragment implements GameContract.View {
         }
     }
 
-    public void setOpponentView(int pos, String name, Integer money, int picture){
+    public void setOpponentView(int pos, Player player){
+        String name = player.getName();
+        Integer money = player.getMoney();
+        int picture = player.getNumOfPicture();
         switch (pos){
             case 1:
                 firstOpponentLayout.setVisibility(View.VISIBLE);
@@ -175,7 +179,9 @@ public class GameViewFragment extends Fragment implements GameContract.View {
         }
     }
 
-    public void setPlayerView(Integer money, int picture) { playerMoney.setText(money.toString()); }
+    public void setPlayerView(Player player) {
+        playerMoney.setText(player.getMoney());
+    }
 
     private void clearAllCards(){
         firstHoleCard.setBackground(null);

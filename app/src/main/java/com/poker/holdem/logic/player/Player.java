@@ -1,5 +1,6 @@
 package com.poker.holdem.logic.player;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class Player{
@@ -10,18 +11,15 @@ public class Player{
     private boolean active;
     private List<Integer> cards;
 
-
     public void setActive(boolean active) {
         this.active = active;
+        if(active)
+            this.cards = new ArrayList<>();
     }
 
-    public List<Integer> getCards() {
-        return cards;
-    }
+    public List<Integer> getCards() { return cards; }
 
-    public void setCards(List<Integer> cards) {
-        this.cards = cards;
-    }
+    public void setCards(List<Integer> cards) { this.cards = cards; }
 
     public boolean isActive() {
         return active;
@@ -50,6 +48,4 @@ public class Player{
     public void setNumOfPicture(int numOfPicture) {
         this.numOfPicture = numOfPicture;
     }
-
-
 }

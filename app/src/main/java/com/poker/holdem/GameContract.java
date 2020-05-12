@@ -14,8 +14,12 @@ public interface GameContract {
         //установить значения
         void clearCards (int typeOfClear);
         void setCardView (int action, int card);
-        void setOpponentView (int pos, String name, Integer money, int picture);
-        void setPlayerView (Integer money, int picture);
+
+        //передавать игроками, на мой взгляд, лучше
+        //так мы можем легко добавить много параметров
+        //типа активности игрока
+        void setOpponentView (int pos, Player player);
+        void setPlayerView (Player player);
     }
 
     interface Presenter{
