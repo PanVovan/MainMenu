@@ -8,6 +8,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.widget.Toast;
 
 import com.poker.holdem.LobbyContract;
 import com.poker.holdem.PokerApplicationManager;
@@ -15,6 +16,7 @@ import com.poker.holdem.R;
 import com.poker.holdem.constants.Constants;
 import com.poker.holdem.server.deserialization.MyDeserializer;
 import com.poker.holdem.server.deserialization.auth.AuthResponce;
+import com.poker.holdem.server.deserialization.registration.RegResp;
 import com.poker.holdem.server.serialization.GetJSON;
 import com.poker.holdem.view.fragments.AuthFragment;
 import com.poker.holdem.view.fragments.CreateAccFragment;

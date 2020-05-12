@@ -18,6 +18,9 @@ public class Presenter implements GameContract.Presenter {
     private GameContract.Server serverController;
 
     private Hand.Builder handBuilder;
+    private Player player;
+
+    private List<Player> players;
 
 
 
@@ -58,27 +61,27 @@ public class Presenter implements GameContract.Presenter {
     }
 
     @Override
-    public void acceptMessageFromServerOpponentCheck(String name, String nextLead) {
+    public void acceptMessageFromServerOpponentCheck(String name, String newLead) {
 
     }
 
     @Override
-    public void acceptMessageFromServerOpponentRaise(String name, Integer rate, String nextLead) {
+    public void acceptMessageFromServerOpponentRaise(String name, Integer rate, String newLead) {
 
     }
 
     @Override
-    public void acceptMessageFromServerOpponentAllIn(String name, String nextLead) {
+    public void acceptMessageFromServerOpponentAllIn(String name, String newLead) {
 
     }
 
     @Override
-    public void acceptMessageFromServerOpponentFold(String name, String nextLead) {
+    public void acceptMessageFromServerOpponentFold(String name, String newLead) {
 
     }
 
     @Override
-    public void acceptMessageFromServerOpponentLeft(String name, String nextLead) {
+    public void acceptMessageFromServerOpponentLeft(String name, String newLead) {
 
     }
 
