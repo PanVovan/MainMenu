@@ -16,6 +16,14 @@ public class GameStatsHolder {
     private String lead;
     private int numberOfCardsOpened;
 
+    public void onPlayerCheck(String name){
+
+    }
+
+
+
+
+
     public void initPlayers(
             List<Player> allplayers
             ,List<Player> activePlayers

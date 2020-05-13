@@ -241,7 +241,8 @@ public class Presenter implements GameContract.Presenter {
                 break;
             gameView.setOpponentView(i, opponents.pop());
         }
-
+        //TODO:убрать костыль
+        //с новым методом GameContract.View showCommunityCards
         gameStats.setNumberOfCardsOpened(rounds_done);
         //типа по количеству раундов ставим но
         for (int i = 0; i<gameStats.getNumberOfCardsOpened() && i<4; i++)
