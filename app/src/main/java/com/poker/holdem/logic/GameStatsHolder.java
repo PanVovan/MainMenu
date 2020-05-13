@@ -1,13 +1,8 @@
 package com.poker.holdem.logic;
 
-import com.poker.holdem.GameContract;
 import com.poker.holdem.logic.player.Player;
-import com.poker.holdem.server.deserialization.gamestarts.GameStartsResp;
 
-import java.sql.Array;
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -19,6 +14,7 @@ public class GameStatsHolder {
     private Integer bank;
     private Integer rate;
     private String lead;
+    private int numberOfCardsOpened;
 
     public void initPlayers(
             List<Player> allplayers
@@ -29,14 +25,30 @@ public class GameStatsHolder {
         players = allplayers;
 
         //предопределяем всех неактивными
-        for (Player i: players)
+        //и не совершившими ход
+        for (Player i: players) {
             i.setActive(false);
+            i.setDidSomethingInThisRound(false);
+        }
         //делаем активными всех, кто играет
         setActivePlayers(activePlayers);
         //...
         setGamePlayersCards(playersCardsMap);
         //чтобы каждый раз не искать
         mainPlayer = getPlayerByName(mainName);
+    }
+
+    public void onGameAction(String actorName){
+        setPlayerDidSomething(actorName);
+
+    }
+
+    public void onpPlayerLeaves(String actorName){
+
+    }
+
+    public void onPlayerFold(String actorName){
+
     }
 
     private void setGamePlayersCards(Map<String, List<Integer>> cards){
@@ -52,10 +64,16 @@ public class GameStatsHolder {
             setPlayerActivity(i.getName(), true);
     }
 
-    public void setPlayerActivity(String name, boolean activity){
+    private void setPlayerActivity(String name, boolean activity){
         for(Player i: players)
             if(i.getName().equals(name))
                 i.setActive(activity);
+    }
+
+    private void setPlayerDidSomething(String name){
+        for(Player i: players)
+            if(i.getName().equals(name))
+                i.setDidSomethingInThisRound(true);
     }
 
     public void setPlayerCards(String name, List<Integer> cards){
@@ -115,5 +133,13 @@ public class GameStatsHolder {
 
     public void setPlayers(List<Player> players) {
         this.players = players;
+    }
+
+    public int getNumberOfCardsOpened() {
+        return numberOfCardsOpened;
+    }
+
+    public void setNumberOfCardsOpened(int numberOfCardsOpened) {
+        this.numberOfCardsOpened = numberOfCardsOpened;
     }
 }

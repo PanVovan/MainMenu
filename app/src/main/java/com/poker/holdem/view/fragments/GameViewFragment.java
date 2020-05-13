@@ -1,6 +1,7 @@
 package com.poker.holdem.view.fragments;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -15,12 +16,18 @@ import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.fragment.app.Fragment;
 
 import com.poker.holdem.GameContract;
+import com.poker.holdem.PokerApplicationManager;
 import com.poker.holdem.Presenter;
 import com.poker.holdem.R;
+import com.poker.holdem.constants.Constants;
 import com.poker.holdem.logic.player.Player;
+import com.poker.holdem.view.activity.MainActivity;
 import com.poker.holdem.view.customparts.seekbar.RaiseSeekBar;
 import com.poker.holdem.view.grafic.CardView;
+import com.poker.holdem.view.grafic.PictureView;
 import com.poker.holdem.view.util.ViewControllerActionCode;
+
+import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -49,7 +56,6 @@ public class GameViewFragment extends Fragment implements GameContract.View {
         super.onCreate(savedInstanceState);
         setRetainInstance(true);
         presenter = new Presenter(this, this.ROOM_NAME);
-        //presenter.setRoomName(this.ROOM_NAME);
     }
 
     @OnClick(R.id.raise_button)
@@ -101,7 +107,10 @@ public class GameViewFragment extends Fragment implements GameContract.View {
 
     @OnClick(R.id.exit_button)
     void exit(){
+        //ACHTUNG! TODO: здесь мы выходим в MainActivity
+        //данные о деньгах игрока мы берём из TextView лэйаута игрока
 
+        presenter.exitButtonClicked();
     }
 
     public void clearCards(int typeOfClear) {
@@ -151,6 +160,7 @@ public class GameViewFragment extends Fragment implements GameContract.View {
         }
     }
 
+
     public void setOpponentView(int pos, Player player){
         String name = player.getName();
         Integer money = player.getMoney();
@@ -160,27 +170,64 @@ public class GameViewFragment extends Fragment implements GameContract.View {
                 firstOpponentLayout.setVisibility(View.VISIBLE);
                 firstOpponentName.setText(name);
                 firstOpponentMoney.setText(money.toString());
+                if(player.isActive()){
+                    setInvisibleOpponentCard(ViewControllerActionCode.ADD_FIRST_OPPONENT_FIRST_CARD);
+                    setInvisibleOpponentCard(ViewControllerActionCode.ADD_FIRST_OPPONENT_SECOND_CARD);
+                }
                 break;
             case 2:
                 secondOpponentLayout.setVisibility(View.VISIBLE);
                 secondOpponentName.setText(name);
                 secondOpponentMoney.setText(money.toString());
+                if(player.isActive()){
+                    setInvisibleOpponentCard(ViewControllerActionCode.ADD_SECOND_OPPONENT_FIRST_CARD);
+                    setInvisibleOpponentCard(ViewControllerActionCode.ADD_SECOND_OPPONENT_SECOND_CARD);
+                }
                 break;
             case 3:
                 thirdOpponentLayout.setVisibility(View.VISIBLE);
                 thirdOpponentName.setText(name);
                 thirdOpponentMoney.setText(money.toString());
+                if(player.isActive()){
+                    setInvisibleOpponentCard(ViewControllerActionCode.ADD_THIRD_OPPONENT_FIRST_CARD);
+                    setInvisibleOpponentCard(ViewControllerActionCode.ADD_THIRD_OPPONENT_SECOND_CARD);
+                }
                 break;
             case 4:
                 fourthOpponentLayout.setVisibility(View.VISIBLE);
                 fourthOpponentName.setText(name);
                 fourthOpponentMoney.setText(money.toString());
+                if(player.isActive()){
+                    setInvisibleOpponentCard(ViewControllerActionCode.ADD_FOURTH_OPPONENT_FIRST_CARD);
+                    setInvisibleOpponentCard(ViewControllerActionCode.ADD_FOURTH_OPPONENT_SECOND_CARD);
+                }
                 break;
         }
     }
 
     public void setPlayerView(Player player) {
         playerMoney.setText(player.getMoney());
+        //поскольку картинка игрока - постоянная,
+        //то при отображении берём её из шариков
+        int playerPicCode = PokerApplicationManager
+                .getInstance()
+                .getSharedPreferences(Constants.PREFS_NAME, Context.MODE_PRIVATE)
+                .getInt(Constants.PLAYER_PICTURE, 1);
+        playerIcon.setBackground(PictureView.getPic(
+                                        getContext()
+                                        ,playerPicCode
+                                        ));
+        if (!player.getCards().isEmpty()) {
+            setYouCard(
+                    ViewControllerActionCode.ADD_FIRST_PLAYER_CARD
+                    ,player.getCards().get(0)
+            );
+            setYouCard(
+                    ViewControllerActionCode.ADD_SECOND_PLAYER_CARD
+                    ,player.getCards().get(1)
+            );
+        }
+
     }
 
     private void clearAllCards(){

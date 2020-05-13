@@ -19,6 +19,7 @@ public class DesEnterInfo implements JsonDeserializer<LobbyInfoResp> {
         lobbyInfoResp.setRate(jsonObject.get("rate").getAsInt());
         lobbyInfoResp.setName(jsonObject.get("name").getAsString());
         lobbyInfoResp.setIsgamerunning(jsonObject.get("isgamerunning").getAsBoolean());
+        lobbyInfoResp.setRounds_done(jsonObject.get("rounds_done").getAsInt());
 
         LobbyCardsResp cards = context.deserialize(jsonObject.get("cards").getAsJsonObject(), LobbyCardsResp.class);
         lobbyInfoResp.setCards(cards);

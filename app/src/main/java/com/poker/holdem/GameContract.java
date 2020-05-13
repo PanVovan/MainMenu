@@ -49,6 +49,7 @@ public interface GameContract {
                 ,Map<String, List<Integer>> playersCardsMap
                 ,String lead
                 ,Integer base_rate
+                ,Integer rounds_done
         );
         void acceptMessageFromServerRestore(
                 List<Player> allplayers
@@ -57,6 +58,7 @@ public interface GameContract {
                 ,Map<String, List<Integer>> playersCardsMap
                 ,String lead
                 ,Integer base_rate
+                ,Integer rounds_done
         );
         void acceptMessageFromServerGameStarts(
                 List<Player> allplayers
@@ -65,6 +67,7 @@ public interface GameContract {
                 ,Map<String, List<Integer>> playersCardsMap
                 ,String lead
                 ,Integer base_rate
+                ,Integer rounds_done
         );
 
     }

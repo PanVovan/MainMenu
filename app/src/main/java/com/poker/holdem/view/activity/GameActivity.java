@@ -11,7 +11,7 @@ import com.poker.holdem.R;
 import com.poker.holdem.view.fragments.GameViewFragment;
 import com.poker.holdem.view.util.NavigationHost;
 
-public class GameActivity extends AppCompatActivity implements NavigationHost, GameContract.View {
+public class GameActivity extends AppCompatActivity implements NavigationHost {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,22 +42,22 @@ public class GameActivity extends AppCompatActivity implements NavigationHost, G
         transaction.commit();
     }
 
-    @Override
+    //@Override
     public void clearCards(int typeOfClear) {
 
     }
 
-    @Override
+   // @Override
     public void setCardView(int action, int card) {
 
     }
 
-    @Override
+    //@Override
     public void setOpponentView(int pos, String name, Integer money, int picture) {
 
     }
 
-    @Override
+    //@Override
     public void setPlayerView(Integer money, int picture) {
 
     }

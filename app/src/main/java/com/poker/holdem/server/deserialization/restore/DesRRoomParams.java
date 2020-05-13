@@ -21,6 +21,7 @@ public class DesRRoomParams implements JsonDeserializer<RestoreRoomParams> {
         restoreRoomParams.setBank(jsonObject.get("bank").getAsInt());
         restoreRoomParams.setRate(jsonObject.get("rate").getAsInt());
         restoreRoomParams.setLead(jsonObject.get("lead").getAsString());
+        restoreRoomParams.setRounds_done(jsonObject.get("rounds_done").getAsInt());
         //Конечно, с началом игры этот флаг будет true
         //но пока пусть будет
         restoreRoomParams.setIsgamerunning(jsonObject.get("isgamerunning").getAsBoolean());

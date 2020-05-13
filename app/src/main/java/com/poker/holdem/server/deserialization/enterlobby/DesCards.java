@@ -25,7 +25,7 @@ public class DesCards implements JsonDeserializer<LobbyCardsResp> {
         JsonArray players = jsonObject.get("players").getAsJsonArray();
         ArrayList<LobbyInfoPlayerCardsResp> playersArray = new ArrayList<>();
         for (JsonElement i: players)
-            playersArray.add(context.deserialize(i, LobbyPlayerResp.class));
+            playersArray.add(context.deserialize(i, LobbyInfoPlayerCardsResp.class));
         lobbyCardsResp.setPlayers(playersArray);
 
 

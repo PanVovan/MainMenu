@@ -33,6 +33,13 @@ public class RestoreRoomParams {
     @SerializedName("lead")
     @Expose
     private String lead;
+    @SerializedName("rounds_done")
+    @Expose
+    private Integer rounds_done;
+
+    public Integer getRounds_done(){ return rounds_done; }
+
+    public void setRounds_done(Integer rounds_done){ this.rounds_done = rounds_done; }
 
     public String getLead() {
         return lead;

@@ -7,6 +7,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class GameStartsRoomParams {
+    @SerializedName("rounds_done")
+    @Expose
+    private Integer rounds_done;
     @SerializedName("bank")
     @Expose
     private Integer bank;
@@ -30,6 +33,10 @@ public class GameStartsRoomParams {
     @SerializedName("allplayers")
     @Expose
     private List<GameStartsRPPlayer> allplayers =  new ArrayList<>();
+
+    public Integer getRounds_done(){ return rounds_done; }
+
+    public void setRounds_done(Integer rounds_done){ this.rounds_done = rounds_done; }
 
     public Integer getBank() {
         return bank;

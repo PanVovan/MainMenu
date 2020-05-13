@@ -139,6 +139,7 @@ public class LoginActivity extends AppCompatActivity implements LobbyContract.Re
                 prefsEditor.putString(Constants.AUTH_TOKEN, responce.getNewauthtoken());
                 prefsEditor.putString(Constants.SESSION_TOKEN, responce.getToken());
                 prefsEditor.putString(Constants.PLAYER_NAME, responce.getAuthPlayer().getName());
+                prefsEditor.putInt(Constants.PLAYER_PICTURE, responce.getAuthPlayer().getPicture());
                 prefsEditor.apply();
 
                 Intent intent = new Intent(LoginActivity.this, MainActivity.class);

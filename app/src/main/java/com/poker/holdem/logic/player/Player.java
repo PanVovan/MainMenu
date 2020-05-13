@@ -10,6 +10,10 @@ public class Player{
     private int numOfPicture;
     private boolean active;
     private List<Integer> cards;
+    //сделано для отсчёта раундов:
+    //когда сходили все игроки в комнате,
+    //раунд сменяется и открывается новая карта
+    private boolean didSomethingInThisRound;
 
     public void setActive(boolean active) {
         this.active = active;
@@ -47,5 +51,13 @@ public class Player{
 
     public void setNumOfPicture(int numOfPicture) {
         this.numOfPicture = numOfPicture;
+    }
+
+    public boolean isDidSomethingInThisRound() {
+        return didSomethingInThisRound;
+    }
+
+    public void setDidSomethingInThisRound(boolean didSomethingInThisRound) {
+        this.didSomethingInThisRound = didSomethingInThisRound;
     }
 }

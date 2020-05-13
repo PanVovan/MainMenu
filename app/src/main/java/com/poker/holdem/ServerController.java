@@ -99,6 +99,7 @@ public class ServerController implements GameContract.Server {
                         ,enterResp.getPlayersCardsAsMap()
                         ,enterResp.getLobbyinfo().getLead()
                         ,enterResp.getLobbyinfo().getRate()
+                        ,enterResp.getLobbyinfo().getRounds_done()
                 );
             else
                 Logger.getAnonymousLogger().info("<-----Didn't manage to Enter!");
@@ -115,6 +116,7 @@ public class ServerController implements GameContract.Server {
                     ,gameStartsResp.getPlayersCardsAsMap()
                     ,gameStartsResp.getLead()
                     ,gameStartsResp.getRoomparams().getRate()
+                    ,gameStartsResp.getRoomparams().getRounds_done()
             );
         }
     };
@@ -199,6 +201,7 @@ public class ServerController implements GameContract.Server {
                         ,restoreResp.getPlayersCardsAsMap()
                         ,restoreResp.getRoomparams().getLead()
                         ,restoreResp.getRoomparams().getRate()
+                        ,restoreResp.getRoomparams().getRounds_done()
                 );
             else
                 Logger.getAnonymousLogger().info("<-----Didn't manage to Restore!");

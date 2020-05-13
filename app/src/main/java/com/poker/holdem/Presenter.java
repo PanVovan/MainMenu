@@ -9,8 +9,6 @@ import com.poker.holdem.logic.handlogic.card.Card;
 import com.poker.holdem.logic.player.Player;
 import com.poker.holdem.view.util.ViewControllerActionCode;
 
-import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
@@ -212,6 +210,7 @@ public class Presenter implements GameContract.Presenter {
             ,Map<String, List<Integer>> playersCardsMap
             ,String lead
             ,Integer base_rate
+            ,Integer rounds_done
     ) {
         Logger.getAnonymousLogger().info("<--------Entered lobby!");
         gameStats.setBank(0);
@@ -242,6 +241,16 @@ public class Presenter implements GameContract.Presenter {
                 break;
             gameView.setOpponentView(i, opponents.pop());
         }
+
+        gameStats.setNumberOfCardsOpened(rounds_done);
+        //типа по количеству раундов ставим но
+        for (int i = 0; i<gameStats.getNumberOfCardsOpened() && i<4; i++)
+            gameView.setCardView(
+                    //за костыль извиняюсь, но я хз как это
+                    //отобразить без больших свичей
+                    101+i
+                    ,gameStats.getDeck().get(i)
+            );
     }
     @Override
     public void acceptMessageFromServerRestore(
@@ -251,6 +260,7 @@ public class Presenter implements GameContract.Presenter {
             ,Map<String, List<Integer>> playersCardsMap
             ,String lead
             ,Integer rate
+            ,Integer rounds_done
     ) {
 
     }
@@ -262,7 +272,9 @@ public class Presenter implements GameContract.Presenter {
             ,List<Integer>> playersCardsMap
             ,String lead
             ,Integer base_rate
+            ,Integer rounds_done
     ) {
 
     }
+
 }

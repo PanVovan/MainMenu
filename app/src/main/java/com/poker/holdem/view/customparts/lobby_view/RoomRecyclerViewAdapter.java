@@ -16,6 +16,7 @@ import com.poker.holdem.server.deserialization.getlobbies.RespRoom;
 import com.poker.holdem.view.activity.GameActivity;
 
 import java.util.ArrayList;
+import java.util.logging.Logger;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -70,15 +71,20 @@ public class RoomRecyclerViewAdapter extends RecyclerView.Adapter<RoomRecyclerVi
 
         @OnClick
         public void onClick() {
-            context.startActivity(
-                    new Intent(
-                            context
-                            ,GameActivity.class
-                    ).putExtra(
-                            "room"
-                            ,lobbyName.getText().toString()
-                    )
-            );
+            if(Integer.parseInt(playersActive.getText().toString().trim()) < 5)
+                context.startActivity(
+                        new Intent(
+                                context
+                                ,GameActivity.class
+                        ).putExtra(
+                                "room"
+                                ,lobbyName.getText().toString()
+                        )
+                );
+            else {
+                //TODO: в runOnUiThread показывать Toast типа "тебе сюда нельзя"
+                Logger.getAnonymousLogger().info("<--Player attempts to enter a full lobby.");
+            }
         }
 
     }
