@@ -15,6 +15,7 @@ public class DesPlayerCheckResp implements JsonDeserializer<PlayerCheckResp> {
         PlayerCheckResp playerCheckResp = new PlayerCheckResp();
         playerCheckResp.setName(jsonObject.get("name").getAsString());
         playerCheckResp.setNewlead(jsonObject.get("newlead").getAsString());
+        playerCheckResp.setNewround(jsonObject.get("newround").getAsBoolean());
         return playerCheckResp;
     }
 }

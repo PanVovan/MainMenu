@@ -16,6 +16,7 @@ public class DesPlayerRaiseResp implements JsonDeserializer<PlayerRaiseResp> {
         playerRaiseResp.setName(jsonObject.get("name").getAsString());
         playerRaiseResp.setNewlead(jsonObject.get("newlead").getAsString());
         playerRaiseResp.setRate(jsonObject.get("rate").getAsInt());
+        playerRaiseResp.setNewround(jsonObject.get("newround").getAsBoolean());
         return playerRaiseResp;
     }
 }

@@ -15,6 +15,7 @@ public class DesYouAllInResp implements JsonDeserializer<YouAllInResp> {
         YouAllInResp youAllInResp = new YouAllInResp();
         youAllInResp.setFlag(jsonObject.get("flag").getAsBoolean());
         youAllInResp.setNewlead(jsonObject.get("newlead").getAsString());
+        youAllInResp.setNewround(jsonObject.get("newround").getAsBoolean());
         return youAllInResp;
     }
 }

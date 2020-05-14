@@ -16,6 +16,7 @@ public class DesPlayerAllInResp implements JsonDeserializer<PlayerAllInResp> {
         PlayerAllInResp playerAllInResp = new PlayerAllInResp();
         playerAllInResp.setName(jsonObject.get("name").getAsString());
         playerAllInResp.setNewlead(jsonObject.get("newlead").getAsString());
+        playerAllInResp.setNewround(jsonObject.get("newround").getAsBoolean());
         return playerAllInResp;
     }
 }

@@ -14,6 +14,17 @@ public class PlayerRaiseResp {
     @SerializedName("rate")
     @Expose
     private Integer rate;
+    @SerializedName("newround")
+    @Expose
+    private boolean newround;
+
+    public boolean getNewround() {
+        return newround;
+    }
+
+    public void setNewround(boolean newround) {
+        this.newround = newround;
+    }
 
     public String getName() {
         return name;

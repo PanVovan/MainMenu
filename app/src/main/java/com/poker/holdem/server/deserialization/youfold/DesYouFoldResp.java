@@ -15,6 +15,7 @@ public class DesYouFoldResp implements JsonDeserializer<YouFoldResp> {
         YouFoldResp youFoldResp = new YouFoldResp();
         youFoldResp.setFlag(jsonObject.get("flag").getAsBoolean());
         youFoldResp.setNewlead(jsonObject.get("newlead").getAsString());
+        youFoldResp.setNewround(jsonObject.get("newround").getAsBoolean());
         return youFoldResp;
     }
 }

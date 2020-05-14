@@ -11,6 +11,17 @@ public class PlayerCheckResp {
     @SerializedName("newlead")
     @Expose
     private String newlead;
+    @SerializedName("newround")
+    @Expose
+    private boolean newround;
+
+    public boolean getNewround() {
+        return newround;
+    }
+
+    public void setNewround(boolean newround) {
+        this.newround = newround;
+    }
 
     public String getName() {
         return name;

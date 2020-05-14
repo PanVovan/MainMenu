@@ -15,6 +15,7 @@ public class DesPlayerLeftResp implements JsonDeserializer<PlayerLeftResp> {
         PlayerLeftResp playerLeftResp = new PlayerLeftResp();
         playerLeftResp.setName(jsonObject.get("name").getAsString());
         playerLeftResp.setNewlead(jsonObject.get("newlead").getAsString());
+        playerLeftResp.setNewround(jsonObject.get("newround").getAsBoolean());
         return playerLeftResp;
     }
 }

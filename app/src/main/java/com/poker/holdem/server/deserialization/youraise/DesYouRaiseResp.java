@@ -15,6 +15,7 @@ public class DesYouRaiseResp implements JsonDeserializer<YouRaiseResp> {
         YouRaiseResp youRaiseResp = new YouRaiseResp();
         youRaiseResp.setFlag(jsonObject.get("flag").getAsBoolean());
         youRaiseResp.setNewlead(jsonObject.get("newlead").getAsString());
+        youRaiseResp.setNewround(jsonObject.get("newround").getAsBoolean());
         return youRaiseResp;
     }
 }

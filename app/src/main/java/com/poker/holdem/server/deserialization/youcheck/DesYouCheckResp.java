@@ -15,6 +15,7 @@ public class DesYouCheckResp implements JsonDeserializer<YouCheckResp> {
         YouCheckResp youCheckResp = new YouCheckResp();
         youCheckResp.setFlag(jsonObject.get("flag").getAsBoolean());
         youCheckResp.setNewlead(jsonObject.get("newlead").getAsString());
+        youCheckResp.setNewround(jsonObject.get("newround").getAsBoolean());
         return youCheckResp;
     }
 }

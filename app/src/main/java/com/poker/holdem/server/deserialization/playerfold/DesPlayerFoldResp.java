@@ -15,6 +15,7 @@ public class DesPlayerFoldResp implements JsonDeserializer<PlayerFoldResp> {
         PlayerFoldResp playerFoldResp = new PlayerFoldResp();
         playerFoldResp.setName(jsonObject.get("name").getAsString());
         playerFoldResp.setNewlead(jsonObject.get("newlead").getAsString());
+        playerFoldResp.setNewround(jsonObject.get("newround").getAsBoolean());
         return playerFoldResp;
     }
 }

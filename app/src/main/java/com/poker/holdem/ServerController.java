@@ -90,174 +90,260 @@ public class ServerController implements GameContract.Server {
     private Emitter.Listener onEnterLobby = new Emitter.Listener() {
         @Override
         public void call(Object... args) {
-            EnterResp enterResp = MyDeserializer.desEnterLobbyResponce(args[0].toString());
-            if (enterResp.getDidenter())
-                presenter.acceptMessageFromServerRestore(
-                        enterResp.getAllAsPlayers()
-                        ,enterResp.getGamePlayersAsPlayers()
-                        ,enterResp.getLobbyinfo().getCards().getDeck()
-                        ,enterResp.getPlayersCardsAsMap()
-                        ,enterResp.getLobbyinfo().getLead()
-                        ,enterResp.getLobbyinfo().getRate()
-                        ,enterResp.getLobbyinfo().getRounds_done()
-                );
-            else
-                Logger.getAnonymousLogger().info("<-----Didn't manage to Enter!");
+            try{
+                EnterResp enterResp = MyDeserializer.desEnterLobbyResponce(args[0].toString());
+                if (enterResp.getDidenter())
+                    presenter.acceptMessageFromServerRestore(
+                            enterResp.getAllAsPlayers()
+                            ,enterResp.getGamePlayersAsPlayers()
+                            ,enterResp.getLobbyinfo().getCards().getDeck()
+                            ,enterResp.getPlayersCardsAsMap()
+                            ,enterResp.getLobbyinfo().getLead()
+                            ,enterResp.getLobbyinfo().getRate()
+                            ,enterResp.getLobbyinfo().getRounds_done()
+                    );
+                else
+                    Logger.getAnonymousLogger().info("<-----Didn't manage to Enter!");
+            }catch (Exception e){
+                sendMessageOnServerLeave();
+                e.printStackTrace();
+            }
         }
     };
     private Emitter.Listener onGameStarts = new Emitter.Listener() {
         @Override
         public void call(Object... args) {
-            GameStartsResp gameStartsResp = MyDeserializer.desGameStartsResponce(args[0].toString());
-            presenter.acceptMessageFromServerRestore(
-                    gameStartsResp.getAllAsPlayers()
-                    ,gameStartsResp.getGamePlayersAsPlayers()
-                    ,gameStartsResp.getRoomparams().getCards().getDeck()
-                    ,gameStartsResp.getPlayersCardsAsMap()
-                    ,gameStartsResp.getLead()
-                    ,gameStartsResp.getRoomparams().getRate()
-                    ,gameStartsResp.getRoomparams().getRounds_done()
-            );
+            try {
+                GameStartsResp gameStartsResp = MyDeserializer.desGameStartsResponce(args[0].toString());
+                presenter.acceptMessageFromServerRestore(
+                        gameStartsResp.getAllAsPlayers()
+                        ,gameStartsResp.getGamePlayersAsPlayers()
+                        ,gameStartsResp.getRoomparams().getCards().getDeck()
+                        ,gameStartsResp.getPlayersCardsAsMap()
+                        ,gameStartsResp.getLead()
+                        ,gameStartsResp.getRoomparams().getRate()
+                        ,gameStartsResp.getRoomparams().getRounds_done()
+                );
+            }catch (Exception e){
+                sendMessageOnServerLeave();
+                e.printStackTrace();
+            }
+
         }
     };
     private Emitter.Listener onNewPlayerJoin = new Emitter.Listener() {
         @Override
         public void call(Object... args) {
-            NewPlayerJoinResp newPlayerJoinResp = MyDeserializer.desNewPlayerJoinResp(args[0].toString());
-            Player player = new Player();
-            player.setMoney(newPlayerJoinResp.getMoney());
-            player.setName(newPlayerJoinResp.getName());
-            player.setNumOfPicture(newPlayerJoinResp.getPicture());
-            presenter.acceptMessageFromServerNewPlayerJoin(player);
+            try{
+                NewPlayerJoinResp newPlayerJoinResp = MyDeserializer.desNewPlayerJoinResp(args[0].toString());
+                Player player = new Player();
+                player.setMoney(newPlayerJoinResp.getMoney());
+                player.setName(newPlayerJoinResp.getName());
+                player.setNumOfPicture(newPlayerJoinResp.getPicture());
+                presenter.acceptMessageFromServerNewPlayerJoin(player);
+            }catch (Exception e){
+                sendMessageOnServerLeave();
+                e.printStackTrace();
+            }
         }
     };
     private Emitter.Listener onPlayerAllIn = new Emitter.Listener() {
         @Override
         public void call(Object... args) {
-            PlayerAllInResp playerAllInResp = MyDeserializer.desPlayerAllInResp(args[0].toString());
-            presenter.acceptMessageFromServerOpponentAllIn(playerAllInResp.getName(), playerAllInResp.getNewlead());
+            try{
+                PlayerAllInResp playerAllInResp = MyDeserializer.desPlayerAllInResp(args[0].toString());
+                presenter.acceptMessageFromServerOpponentAllIn(playerAllInResp.getName(), playerAllInResp.getNewlead());
+            }catch (Exception e){
+                sendMessageOnServerLeave();
+                e.printStackTrace();
+            }
         }
     };
     private Emitter.Listener onPlayerCheck = new Emitter.Listener() {
         @Override
         public void call(Object... args) {
-            PlayerCheckResp playerCheckResp = MyDeserializer.desPlayerCheckResp(args[0].toString());
-            presenter.acceptMessageFromServerOpponentCheck(playerCheckResp.getName(), playerCheckResp.getNewlead());
+            try{
+                PlayerCheckResp playerCheckResp = MyDeserializer.desPlayerCheckResp(args[0].toString());
+                presenter.acceptMessageFromServerOpponentCheck(playerCheckResp.getName(), playerCheckResp.getNewlead());
+            }catch (Exception e){
+                sendMessageOnServerLeave();
+                e.printStackTrace();
+            }
         }
     };
     private Emitter.Listener onPlayerFold = new Emitter.Listener() {
         @Override
         public void call(Object... args) {
-            PlayerFoldResp playerFoldResp = MyDeserializer.desPlayerFoldResp(args[0].toString());
-            presenter.acceptMessageFromServerOpponentFold(playerFoldResp.getName(), playerFoldResp.getNewlead());
+            try{
+                PlayerFoldResp playerFoldResp = MyDeserializer.desPlayerFoldResp(args[0].toString());
+                presenter.acceptMessageFromServerOpponentFold(playerFoldResp.getName(), playerFoldResp.getNewlead());
+            }catch (Exception e){
+                sendMessageOnServerLeave();
+                e.printStackTrace();
+            }
         }
     };
     private Emitter.Listener onPlayerLeft = new Emitter.Listener() {
         @Override
         public void call(Object... args) {
-            PlayerLeftResp playerLeftResp = MyDeserializer.desPlayerLeftResp(args[0].toString());
-            presenter.acceptMessageFromServerOpponentLeft(playerLeftResp.getName(), playerLeftResp.getNewlead());
+            try{
+                PlayerLeftResp playerLeftResp = MyDeserializer.desPlayerLeftResp(args[0].toString());
+                presenter.acceptMessageFromServerOpponentLeft(playerLeftResp.getName(), playerLeftResp.getNewlead());
+            }catch (Exception e){
+                sendMessageOnServerLeave();
+                e.printStackTrace();
+            }
         }
     };
     private Emitter.Listener onPlayerRaise = new Emitter.Listener() {
         @Override
         public void call(Object... args) {
-            PlayerRaiseResp playerRaiseResp = MyDeserializer.desPlayerRaiseResp(args[0].toString());
-            presenter.acceptMessageFromServerOpponentRaise(playerRaiseResp.getName(), playerRaiseResp.getRate(), playerRaiseResp.getNewlead());
+            try{
+                PlayerRaiseResp playerRaiseResp = MyDeserializer.desPlayerRaiseResp(args[0].toString());
+                presenter.acceptMessageFromServerOpponentRaise(playerRaiseResp.getName(), playerRaiseResp.getRate(), playerRaiseResp.getNewlead());
+            }catch (Exception e){
+                sendMessageOnServerLeave();
+                e.printStackTrace();
+            }
         }
     };
     private Emitter.Listener onPlayerStops = new Emitter.Listener() {
         @Override
         public void call(Object... args) {
-            String name = MyDeserializer.desPlayerStopsRespName(args[0].toString());
-            presenter.acceptMessageFromServerOpponentStop(name);
+            try{
+                String name = MyDeserializer.desPlayerStopsRespName(args[0].toString());
+                presenter.acceptMessageFromServerOpponentStop(name);
+            }catch (Exception e){
+                sendMessageOnServerLeave();
+                e.printStackTrace();
+            }
         }
     };
     private Emitter.Listener onPlayerRestore = new Emitter.Listener() {
         @Override
         public void call(Object... args) {
-            String name = MyDeserializer.desPlayerRestoresRespName(args[0].toString());
-            presenter.acceptMessageFromServerOpponentRestore(name);
+            try{
+                String name = MyDeserializer.desPlayerRestoresRespName(args[0].toString());
+                presenter.acceptMessageFromServerOpponentRestore(name);
+            }catch (Exception e){
+                sendMessageOnServerLeave();
+                e.printStackTrace();
+            }
         }
     };
     private Emitter.Listener onRestore = new Emitter.Listener() {
         @Override
         public void call(Object... args) {
-            RestoreResp restoreResp = MyDeserializer.desRestoreResp(args[0].toString());
+            try{
+                RestoreResp restoreResp = MyDeserializer.desRestoreResp(args[0].toString());
 
-            //при восстановлении выдаётся новый токен, который нужно записать
-            PokerApplicationManager
-                    .getInstance()
-                    .getSharedPreferences(Constants.PREFS_NAME, Context.MODE_PRIVATE)
-                    .edit()
-                    .putString(Constants.SESSION_TOKEN
-                            ,restoreResp.getToken()
-                    ).apply();
-            if (restoreResp.getDidrestore())
-                presenter.acceptMessageFromServerRestore(
-                        restoreResp.getAllAsPlayers()
-                        ,restoreResp.getGamePlayersAsPlayers()
-                        ,restoreResp.getRoomparams().getCards().getDeck()
-                        ,restoreResp.getPlayersCardsAsMap()
-                        ,restoreResp.getRoomparams().getLead()
-                        ,restoreResp.getRoomparams().getRate()
-                        ,restoreResp.getRoomparams().getRounds_done()
-                );
-            else
-                Logger.getAnonymousLogger().info("<-----Didn't manage to Restore!");
+                //при восстановлении выдаётся новый токен, который нужно записать
+                PokerApplicationManager
+                        .getInstance()
+                        .getSharedPreferences(Constants.PREFS_NAME, Context.MODE_PRIVATE)
+                        .edit()
+                        .putString(Constants.SESSION_TOKEN
+                                ,restoreResp.getToken()
+                        ).apply();
+                if (restoreResp.getDidrestore())
+                    presenter.acceptMessageFromServerRestore(
+                            restoreResp.getAllAsPlayers()
+                            ,restoreResp.getGamePlayersAsPlayers()
+                            ,restoreResp.getRoomparams().getCards().getDeck()
+                            ,restoreResp.getPlayersCardsAsMap()
+                            ,restoreResp.getRoomparams().getLead()
+                            ,restoreResp.getRoomparams().getRate()
+                            ,restoreResp.getRoomparams().getRounds_done()
+                    );
+                else
+                    Logger.getAnonymousLogger().info("<-----Didn't manage to Restore!");
+            }catch (Exception e){
+                sendMessageOnServerLeave();
+                e.printStackTrace();
+            }
         }
     };
     private Emitter.Listener onYouAllIn = new Emitter.Listener() {
         @Override
         public void call(Object... args) {
-            YouAllInResp youAllInResp = MyDeserializer.desYouAllInResp(args[0].toString());
-            if(!youAllInResp.getFlag()){
-                Logger.getAnonymousLogger().info("<-----Didn't manage to AllIn!");
+            try{
+                YouAllInResp youAllInResp = MyDeserializer.desYouAllInResp(args[0].toString());
+                if(!youAllInResp.getFlag()){
+                    Logger.getAnonymousLogger().info("<-----Didn't manage to AllIn!");
+                }
+            }catch (Exception e){
+                sendMessageOnServerLeave();
+                e.printStackTrace();
             }
         }
     };
     private Emitter.Listener onYouCheck = new Emitter.Listener() {
         @Override
         public void call(Object... args) {
-            YouCheckResp youCheckResp = MyDeserializer.desYouCheckResp(args[0].toString());
-            if(!youCheckResp.getFlag()){
-                Logger.getAnonymousLogger().info("<-----Didn't manage to Check!");
+            try{
+                YouCheckResp youCheckResp = MyDeserializer.desYouCheckResp(args[0].toString());
+                if(!youCheckResp.getFlag()){
+                    Logger.getAnonymousLogger().info("<-----Didn't manage to Check!");
+                }
+            }catch (Exception e){
+                sendMessageOnServerLeave();
+                e.printStackTrace();
             }
         }
     };
     private Emitter.Listener onYouFold = new Emitter.Listener() {
         @Override
         public void call(Object... args) {
-            YouFoldResp youFoldResp = MyDeserializer.desYouFoldResp(args[0].toString());
-            if(!youFoldResp.getFlag()){
-                Logger.getAnonymousLogger().info("<-----Didn't manage to Fold!");
+            try{
+                YouFoldResp youFoldResp = MyDeserializer.desYouFoldResp(args[0].toString());
+                if(!youFoldResp.getFlag()){
+                    Logger.getAnonymousLogger().info("<-----Didn't manage to Fold!");
+                }
+            }catch (Exception e){
+                sendMessageOnServerLeave();
+                e.printStackTrace();
             }
         }
     };
     private Emitter.Listener onYouRaise = new Emitter.Listener() {
         @Override
         public void call(Object... args) {
-            YouRaiseResp youRaiseResp = MyDeserializer.desYouRaiseResp(args[0].toString());
-            if(!youRaiseResp.getFlag()){
-                Logger.getAnonymousLogger().info("<-----Didn't manage to Raise!");
+            try{
+                YouRaiseResp youRaiseResp = MyDeserializer.desYouRaiseResp(args[0].toString());
+                if(!youRaiseResp.getFlag()){
+                    Logger.getAnonymousLogger().info("<-----Didn't manage to Raise!");
+                }
+            }catch (Exception e){
+                sendMessageOnServerLeave();
+                e.printStackTrace();
             }
         }
     };
     private Emitter.Listener onYouLeft = new Emitter.Listener() {
         @Override
         public void call(Object... args) {
-            Integer myMoney = MyDeserializer.desYouLeft(args[0].toString());
-            Logger.getAnonymousLogger().info("<--------In controller. I quit. My money: "+myMoney);
+            try{
+                Integer myMoney = MyDeserializer.desYouLeft(args[0].toString());
+                Logger.getAnonymousLogger().info("<--------In controller. I quit. My money: "+myMoney);
+            }catch (Exception e){
+                sendMessageOnServerLeave();
+                e.printStackTrace();
+            }
         }
     };
     private Emitter.Listener onEndGame = new Emitter.Listener() {
         @Override
         public void call(Object... args) {
-            EndgameResp endgameResp = MyDeserializer.desEndgameResp(args[0].toString());
-            presenter.acceptMessageFromServerEndGame(
-                    endgameResp.getWinVal()
-                    ,endgameResp.getWinners()
-            );
+            try{
+                EndgameResp endgameResp = MyDeserializer.desEndgameResp(args[0].toString());
+                presenter.acceptMessageFromServerEndGame(
+                        endgameResp.getWinVal()
+                        ,endgameResp.getWinners()
+                );
+            }catch (Exception e){
+                sendMessageOnServerLeave();
+                e.printStackTrace();
+            }
         }
     };
 
