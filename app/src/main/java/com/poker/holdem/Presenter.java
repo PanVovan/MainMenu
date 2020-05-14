@@ -6,6 +6,7 @@ import com.poker.holdem.constants.Constants;
 import com.poker.holdem.logic.GameStatsHolder;
 import com.poker.holdem.logic.handlogic.Hand;
 import com.poker.holdem.logic.player.Player;
+import com.poker.holdem.view.util.ViewControllerActionCode;
 
 import java.util.Collections;
 import java.util.List;
@@ -88,6 +89,24 @@ public class Presenter implements GameContract.Presenter {
     @Override
     public void acceptMessageFromServerOpponentLeft(String name, String newLead) {
         gameStats.deleteOpponent(name);
+        switch (gameStats.getPosPlayer(name)){
+            case 0:
+                gameView.clearCards(ViewControllerActionCode.CLEAR_FIRST_OPPONENT_CARDS);
+                gameView.clearOpponentView(1);
+                break;
+            case 1:
+                gameView.clearCards(ViewControllerActionCode.CLEAR_SECOND_OPPONENT_CARDS);
+                gameView.clearOpponentView(2);
+                break;
+            case 2:
+                gameView.clearCards(ViewControllerActionCode.CLEAR_THIRD_OPPONENT_CARDS);
+                gameView.clearOpponentView(3);
+                break;
+            case 3:
+                gameView.clearCards(ViewControllerActionCode.CLEAR_FOURTH_OPPONENT_CARDS);
+                gameView.clearOpponentView(4);
+                break;
+        }
     }
     @Override
     public void acceptMessageFromServerOpponentStop(String name) {
@@ -268,8 +287,8 @@ public class Presenter implements GameContract.Presenter {
     public void acceptMessageFromServerGameStarts(
             List<Player> allplayers
             ,List<Player> gameplayers
-            ,List<Integer> deck,Map<String
-            ,List<Integer>> playersCardsMap
+            ,List<Integer> deck
+            ,Map<String,List<Integer>> playersCardsMap
             ,String lead
             ,Integer base_rate
             ,Integer rounds_done

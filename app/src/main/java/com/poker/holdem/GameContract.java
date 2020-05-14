@@ -20,6 +20,7 @@ public interface GameContract {
         //типа активности игрока
         void setOpponentView (int pos, Player player);
         void setPlayerView (Player player);
+        void clearOpponentView(int pos);
     }
 
     interface Presenter{

@@ -1,7 +1,6 @@
 package com.poker.holdem.view.fragments;
 
 import android.content.Context;
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -21,13 +20,10 @@ import com.poker.holdem.Presenter;
 import com.poker.holdem.R;
 import com.poker.holdem.constants.Constants;
 import com.poker.holdem.logic.player.Player;
-import com.poker.holdem.view.activity.MainActivity;
 import com.poker.holdem.view.customparts.seekbar.RaiseSeekBar;
 import com.poker.holdem.view.grafic.CardView;
 import com.poker.holdem.view.grafic.PictureView;
 import com.poker.holdem.view.util.ViewControllerActionCode;
-
-import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -200,6 +196,35 @@ public class GameViewFragment extends Fragment implements GameContract.View {
                     setInvisibleOpponentCard(ViewControllerActionCode.ADD_FOURTH_OPPONENT_FIRST_CARD);
                     setInvisibleOpponentCard(ViewControllerActionCode.ADD_FOURTH_OPPONENT_SECOND_CARD);
                 }
+                break;
+        }
+    }
+
+    public void clearOpponentView(int pos){
+        switch (pos){
+            case 1:
+                firstOpponentLayout.setVisibility(View.INVISIBLE);
+                firstOpponentName.setText("");
+                firstOpponentMoney.setText("");
+                firstOpponentIcon.setBackground(null);
+                break;
+            case 2:
+                secondOpponentLayout.setVisibility(View.INVISIBLE);
+                secondOpponentName.setText("");
+                secondOpponentMoney.setText("");
+                secondOpponentIcon.setBackground(null);
+                break;
+            case 3:
+                thirdOpponentLayout.setVisibility(View.INVISIBLE);
+                thirdOpponentName.setText("");
+                thirdOpponentMoney.setText("");
+                thirdOpponentIcon.setBackground(null);
+                break;
+            case 4:
+                fourthOpponentLayout.setVisibility(View.INVISIBLE);
+                fourthOpponentName.setText("");
+                fourthOpponentMoney.setText("");
+                fourthOpponentIcon.setBackground(null);
                 break;
         }
     }
@@ -399,5 +424,4 @@ public class GameViewFragment extends Fragment implements GameContract.View {
     @BindView(R.id.fourth_opponent_layout)      ConstraintLayout fourthOpponentLayout;
 
     @BindView(R.id.set_rate_layout)             ConstraintLayout setRateLayout;
-
 }
