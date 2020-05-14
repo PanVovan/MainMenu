@@ -61,6 +61,7 @@ public class Presenter implements GameContract.Presenter {
     @Override
     public void exitButtonClicked() {
         serverController.sendMessageOnServerLeave();
+        serverController.disconnect();
     }
 
     //То, что мы получаем от сервера

@@ -87,6 +87,28 @@ public class ServerController implements GameContract.Server {
         this.socket.connect();
     }
 
+    public void disconnect(){
+        this.socket = PokerApplicationManager.getInstance().getSocket();
+        this.socket.off("enterlobby", onEnterLobby);
+        this.socket.off("newplayerjoinedlobby", onNewPlayerJoin);
+        this.socket.off("gamestarts", onGameStarts);
+        this.socket.off("youcheck", onYouCheck);
+        this.socket.off("playercheck", onPlayerCheck);
+        this.socket.off("youraise", onYouRaise);
+        this.socket.off("playerraise", onPlayerRaise);
+        this.socket.off("youfold", onYouFold);
+        this.socket.off("playerfold", onPlayerFold);
+        this.socket.off("youallin", onYouAllIn);
+        this.socket.off("playerallin", onPlayerAllIn);
+        this.socket.off("youleft", onYouLeft);
+        this.socket.off("playerleft", onPlayerLeft);
+        this.socket.off("playerstops", onPlayerStops);
+        this.socket.off("restore", onRestore);
+        this.socket.off("playerrestores", onPlayerRestore);
+        this.socket.off("endgame", onEndGame);
+        this.socket.disconnect();
+    }
+
     private Emitter.Listener onEnterLobby = new Emitter.Listener() {
         @Override
         public void call(Object... args) {

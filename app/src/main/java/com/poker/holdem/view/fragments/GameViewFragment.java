@@ -108,8 +108,7 @@ public class GameViewFragment extends Fragment implements GameContract.View {
     @OnClick(R.id.exit_button)
     void exit(){
         //ACHTUNG! TODO: здесь мы выходим в MainActivity
-        //данные о деньгах игрока мы берём из TextView лэйаута игрока
-
+        //данные о деньгах игрока мы берём из TextView лэйаута игрок
         presenter.exitButtonClicked();
     }
 

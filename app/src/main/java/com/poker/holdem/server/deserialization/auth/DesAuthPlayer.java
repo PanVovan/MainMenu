@@ -24,11 +24,18 @@ public class DesAuthPlayer implements JsonDeserializer<AuthPlayer> {
         Logger.getAnonymousLogger().info(jsonObject.toString());
         //тупо берём поля, и присваиваем их классу
         authPlayer.setId(jsonObject.get("id").getAsInt());
-        if (jsonObject.get("money") == null) {
-            Logger.getAnonymousLogger().info("<--- Player's money on server is null. That can mean that you've joined a full lobby (in this situation server can't correctly procecc your data).");
-            authPlayer.setMoney(0);
-        }else
+        try {
             authPlayer.setMoney(jsonObject.get("money").getAsInt());
+        }catch (Exception e){
+            authPlayer.setMoney(0);
+            Logger.getAnonymousLogger().info("<--- Player's money on server is not correct. That can mean that you've joined a full lobby (in this situation server can't correctly procecc your data).");
+            e.printStackTrace();
+        }
+        //if (jsonObject.get("money") == null) {
+        //    Logger.getAnonymousLogger().info("<--- Player's money on server is null. That can mean that you've joined a full lobby (in this situation server can't correctly procecc your data).");
+        //    authPlayer.setMoney(0);
+        //}else
+        //    authPlayer.setMoney(jsonObject.get("money").getAsInt());
         authPlayer.setName(jsonObject.get("name").getAsString());
         authPlayer.setPassword(jsonObject.get("password").getAsString());
         authPlayer.setPicture(jsonObject.get("picture").getAsInt());
