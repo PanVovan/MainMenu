@@ -1,10 +1,14 @@
 package com.poker.holdem.logic;
 
+import com.poker.holdem.logic.handlogic.Hand;
+import com.poker.holdem.logic.handlogic.card.Card;
+import com.poker.holdem.logic.handlogic.combination.HandClassifier;
 import com.poker.holdem.logic.player.Player;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 
 
 public class GameStatsHolder {
@@ -95,6 +99,20 @@ public class GameStatsHolder {
             if (i.getName().equals(name))
                 return i;
         return null;
+    }
+
+
+    public long getHandPower(int count) {
+        Hand.Builder builder = new Hand.Builder();
+        for (int i = 0; i<count; i++){
+            builder.addCommunityCard(Optional.of(new Card(deck.get(i))));
+        }
+        for (Integer card: mainPlayer.getCards()){
+            builder.addHoleCard(Optional.of(new Card(card)));
+        }
+
+        return HandClassifier.getPowerStatic(builder.build());
+
     }
 
     //TODO: метка
