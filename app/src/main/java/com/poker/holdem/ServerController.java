@@ -423,6 +423,7 @@ public class ServerController implements GameContract.Server {
                         ,this.SESSION_TOKEN
                 )
         );
+        disconnect();
     }
 
     @Override

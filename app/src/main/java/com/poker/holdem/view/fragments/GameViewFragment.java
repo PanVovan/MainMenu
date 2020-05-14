@@ -10,6 +10,7 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.SeekBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 import androidx.constraintlayout.widget.ConstraintLayout;
@@ -109,6 +110,10 @@ public class GameViewFragment extends Fragment implements GameContract.View {
     void exit(){
         //ACHTUNG! TODO: здесь мы выходим в MainActivity
         //данные о деньгах игрока мы берём из TextView лэйаута игрок
+        //костыль, пока не написали нормальный переход в ChooseGameFragment
+        getActivity().runOnUiThread(() -> {
+            Toast.makeText(getContext(), "Left lobby", Toast.LENGTH_SHORT).show();
+        });
         presenter.exitButtonClicked();
     }
 
