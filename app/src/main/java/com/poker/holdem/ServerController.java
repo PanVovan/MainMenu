@@ -115,7 +115,7 @@ public class ServerController implements GameContract.Server {
             try{
                 Logger.getAnonymousLogger().info("<-resp: "+args[0].toString());
                 EnterResp enterResp = MyDeserializer.desEnterLobbyResponce(args[0].toString());
-                Logger.getAnonymousLogger().info("<-server: "+enterResp.getLobbyinfo().getAllplayers().get(0).getPlayername());
+                //Logger.getAnonymousLogger().info("<-server: "+enterResp.getLobbyinfo().getAllplayers().get(0).getPlayername());
                 if (enterResp.getDidenter())
                     presenter.acceptMessageFromServerEnterLobby(
                             enterResp.getAllAsPlayers()
@@ -130,7 +130,7 @@ public class ServerController implements GameContract.Server {
                 else
                     Logger.getAnonymousLogger().info("<-----Didn't manage to Enter!");
             }catch (Exception e){
-                sendMessageOnServerLeave();
+                //sendMessageOnServerLeave();
                 e.printStackTrace();
             }
         }
@@ -149,7 +149,7 @@ public class ServerController implements GameContract.Server {
                         ,gameStartsResp.getRoomparams().getRate()
                 );
             }catch (Exception e){
-                sendMessageOnServerLeave();
+                //sendMessageOnServerLeave();
                 e.printStackTrace();
             }
 
@@ -166,7 +166,7 @@ public class ServerController implements GameContract.Server {
                 player.setNumOfPicture(newPlayerJoinResp.getPicture());
                 presenter.acceptMessageFromServerNewPlayerJoin(player);
             }catch (Exception e){
-                sendMessageOnServerLeave();
+                //sendMessageOnServerLeave();
                 e.printStackTrace();
             }
         }
@@ -182,7 +182,7 @@ public class ServerController implements GameContract.Server {
                         , playerAllInResp.getNewround()
                 );
             }catch (Exception e){
-                sendMessageOnServerLeave();
+                //sendMessageOnServerLeave();
                 e.printStackTrace();
             }
         }
@@ -198,7 +198,7 @@ public class ServerController implements GameContract.Server {
                         , playerCheckResp.getNewround()
                 );
             }catch (Exception e){
-                sendMessageOnServerLeave();
+                //sendMessageOnServerLeave();
                 e.printStackTrace();
             }
         }
@@ -214,7 +214,7 @@ public class ServerController implements GameContract.Server {
                         , playerFoldResp.getNewround()
                 );
             }catch (Exception e){
-                sendMessageOnServerLeave();
+                //sendMessageOnServerLeave();
                 e.printStackTrace();
             }
         }
@@ -230,7 +230,7 @@ public class ServerController implements GameContract.Server {
                         , playerLeftResp.getNewround()
                 );
             }catch (Exception e){
-                sendMessageOnServerLeave();
+                //sendMessageOnServerLeave();
                 e.printStackTrace();
             }
         }
@@ -247,7 +247,7 @@ public class ServerController implements GameContract.Server {
                         ,playerRaiseResp.getNewround()
                 );
             }catch (Exception e){
-                sendMessageOnServerLeave();
+                //sendMessageOnServerLeave();
                 e.printStackTrace();
             }
         }
@@ -259,7 +259,7 @@ public class ServerController implements GameContract.Server {
                 String name = MyDeserializer.desPlayerStopsRespName(args[0].toString());
                 presenter.acceptMessageFromServerOpponentStop(name);
             }catch (Exception e){
-                sendMessageOnServerLeave();
+                //sendMessageOnServerLeave();
                 e.printStackTrace();
             }
         }
@@ -271,7 +271,7 @@ public class ServerController implements GameContract.Server {
                 String name = MyDeserializer.desPlayerRestoresRespName(args[0].toString());
                 presenter.acceptMessageFromServerOpponentRestore(name);
             }catch (Exception e){
-                sendMessageOnServerLeave();
+                //sendMessageOnServerLeave();
                 e.printStackTrace();
             }
         }
@@ -304,77 +304,62 @@ public class ServerController implements GameContract.Server {
                 else
                     Logger.getAnonymousLogger().info("<-----Didn't manage to Restore!");
             }catch (Exception e){
-                sendMessageOnServerLeave();
+                //sendMessageOnServerLeave();
                 e.printStackTrace();
             }
         }
     };
-    private Emitter.Listener onYouAllIn = new Emitter.Listener() {
-        @Override
-        public void call(Object... args) {
-            try{
-                YouAllInResp youAllInResp = MyDeserializer.desYouAllInResp(args[0].toString());
-                if(!youAllInResp.getFlag()){
-                    Logger.getAnonymousLogger().info("<-----Didn't manage to AllIn!");
-                }
-            }catch (Exception e){
-                sendMessageOnServerLeave();
-                e.printStackTrace();
+    private Emitter.Listener onYouAllIn = args -> {
+        try{
+            YouAllInResp youAllInResp = MyDeserializer.desYouAllInResp(args[0].toString());
+            if(!youAllInResp.getFlag()){
+                Logger.getAnonymousLogger().info("<-----Didn't manage to AllIn!");
             }
+        }catch (Exception e){
+            //sendMessageOnServerLeave();
+            e.printStackTrace();
         }
     };
-    private Emitter.Listener onYouCheck = new Emitter.Listener() {
-        @Override
-        public void call(Object... args) {
-            try{
-                YouCheckResp youCheckResp = MyDeserializer.desYouCheckResp(args[0].toString());
-                if(!youCheckResp.getFlag()){
-                    Logger.getAnonymousLogger().info("<-----Didn't manage to Check!");
-                }
-            }catch (Exception e){
-                sendMessageOnServerLeave();
-                e.printStackTrace();
+    private Emitter.Listener onYouCheck = args -> {
+        try{
+            YouCheckResp youCheckResp = MyDeserializer.desYouCheckResp(args[0].toString());
+            if(!youCheckResp.getFlag()){
+                Logger.getAnonymousLogger().info("<-----Didn't manage to Check!");
             }
+        }catch (Exception e){
+            //sendMessageOnServerLeave();
+            e.printStackTrace();
         }
     };
-    private Emitter.Listener onYouFold = new Emitter.Listener() {
-        @Override
-        public void call(Object... args) {
-            try{
-                YouFoldResp youFoldResp = MyDeserializer.desYouFoldResp(args[0].toString());
-                if(!youFoldResp.getFlag()){
-                    Logger.getAnonymousLogger().info("<-----Didn't manage to Fold!");
-                }
-            }catch (Exception e){
-                sendMessageOnServerLeave();
-                e.printStackTrace();
+    private Emitter.Listener onYouFold = args -> {
+        try{
+            YouFoldResp youFoldResp = MyDeserializer.desYouFoldResp(args[0].toString());
+            if(!youFoldResp.getFlag()){
+                Logger.getAnonymousLogger().info("<-----Didn't manage to Fold!");
             }
+        }catch (Exception e){
+            //sendMessageOnServerLeave();
+            e.printStackTrace();
         }
     };
-    private Emitter.Listener onYouRaise = new Emitter.Listener() {
-        @Override
-        public void call(Object... args) {
-            try{
-                YouRaiseResp youRaiseResp = MyDeserializer.desYouRaiseResp(args[0].toString());
-                if(!youRaiseResp.getFlag()){
-                    Logger.getAnonymousLogger().info("<-----Didn't manage to Raise!");
-                }
-            }catch (Exception e){
-                sendMessageOnServerLeave();
-                e.printStackTrace();
+    private Emitter.Listener onYouRaise = args -> {
+        try{
+            YouRaiseResp youRaiseResp = MyDeserializer.desYouRaiseResp(args[0].toString());
+            if(!youRaiseResp.getFlag()){
+                Logger.getAnonymousLogger().info("<-----Didn't manage to Raise!");
             }
+        }catch (Exception e){
+            //sendMessageOnServerLeave();
+            e.printStackTrace();
         }
     };
-    private Emitter.Listener onYouLeft = new Emitter.Listener() {
-        @Override
-        public void call(Object... args) {
-            try{
-                Integer myMoney = MyDeserializer.desYouLeft(args[0].toString());
-                Logger.getAnonymousLogger().info("<--------In controller. I quit. My money: "+myMoney);
-            }catch (Exception e){
-                sendMessageOnServerLeave();
-                e.printStackTrace();
-            }
+    private Emitter.Listener onYouLeft = args -> {
+        try{
+            Integer myMoney = MyDeserializer.desYouLeft(args[0].toString());
+            Logger.getAnonymousLogger().info("<--------In controller. I quit. My money: "+myMoney);
+        }catch (Exception e){
+            //sendMessageOnServerLeave();
+            e.printStackTrace();
         }
     };
     private Emitter.Listener onEndGame = new Emitter.Listener() {
@@ -387,7 +372,7 @@ public class ServerController implements GameContract.Server {
                         ,endgameResp.getWinners()
                 );
             }catch (Exception e){
-                sendMessageOnServerLeave();
+                //sendMessageOnServerLeave();
                 e.printStackTrace();
             }
         }

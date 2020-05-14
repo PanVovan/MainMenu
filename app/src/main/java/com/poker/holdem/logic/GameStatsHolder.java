@@ -9,10 +9,12 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
+import java.util.logging.Logger;
 
 
 public class GameStatsHolder {
     private Player mainPlayer;
+    private String mainPlayerName;
     private List<Player> players = new ArrayList<>();
     private List<Integer> deck = new ArrayList<>();
     private Integer bank;
@@ -59,7 +61,7 @@ public class GameStatsHolder {
         this.bank = bank;
         //иницивлизируем так <- не всегда
         //List<> это ArrayList<>
-        players = new ArrayList<>(allplayers);
+        players = allplayers;//new ArrayList<>(allplayers);
         deck = new ArrayList<>(cardsOnTable);
         this.rate = base_rate;
         this.lead = lead;
@@ -73,6 +75,8 @@ public class GameStatsHolder {
         setGamePlayersCards(playersCardsMap);
         //чтобы каждый раз не искать
         mainPlayer = getPlayerByName(mainName);
+        Logger.getAnonymousLogger().info("name: "+mainName);
+        mainPlayerName = mainName;
     }
 
     //ищем игрока и забираем у него деньги
@@ -83,12 +87,12 @@ public class GameStatsHolder {
                 this.bank+=val;
             }
         });
+        if(name.equals(mainPlayerName))
+            mainPlayer = getPlayerByName(mainPlayerName);
     }
 
     public void clearAllPlayersCards(){
-        this.players.forEach((i)->{
-            i.setCards(new ArrayList<>());
-        });
+        this.players.forEach((i)-> i.setCards(new ArrayList<>()));
     }
 
     private void setGamePlayersCards(Map<String, List<Integer>> cards){
@@ -102,18 +106,23 @@ public class GameStatsHolder {
     private void setActivePlayers(List<Player> gamePlayers){
         for(Player i: gamePlayers)
             setPlayerActivity(i.getName(), true);
+        mainPlayer = getPlayerByName(mainPlayerName);
     }
 
     private void setPlayerActivity(String name, boolean activity){
         for(Player i: players)
             if(i.getName().equals(name))
                 i.setActive(activity);
+        if(name.equals(mainPlayerName))
+            mainPlayer = getPlayerByName(mainPlayerName);
     }
 
     public void setPlayerPos(String  name, int pos){
         this.players.forEach((i)->{
             if(i.getName().equals(name)) i.setPos(pos);
         });
+        if(name.equals(mainPlayerName))
+            mainPlayer = getPlayerByName(mainPlayerName);
     }
 
     public boolean checkIfPlaceIsNotTaken(int pos){
@@ -133,38 +142,49 @@ public class GameStatsHolder {
         for(Player i: players)
             if(i.getName().equals(name))
                 i.setCards(cards);
+        if(name.equals(mainPlayerName))
+            mainPlayer = getPlayerByName(mainPlayerName);
     }
 
     public Player getPlayerByName(String name){
-        for(Player i: players)
-            if (i.getName().equals(name))
-                return i;
-        return null;
+        Player result = new Player();
+        for (int i=0; i<players.size(); i++)
+            if(players.get(i).getName().equals(name))
+                result =  players.get(i);
+        return result;
     }
 
     //переименовал в getMainPlayerHandPower, так понятнее
     public long getMainPlayerHandPower(int count) {
         Hand.Builder builder = new Hand.Builder();
 
-        for (int i = 0; i<count; i++)
+        for (int i = 0; i<count && i<6; i++)
             builder.addCommunityCard(Optional.of(new Card(deck.get(i))));
 
-        for (Integer card: mainPlayer.getCards())
+        for (Integer card: getPlayerByName(mainPlayerName).getCards())
             builder.addHoleCard(Optional.of(new Card(card)));
 
         return HandClassifier.getPowerStatic(builder.build());
     }
 
-    public boolean mainPlayerIsInGame(){ return this.mainPlayer.isActive(); }
+    public boolean mainPlayerIsInGame(){ return getPlayerByName(mainPlayerName).isActive(); }
 
     //TODO: метка
     public void deleteOpponent(String name) {
         players.remove(getPlayerByName(name));
     }
 
-    public Player getMainPlayer(){ return mainPlayer; }
+    public Player getMainPlayer(){
+        Logger.getAnonymousLogger().info("mainPlayername"+mainPlayerName+ " ");
+        return getPlayerByName(mainPlayerName); }
 
-    public int getPosPlayer(String name){ return players.indexOf(name); }
+    public int getPosPlayer(String name){
+        for(int i=0; i<players.size(); i++) {
+            if (name.equals(players.get(i).getName()))
+                return i;
+        }
+        return -1;
+    }
 
     public Integer getBank() { return bank; }
 
@@ -191,4 +211,12 @@ public class GameStatsHolder {
     public void setRoundsNum(int roundsNum) { this.roundsNum = roundsNum; }
 
     public void increaseRoundsNum(){ this.roundsNum++; }
+
+    public String getMainPlayerName() {
+        return mainPlayerName;
+    }
+
+    public void setMainPlayerName(String mainPlayerName) {
+        this.mainPlayerName = mainPlayerName;
+    }
 }

@@ -190,12 +190,10 @@ public class Presenter implements GameContract.Presenter {
         gameView.clearCards(ViewControllerActionCode.CLEAR_ALL_CARDS);
 
         //вот так нехитро обновляем деньги игроков
-        gameStats.getPlayers().forEach((i) -> {
-            gameView.updatePlayerMoney(
-                    gameStats.getPlayerByName(i.getName()).getPos()
-                    , gameStats.getPlayerByName(i.getName()).getMoney()
-            );
-        });
+        gameStats.getPlayers().forEach((i) -> gameView.updatePlayerMoney(
+                gameStats.getPlayerByName(i.getName()).getPos()
+                , gameStats.getPlayerByName(i.getName()).getMoney()
+        ));
     }
 
     @Override
@@ -209,12 +207,12 @@ public class Presenter implements GameContract.Presenter {
             ,Integer rounds_done
             ,Integer bank
     ) {
-        Logger logger = Logger.getAnonymousLogger();
-        logger.info("<--------Entered lobby!");
-        logger.info("My money: " + allplayers.get(0).getMoney());
-        allplayers.forEach((i)->{
-            logger.info(i.getName()+"  "+i.getMoney());
-        });
+        //Logger logger = Logger.getAnonymousLogger();
+        //logger.info("<--------Entered lobby!");
+        //logger.info("My money: " + allplayers.get(0).getMoney());
+        //allplayers.forEach((i)->{
+        //    logger.info(i.getName()+"  "+i.getMoney());
+        //});
         //сначала сделал отдельными методами, но потом решил вынести
         gameStats.setGame(
                 allplayers
@@ -287,6 +285,7 @@ public class Presenter implements GameContract.Presenter {
         );
         showFirstFreeCards();
         sitThePlayers();
+        serverController.sendMessageOnServerHandPower(gameStats.getMainPlayerHandPower(5));
     }
 
     private void showFirstFreeCards(){

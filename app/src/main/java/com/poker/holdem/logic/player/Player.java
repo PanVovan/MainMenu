@@ -9,7 +9,7 @@ public class Player{
     private int money;
     private int numOfPicture;
     private boolean active;
-    private List<Integer> cards;
+    private List<Integer> cards = new ArrayList<>();
     private int pos;
     //сделано для отсчёта раундов:
     //когда сходили все игроки в комнате,

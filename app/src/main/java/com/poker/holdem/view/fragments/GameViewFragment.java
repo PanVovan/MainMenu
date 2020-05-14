@@ -28,6 +28,9 @@ import com.poker.holdem.view.grafic.CardView;
 import com.poker.holdem.view.grafic.PictureView;
 import com.poker.holdem.view.util.ViewControllerActionCode;
 
+import java.util.Locale;
+import java.util.Objects;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -75,7 +78,10 @@ public class GameViewFragment extends Fragment implements GameContract.View {
             setRateLayout.setVisibility(View.INVISIBLE);
             setRateTextView.setText("");
             presenter.raiseButtonClicked(raiseSeekBar.getValue());
-            youRate.setText(raiseSeekBar.getValue().toString());
+            //студия подсказывает сделать так
+            //"%d" - целое
+            //локаль - способ вывлда
+            youRate.setText(String.format(Locale.ENGLISH,"%d",raiseSeekBar.getValue()));
         }
     }
 
@@ -88,7 +94,7 @@ public class GameViewFragment extends Fragment implements GameContract.View {
         return new SeekBar.OnSeekBarChangeListener() {
             @Override
             public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
-                setRateTextView.setText(Integer.toString(progress));
+                setRateTextView.setText(String.format(Locale.ENGLISH,"%d",progress));
                 raiseSeekBar.setValue(progress);
             }
             @Override
@@ -104,16 +110,14 @@ public class GameViewFragment extends Fragment implements GameContract.View {
 
     @OnClick(R.id.game_container)
     void clickOnContainer(){
-        if(setRateLayout.getVisibility() == View.VISIBLE && getView().getId() != R.id.set_rate_layout)
+        if(setRateLayout.getVisibility() == View.VISIBLE && Objects.requireNonNull(getView()).getId() != R.id.set_rate_layout)
             setRateLayout.setVisibility(View.INVISIBLE);
     }
 
     @OnClick(R.id.exit_button)
     void exit(){
         //TODO: ACHTUNG! здесь мы выходим в MainActivity
-        getActivity().runOnUiThread(() -> {
-            Toast.makeText(getContext(), "Left lobby", Toast.LENGTH_SHORT).show();
-        });
+        Objects.requireNonNull(getActivity()).runOnUiThread(() -> Toast.makeText(getContext(), "Left lobby", Toast.LENGTH_SHORT).show());
         Intent intent = new Intent(getActivity(), MainActivity.class);
         intent.putExtra("money", presenter.exitButtonClicked());
         startActivity(intent);
@@ -121,173 +125,186 @@ public class GameViewFragment extends Fragment implements GameContract.View {
 
     @Override
     public void updatePlayerMoney(int pos, Integer money){
-        switch (pos){
-            case ViewControllerActionCode.POSITION_OPPONENT_FIRST:
-                firstOpponentMoney.setText(money.toString());
-                break;
-            case ViewControllerActionCode.POSITION_OPPONENT_SECOND:
-                secondOpponentMoney.setText(money.toString());
-                break;
-            case ViewControllerActionCode.POSITION_OPPONENT_THIRD:
-                thirdOpponentMoney.setText(money.toString());
-                break;
-            case ViewControllerActionCode.POSITION_OPPONENT_FOURTH:
-                fourthOpponentMoney.setText(money.toString());
-                break;
-            case ViewControllerActionCode.POSITION_MAIN_PLAYER:
-                playerMoney.setText(money.toString());
-                break;
-        }
-    }
+        Objects.requireNonNull(getActivity()).runOnUiThread(()->{
+            switch (pos){
+                case ViewControllerActionCode.POSITION_OPPONENT_FIRST:
+                    firstOpponentMoney.setText(String.format(Locale.ENGLISH,"%d",money));
+                    break;
+                case ViewControllerActionCode.POSITION_OPPONENT_SECOND:
+                    secondOpponentMoney.setText(String.format(Locale.ENGLISH,"%d",money));
+                    break;
+                case ViewControllerActionCode.POSITION_OPPONENT_THIRD:
+                    thirdOpponentMoney.setText(String.format(Locale.ENGLISH,"%d",money));
+                    break;
+                case ViewControllerActionCode.POSITION_OPPONENT_FOURTH:
+                    fourthOpponentMoney.setText(String.format(Locale.ENGLISH,"%d",money));
+                    break;
+                case ViewControllerActionCode.POSITION_MAIN_PLAYER:
+                    playerMoney.setText(String.format(Locale.ENGLISH,"%d",money));
+                    break;
+            }
 
+        });
+    }
+    @Override
     public void clearCards(int typeOfClear) {
-        switch (typeOfClear) {
-            case ViewControllerActionCode.CLEAR_PLAYER_CARDS:
-                firstHoleCard.setBackground(null);
-                secondHoleCard.setBackground(null);
-                break;
-            case ViewControllerActionCode.CLEAR_FIRST_OPPONENT_CARDS:
-                firstOpponentFirstCard.setBackground(null);
-                firstOpponentSecondCard.setBackground(null);
-                break;
-            case ViewControllerActionCode.CLEAR_SECOND_OPPONENT_CARDS:
-                secondOpponentFirstCard.setBackground(null);
-                secondOpponentSecondCard.setBackground(null);
-                break;
-            case ViewControllerActionCode.CLEAR_THIRD_OPPONENT_CARDS:
-                thirdOpponentFirstCard.setBackground(null);
-                thirdOpponentSecondCard.setBackground(null);
-                break;
-            case ViewControllerActionCode.CLEAR_FOURTH_OPPONENT_CARDS:
-                fourthOpponentFirstCard.setBackground(null);
-                fourthOpponentSecondCard.setBackground(null);
-                break;
-            case ViewControllerActionCode.CLEAR_COMMUNITY_CARDS:
-                firstCommunityCard.setBackground(null);
-                secondCommunityCard.setBackground(null);
-                thirdCommunityCard.setBackground(null);
-                fourthCommunityCard.setBackground(null);
-                fifthCommunityCard.setBackground(null);
-                break;
-            case ViewControllerActionCode.CLEAR_ALL_CARDS:
+        Objects.requireNonNull(getActivity()).runOnUiThread(()->{
+            switch (typeOfClear) {
+                case ViewControllerActionCode.CLEAR_PLAYER_CARDS:
+                    firstHoleCard.setBackground(null);
+                    secondHoleCard.setBackground(null);
+                    break;
+                case ViewControllerActionCode.CLEAR_FIRST_OPPONENT_CARDS:
+                    firstOpponentFirstCard.setBackground(null);
+                    firstOpponentSecondCard.setBackground(null);
+                    break;
+                case ViewControllerActionCode.CLEAR_SECOND_OPPONENT_CARDS:
+                    secondOpponentFirstCard.setBackground(null);
+                    secondOpponentSecondCard.setBackground(null);
+                    break;
+                case ViewControllerActionCode.CLEAR_THIRD_OPPONENT_CARDS:
+                    thirdOpponentFirstCard.setBackground(null);
+                    thirdOpponentSecondCard.setBackground(null);
+                    break;
+                case ViewControllerActionCode.CLEAR_FOURTH_OPPONENT_CARDS:
+                    fourthOpponentFirstCard.setBackground(null);
+                    fourthOpponentSecondCard.setBackground(null);
+                    break;
+                case ViewControllerActionCode.CLEAR_COMMUNITY_CARDS:
+                    firstCommunityCard.setBackground(null);
+                    secondCommunityCard.setBackground(null);
+                    thirdCommunityCard.setBackground(null);
+                    fourthCommunityCard.setBackground(null);
+                    fifthCommunityCard.setBackground(null);
+                    break;
+                case ViewControllerActionCode.CLEAR_ALL_CARDS:
                     clearAllCards();
                     break;
-        }
+            }
+        });
     }
-
+    @Override
     public void setCardView(int action, int card) {
-        if (card == ViewControllerActionCode.NONE){
-            setInvisibleOpponentCard(action);
-        } else if (action < 10){
-            setYouCard(action, card);
-        } else if (action < 100){
-            setOpponentCard(action, card);
-        } else if(action < 200){
-            setCommunityCard(action, card);
-        }
+        Objects.requireNonNull(getActivity()).runOnUiThread(()->{
+            if (card == ViewControllerActionCode.NONE){
+                setInvisibleOpponentCard(action);
+            } else if (action < 10){
+                setYouCard(action, card);
+            } else if (action < 100){
+                setOpponentCard(action, card);
+            } else if(action < 200){
+                setCommunityCard(action, card);
+            }
+        });
     }
 
-
+    @Override
     public void setOpponentView(int pos, Player player){
-        String name = player.getName();
-        Integer money = player.getMoney();
-        int picture = player.getNumOfPicture();
-        switch (pos){
-            case 1:
-                firstOpponentLayout.setVisibility(View.VISIBLE);
-                firstOpponentName.setText(name);
-                firstOpponentMoney.setText(money.toString());
-                firstOpponentIcon.setBackground(PictureView.getPic(getContext(), picture));
-                if(player.isActive()){
-                    setInvisibleOpponentCard(ViewControllerActionCode.ADD_FIRST_OPPONENT_FIRST_CARD);
-                    setInvisibleOpponentCard(ViewControllerActionCode.ADD_FIRST_OPPONENT_SECOND_CARD);
-                }
-                break;
-            case 2:
-                secondOpponentLayout.setVisibility(View.VISIBLE);
-                secondOpponentName.setText(name);
-                secondOpponentMoney.setText(money.toString());
-                firstOpponentIcon.setBackground(PictureView.getPic(getContext(), picture));
-                if(player.isActive()){
-                    setInvisibleOpponentCard(ViewControllerActionCode.ADD_SECOND_OPPONENT_FIRST_CARD);
-                    setInvisibleOpponentCard(ViewControllerActionCode.ADD_SECOND_OPPONENT_SECOND_CARD);
-                }
-                break;
-            case 3:
-                thirdOpponentLayout.setVisibility(View.VISIBLE);
-                thirdOpponentName.setText(name);
-                thirdOpponentMoney.setText(money.toString());
-                firstOpponentIcon.setBackground(PictureView.getPic(getContext(), picture));
-                if(player.isActive()){
-                    setInvisibleOpponentCard(ViewControllerActionCode.ADD_THIRD_OPPONENT_FIRST_CARD);
-                    setInvisibleOpponentCard(ViewControllerActionCode.ADD_THIRD_OPPONENT_SECOND_CARD);
-                }
-                break;
-            case 4:
-                fourthOpponentLayout.setVisibility(View.VISIBLE);
-                fourthOpponentName.setText(name);
-                fourthOpponentMoney.setText(money.toString());
-                firstOpponentIcon.setBackground(PictureView.getPic(getContext(), picture));
-                if(player.isActive()){
-                    setInvisibleOpponentCard(ViewControllerActionCode.ADD_FOURTH_OPPONENT_FIRST_CARD);
-                    setInvisibleOpponentCard(ViewControllerActionCode.ADD_FOURTH_OPPONENT_SECOND_CARD);
-                }
-                break;
-        }
+        Objects.requireNonNull(getActivity()).runOnUiThread(()->{
+            String name = player.getName();
+            int money = player.getMoney();
+            int picture = player.getNumOfPicture();
+            switch (pos){
+                case 1:
+                    firstOpponentLayout.setVisibility(View.VISIBLE);
+                    firstOpponentName.setText(name);
+                    firstOpponentMoney.setText(String.format(Locale.ENGLISH,"%d",money));
+                    firstOpponentIcon.setBackground(PictureView.getPic(getContext(), picture));
+                    if(player.isActive()){
+                        setInvisibleOpponentCard(ViewControllerActionCode.ADD_FIRST_OPPONENT_FIRST_CARD);
+                        setInvisibleOpponentCard(ViewControllerActionCode.ADD_FIRST_OPPONENT_SECOND_CARD);
+                    }
+                    break;
+                case 2:
+                    secondOpponentLayout.setVisibility(View.VISIBLE);
+                    secondOpponentName.setText(name);
+                    secondOpponentMoney.setText(String.format(Locale.ENGLISH,"%d",money));
+                    firstOpponentIcon.setBackground(PictureView.getPic(getContext(), picture));
+                    if(player.isActive()){
+                        setInvisibleOpponentCard(ViewControllerActionCode.ADD_SECOND_OPPONENT_FIRST_CARD);
+                        setInvisibleOpponentCard(ViewControllerActionCode.ADD_SECOND_OPPONENT_SECOND_CARD);
+                    }
+                    break;
+                case 3:
+                    thirdOpponentLayout.setVisibility(View.VISIBLE);
+                    thirdOpponentName.setText(name);
+                    thirdOpponentMoney.setText(String.format(Locale.ENGLISH,"%d",money));
+                    firstOpponentIcon.setBackground(PictureView.getPic(getContext(), picture));
+                    if(player.isActive()){
+                        setInvisibleOpponentCard(ViewControllerActionCode.ADD_THIRD_OPPONENT_FIRST_CARD);
+                        setInvisibleOpponentCard(ViewControllerActionCode.ADD_THIRD_OPPONENT_SECOND_CARD);
+                    }
+                    break;
+                case 4:
+                    fourthOpponentLayout.setVisibility(View.VISIBLE);
+                    fourthOpponentName.setText(name);
+                    fourthOpponentMoney.setText(String.format(Locale.ENGLISH,"%d",money));
+                    firstOpponentIcon.setBackground(PictureView.getPic(getContext(), picture));
+                    if(player.isActive()){
+                        setInvisibleOpponentCard(ViewControllerActionCode.ADD_FOURTH_OPPONENT_FIRST_CARD);
+                        setInvisibleOpponentCard(ViewControllerActionCode.ADD_FOURTH_OPPONENT_SECOND_CARD);
+                    }
+                    break;
+            }
+        });
     }
-
+    @Override
     public void clearOpponentView(int pos){
-        switch (pos){
-            case 1:
-                firstOpponentLayout.setVisibility(View.INVISIBLE);
-                firstOpponentName.setText("");
-                firstOpponentMoney.setText("");
-                firstOpponentIcon.setBackground(null);
-                break;
-            case 2:
-                secondOpponentLayout.setVisibility(View.INVISIBLE);
-                secondOpponentName.setText("");
-                secondOpponentMoney.setText("");
-                secondOpponentIcon.setBackground(null);
-                break;
-            case 3:
-                thirdOpponentLayout.setVisibility(View.INVISIBLE);
-                thirdOpponentName.setText("");
-                thirdOpponentMoney.setText("");
-                thirdOpponentIcon.setBackground(null);
-                break;
-            case 4:
-                fourthOpponentLayout.setVisibility(View.INVISIBLE);
-                fourthOpponentName.setText("");
-                fourthOpponentMoney.setText("");
-                fourthOpponentIcon.setBackground(null);
-                break;
-        }
+        Objects.requireNonNull(getActivity()).runOnUiThread(()->{
+            switch (pos){
+                case 1:
+                    firstOpponentLayout.setVisibility(View.INVISIBLE);
+                    firstOpponentName.setText("");
+                    firstOpponentMoney.setText("");
+                    firstOpponentIcon.setBackground(null);
+                    break;
+                case 2:
+                    secondOpponentLayout.setVisibility(View.INVISIBLE);
+                    secondOpponentName.setText("");
+                    secondOpponentMoney.setText("");
+                    secondOpponentIcon.setBackground(null);
+                    break;
+                case 3:
+                    thirdOpponentLayout.setVisibility(View.INVISIBLE);
+                    thirdOpponentName.setText("");
+                    thirdOpponentMoney.setText("");
+                    thirdOpponentIcon.setBackground(null);
+                    break;
+                case 4:
+                    fourthOpponentLayout.setVisibility(View.INVISIBLE);
+                    fourthOpponentName.setText("");
+                    fourthOpponentMoney.setText("");
+                    fourthOpponentIcon.setBackground(null);
+                    break;
+            }
+        });
     }
-
+    @Override
     public void setPlayerView(Player player) {
-        playerMoney.setText(player.getMoney());
-        //поскольку картинка игрока - постоянная,
-        //то при отображении берём её из шариков
-        int playerPicCode = PokerApplicationManager
-                .getInstance()
-                .getSharedPreferences(Constants.PREFS_NAME, Context.MODE_PRIVATE)
-                .getInt(Constants.PLAYER_PICTURE, 1);
-        playerIcon.setBackground(PictureView.getPic(
-                                        getContext()
-                                        ,playerPicCode
-                                        ));
-        if (!player.getCards().isEmpty()) {
-            setYouCard(
-                    ViewControllerActionCode.ADD_FIRST_PLAYER_CARD
-                    ,player.getCards().get(0)
-            );
-            setYouCard(
-                    ViewControllerActionCode.ADD_SECOND_PLAYER_CARD
-                    ,player.getCards().get(1)
-            );
-        }
-
+        Objects.requireNonNull(getActivity()).runOnUiThread(()-> {
+            //Integer money = new Integer(player.getMoney());
+            playerMoney.setText(String.format(Locale.ENGLISH,"%d",player.getMoney()));
+            //поскольку картинка игрока - постоянная,
+            //то при отображении берём её из шариков
+            int playerPicCode = PokerApplicationManager
+                    .getInstance()
+                    .getSharedPreferences(Constants.PREFS_NAME, Context.MODE_PRIVATE)
+                    .getInt(Constants.PLAYER_PICTURE, 1);
+            playerIcon.setBackground(PictureView.getPic(
+                    getContext()
+                    , playerPicCode
+            ));
+            if (!player.getCards().isEmpty()) {
+                setYouCard(
+                        ViewControllerActionCode.ADD_FIRST_PLAYER_CARD
+                        , player.getCards().get(0)
+                );
+                setYouCard(
+                        ViewControllerActionCode.ADD_SECOND_PLAYER_CARD
+                        , player.getCards().get(1)
+                );
+            }
+        });
     }
 
     private void clearAllCards(){
@@ -309,23 +326,23 @@ public class GameViewFragment extends Fragment implements GameContract.View {
     }
 
     private void setCommunityCard(int action, int card){
-        switch (action){
-            case ViewControllerActionCode.ADD_COMMUNITY_CARD_FIRST:
-                firstCommunityCard.setBackground(CardView.initDrawableVisibleCard(getContext(), card));
-                break;
-            case ViewControllerActionCode.ADD_COMMUNITY_CARD_SECOND:
-                secondCommunityCard.setBackground(CardView.initDrawableVisibleCard(getContext(), card));
-                break;
-            case ViewControllerActionCode.ADD_COMMUNITY_CARD_THIRD:
-                thirdCommunityCard.setBackground(CardView.initDrawableVisibleCard(getContext(), card));
-                break;
-            case ViewControllerActionCode.ADD_COMMUNITY_CARD_FOURTH:
-                fourthCommunityCard.setBackground(CardView.initDrawableVisibleCard(getContext(), card));
-                break;
-            case ViewControllerActionCode.ADD_COMMUNITY_CARD_FIFTH:
-                fifthCommunityCard.setBackground(CardView.initDrawableVisibleCard(getContext(), card));
-                break;
-        }
+            switch (action){
+                case ViewControllerActionCode.ADD_COMMUNITY_CARD_FIRST:
+                    firstCommunityCard.setBackground(CardView.initDrawableVisibleCard(getContext(), card));
+                    break;
+                case ViewControllerActionCode.ADD_COMMUNITY_CARD_SECOND:
+                    secondCommunityCard.setBackground(CardView.initDrawableVisibleCard(getContext(), card));
+                    break;
+                case ViewControllerActionCode.ADD_COMMUNITY_CARD_THIRD:
+                    thirdCommunityCard.setBackground(CardView.initDrawableVisibleCard(getContext(), card));
+                    break;
+                case ViewControllerActionCode.ADD_COMMUNITY_CARD_FOURTH:
+                    fourthCommunityCard.setBackground(CardView.initDrawableVisibleCard(getContext(), card));
+                    break;
+                case ViewControllerActionCode.ADD_COMMUNITY_CARD_FIFTH:
+                    fifthCommunityCard.setBackground(CardView.initDrawableVisibleCard(getContext(), card));
+                    break;
+            }
     }
 
     private void setYouCard(int action, int card){
