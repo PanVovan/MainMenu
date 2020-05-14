@@ -1,6 +1,7 @@
 package com.poker.holdem.view.fragments;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -21,6 +22,7 @@ import com.poker.holdem.Presenter;
 import com.poker.holdem.R;
 import com.poker.holdem.constants.Constants;
 import com.poker.holdem.logic.player.Player;
+import com.poker.holdem.view.activity.MainActivity;
 import com.poker.holdem.view.customparts.seekbar.RaiseSeekBar;
 import com.poker.holdem.view.grafic.CardView;
 import com.poker.holdem.view.grafic.PictureView;
@@ -79,6 +81,7 @@ public class GameViewFragment extends Fragment implements GameContract.View {
 
     @OnClick(R.id.game_info_button)
     void info(){
+        //хуйня
     }
 
     private SeekBar.OnSeekBarChangeListener changeListener(){
@@ -107,13 +110,16 @@ public class GameViewFragment extends Fragment implements GameContract.View {
 
     @OnClick(R.id.exit_button)
     void exit(){
-        //ACHTUNG! TODO: здесь мы выходим в MainActivity
-        //данные о деньгах игрока мы берём из TextView лэйаута игрок
-        //костыль, пока не написали нормальный переход в ChooseGameFragment
+        //TODO: ACHTUNG! здесь мы выходим в MainActivity
         getActivity().runOnUiThread(() -> {
             Toast.makeText(getContext(), "Left lobby", Toast.LENGTH_SHORT).show();
         });
-        presenter.exitButtonClicked();
+        //на мой взгляд, ловко
+        //presenter используется в качестве фабрики
+        //для интентов перехода в MainActivity
+        Intent intent = new Intent(getActivity(), MainActivity.class);
+        intent.putExtra("money", presenter.exitButtonClicked());
+        startActivity(intent);
     }
 
     @Override

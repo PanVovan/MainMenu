@@ -1,10 +1,14 @@
 package com.poker.holdem;
 
+import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
+import android.widget.Toast;
 
 import com.poker.holdem.constants.Constants;
 import com.poker.holdem.logic.GameStatsHolder;
 import com.poker.holdem.logic.player.Player;
+import com.poker.holdem.view.activity.MainActivity;
 import com.poker.holdem.view.util.ViewControllerActionCode;
 
 import java.util.ArrayList;
@@ -58,8 +62,11 @@ public class Presenter implements GameContract.Presenter {
     }
 
     @Override
-    public void exitButtonClicked() {
+    public Integer exitButtonClicked(){           //Intent intent) {
+        //intent.putExtra("money", gameStats.getPlayerByName(this.PLAYER_NAME).getMoney());
         serverController.sendMessageOnServerLeave();
+        return gameStats.getPlayerByName(this.PLAYER_NAME).getMoney();
+
     }
 
     //То, что мы получаем от сервера

@@ -4,6 +4,9 @@ package com.poker.holdem;
 */
 
 
+import android.app.Activity;
+import android.content.Intent;
+
 import com.poker.holdem.logic.player.Player;
 
 import java.util.List;
@@ -30,7 +33,8 @@ public interface GameContract {
         void foldButtonClicked();
         void checkButtonClicked();
         void raiseButtonClicked(int rate);
-        void exitButtonClicked();
+
+        Integer exitButtonClicked();
 
         //Если чето с сервера приходит
         void acceptMessageFromServerNewPlayerJoin(Player player);  //Там по ходу посмотрим что передается, как и везде

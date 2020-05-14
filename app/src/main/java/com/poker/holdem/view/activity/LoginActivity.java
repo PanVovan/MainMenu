@@ -143,8 +143,6 @@ public class LoginActivity extends AppCompatActivity implements LobbyContract.Re
                 prefsEditor.apply();
 
                 Intent intent = new Intent(LoginActivity.this, MainActivity.class);
-                intent.putExtra("picture", responce.getAuthPlayer().getPicture());
-                intent.putExtra("name", responce.getAuthPlayer().getName());
                 intent.putExtra("money", responce.getAuthPlayer().getMoney());
                 startActivity(intent);
             }else
