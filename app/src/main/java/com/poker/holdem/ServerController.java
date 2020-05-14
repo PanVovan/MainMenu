@@ -113,7 +113,9 @@ public class ServerController implements GameContract.Server {
         @Override
         public void call(Object... args) {
             try{
+                Logger.getAnonymousLogger().info("<-resp: "+args[0].toString());
                 EnterResp enterResp = MyDeserializer.desEnterLobbyResponce(args[0].toString());
+                Logger.getAnonymousLogger().info("<-server: "+enterResp.getLobbyinfo().getAllplayers().get(0).getPlayername());
                 if (enterResp.getDidenter())
                     presenter.acceptMessageFromServerEnterLobby(
                             enterResp.getAllAsPlayers()

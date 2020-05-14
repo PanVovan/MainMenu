@@ -41,6 +41,7 @@ public class MainMenuFragment extends Fragment {
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_main_menu, container, false);
         ButterKnife.bind(this, view);
+        //хз, тут ошибку кидает
         //playerMoney.setText(
         //        getActivity()
         //        .getIntent()

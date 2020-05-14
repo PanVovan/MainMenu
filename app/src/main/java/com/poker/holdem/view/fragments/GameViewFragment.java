@@ -114,9 +114,6 @@ public class GameViewFragment extends Fragment implements GameContract.View {
         getActivity().runOnUiThread(() -> {
             Toast.makeText(getContext(), "Left lobby", Toast.LENGTH_SHORT).show();
         });
-        //на мой взгляд, ловко
-        //presenter используется в качестве фабрики
-        //для интентов перехода в MainActivity
         Intent intent = new Intent(getActivity(), MainActivity.class);
         intent.putExtra("money", presenter.exitButtonClicked());
         startActivity(intent);

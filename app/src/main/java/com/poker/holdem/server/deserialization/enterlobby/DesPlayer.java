@@ -15,7 +15,13 @@ public class DesPlayer implements JsonDeserializer<LobbyPlayerResp> {
         JsonObject jsonObject = json.getAsJsonObject();
         LobbyPlayerResp playerResp = new LobbyPlayerResp();
 
-        playerResp.setMoney(jsonObject.get("money").getAsInt());
+        try {
+            playerResp.setMoney(jsonObject.get("money").getAsInt());
+        }catch (Exception e){
+            playerResp.setMoney(0);
+            Logger.getAnonymousLogger().info(" <--- Player's money on server is not correct. That can mean that you've joined a full lobby (in this situation server can't correctly procecc your data).");
+            e.printStackTrace();
+        }
         playerResp.setPicture(jsonObject.get("picture").getAsInt());
         playerResp.setPlayername(jsonObject.get("name").getAsString());
 

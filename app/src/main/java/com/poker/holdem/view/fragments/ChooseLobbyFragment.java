@@ -70,6 +70,7 @@ public class ChooseLobbyFragment extends Fragment implements LobbyContract.MenuL
     public void onDestroy() {
         super.onDestroy();
         socket.off("getlobbies", onGetLobbies);
+        socket.disconnect();
     }
 
     private void setLobbies(){
@@ -107,7 +108,6 @@ public class ChooseLobbyFragment extends Fragment implements LobbyContract.MenuL
             getActivity().runOnUiThread(() -> {
                 RespRooms roomsObject = MyDeserializer.desGetLobbiesResponce(args[0].toString());
                 lobbies.addAll(roomsObject.getRooms());
-                logger.info("<-------------got responce"+roomsObject.getRooms().get(0).getName());
                 setLobbies();
             });
         }

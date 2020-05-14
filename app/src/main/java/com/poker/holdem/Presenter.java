@@ -209,7 +209,12 @@ public class Presenter implements GameContract.Presenter {
             ,Integer rounds_done
             ,Integer bank
     ) {
-        Logger.getAnonymousLogger().info("<--------Entered lobby!");
+        Logger logger = Logger.getAnonymousLogger();
+        logger.info("<--------Entered lobby!");
+        logger.info("My money: " + allplayers.get(0).getMoney());
+        allplayers.forEach((i)->{
+            logger.info(i.getName()+"  "+i.getMoney());
+        });
         //сначала сделал отдельными методами, но потом решил вынести
         gameStats.setGame(
                 allplayers
