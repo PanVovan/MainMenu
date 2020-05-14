@@ -116,6 +116,27 @@ public class GameViewFragment extends Fragment implements GameContract.View {
         presenter.exitButtonClicked();
     }
 
+    @Override
+    public void updatePlayerMoney(int pos, Integer money){
+        switch (pos){
+            case ViewControllerActionCode.POSITION_OPPONENT_FIRST:
+                firstOpponentMoney.setText(money.toString());
+                break;
+            case ViewControllerActionCode.POSITION_OPPONENT_SECOND:
+                secondOpponentMoney.setText(money.toString());
+                break;
+            case ViewControllerActionCode.POSITION_OPPONENT_THIRD:
+                thirdOpponentMoney.setText(money.toString());
+                break;
+            case ViewControllerActionCode.POSITION_OPPONENT_FOURTH:
+                fourthOpponentMoney.setText(money.toString());
+                break;
+            case ViewControllerActionCode.POSITION_MAIN_PLAYER:
+                playerMoney.setText(money.toString());
+                break;
+        }
+    }
+
     public void clearCards(int typeOfClear) {
         switch (typeOfClear) {
             case ViewControllerActionCode.CLEAR_PLAYER_CARDS:
@@ -173,6 +194,7 @@ public class GameViewFragment extends Fragment implements GameContract.View {
                 firstOpponentLayout.setVisibility(View.VISIBLE);
                 firstOpponentName.setText(name);
                 firstOpponentMoney.setText(money.toString());
+                firstOpponentIcon.setBackground(PictureView.getPic(getContext(), picture));
                 if(player.isActive()){
                     setInvisibleOpponentCard(ViewControllerActionCode.ADD_FIRST_OPPONENT_FIRST_CARD);
                     setInvisibleOpponentCard(ViewControllerActionCode.ADD_FIRST_OPPONENT_SECOND_CARD);
@@ -182,6 +204,7 @@ public class GameViewFragment extends Fragment implements GameContract.View {
                 secondOpponentLayout.setVisibility(View.VISIBLE);
                 secondOpponentName.setText(name);
                 secondOpponentMoney.setText(money.toString());
+                firstOpponentIcon.setBackground(PictureView.getPic(getContext(), picture));
                 if(player.isActive()){
                     setInvisibleOpponentCard(ViewControllerActionCode.ADD_SECOND_OPPONENT_FIRST_CARD);
                     setInvisibleOpponentCard(ViewControllerActionCode.ADD_SECOND_OPPONENT_SECOND_CARD);
@@ -191,6 +214,7 @@ public class GameViewFragment extends Fragment implements GameContract.View {
                 thirdOpponentLayout.setVisibility(View.VISIBLE);
                 thirdOpponentName.setText(name);
                 thirdOpponentMoney.setText(money.toString());
+                firstOpponentIcon.setBackground(PictureView.getPic(getContext(), picture));
                 if(player.isActive()){
                     setInvisibleOpponentCard(ViewControllerActionCode.ADD_THIRD_OPPONENT_FIRST_CARD);
                     setInvisibleOpponentCard(ViewControllerActionCode.ADD_THIRD_OPPONENT_SECOND_CARD);
@@ -200,6 +224,7 @@ public class GameViewFragment extends Fragment implements GameContract.View {
                 fourthOpponentLayout.setVisibility(View.VISIBLE);
                 fourthOpponentName.setText(name);
                 fourthOpponentMoney.setText(money.toString());
+                firstOpponentIcon.setBackground(PictureView.getPic(getContext(), picture));
                 if(player.isActive()){
                     setInvisibleOpponentCard(ViewControllerActionCode.ADD_FOURTH_OPPONENT_FIRST_CARD);
                     setInvisibleOpponentCard(ViewControllerActionCode.ADD_FOURTH_OPPONENT_SECOND_CARD);

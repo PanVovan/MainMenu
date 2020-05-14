@@ -20,6 +20,7 @@ public interface GameContract {
         //типа активности игрока
         void setOpponentView (int pos, Player player);
         void setPlayerView (Player player);
+        void updatePlayerMoney(int pos, Integer money);
         void clearOpponentView(int pos);
     }
 
@@ -33,11 +34,12 @@ public interface GameContract {
 
         //Если чето с сервера приходит
         void acceptMessageFromServerNewPlayerJoin(Player player);  //Там по ходу посмотрим что передается, как и везде
-        void acceptMessageFromServerOpponentCheck(String name, String nextLead);
-        void acceptMessageFromServerOpponentRaise(String name, Integer rate, String nextLead);
-        void acceptMessageFromServerOpponentAllIn(String name, String nextLead);
-        void acceptMessageFromServerOpponentFold(String name, String nextLead);
-        void acceptMessageFromServerOpponentLeft(String name, String nextLead);
+        void acceptMessageFromServerOpponentCheck(String name, String nextLead, boolean didRoundChange);
+        void acceptMessageFromServerOpponentRaise(String name, Integer rate, String nextLead, boolean didRoundChange);
+        void acceptMessageFromServerOpponentAllIn(String name, String nextLead, boolean didRoundChange);
+        void acceptMessageFromServerOpponentFold(String name, String nextLead, boolean didRoundChange);
+        void acceptMessageFromServerOpponentLeft(String name, String nextLead, boolean didRoundChange);
+        void acceptMessageFromServerOpponentLefMeDidSomething(String nextLead, boolean didRoundChange);
         void acceptMessageFromServerOpponentStop(String name);
         void acceptMessageFromServerOpponentRestore(String name);
         void acceptMessageFromServerEndGame(Integer winVal, List<String> winners);
@@ -49,6 +51,7 @@ public interface GameContract {
                 ,String lead
                 ,Integer base_rate
                 ,Integer rounds_done
+                ,Integer bank
         );
         void acceptMessageFromServerRestore(
                 List<Player> allplayers
@@ -58,6 +61,7 @@ public interface GameContract {
                 ,String lead
                 ,Integer base_rate
                 ,Integer rounds_done
+                ,Integer bank
         );
         void acceptMessageFromServerGameStarts(
                 List<Player> allplayers
@@ -66,7 +70,6 @@ public interface GameContract {
                 ,Map<String, List<Integer>> playersCardsMap
                 ,String lead
                 ,Integer base_rate
-                ,Integer rounds_done
         );
 
     }

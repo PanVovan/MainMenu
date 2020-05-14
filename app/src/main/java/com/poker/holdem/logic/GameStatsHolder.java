@@ -18,30 +18,55 @@ public class GameStatsHolder {
     private Integer bank;
     private Integer rate;
     private String lead;
-    private int numberOfCardsOpened;
+    private int roundsNum;
 
-    public void onPlayerCheck(String name){
-
+    public void onPlayerRaise(String name, int newRate){
+        this.rate = newRate; playerSpendMoney(name, rate);
+    }
+    public void onPlayerFold(String name){  }
+    public void onPlayerCheck(String name){ playerSpendMoney(name, rate); }
+    public void onPlayerAllIn(String name){
+        playerSpendMoney(name, getPlayerByName(name).getMoney());
+    }
+    public void onPlayerStop(String name){}
+    public void onPlayerRestore(String name){}
+    public void onEndGame(int win_val, List<String> winners){
+        this.bank = 0;
+        this.players.forEach((i)->{
+            if(winners.contains(i.getName()))
+                i.setMoney(i.getMoney()+win_val);
+        });
+    }
+    public void addNewPlayer(Player player){
+        player.setActive(false);
+        player.setCards(new ArrayList<>());
+        this.players.add(player);
     }
 
 
-
-
-
-    public void initPlayers(
+    public void setGame(
             List<Player> allplayers
             ,List<Player> activePlayers
             ,Map<String, List<Integer>> playersCardsMap
             ,String mainName
+            ,List<Integer> cardsOnTable
+            ,String lead
+            ,Integer base_rate
+            ,Integer bank
+            ,Integer roundNum
     ){
-        players = allplayers;
-
+        this.roundsNum = roundNum;
+        this.bank = bank;
+        //иницивлизируем так <- не всегда
+        //List<> это ArrayList<>
+        players = new ArrayList<>(allplayers);
+        deck = new ArrayList<>(cardsOnTable);
+        this.rate = base_rate;
+        this.lead = lead;
         //предопределяем всех неактивными
         //и не совершившими ход
-        for (Player i: players) {
+        for (Player i: players)
             i.setActive(false);
-            i.setDidSomethingInThisRound(false);
-        }
         //делаем активными всех, кто играет
         setActivePlayers(activePlayers);
         //...
@@ -50,17 +75,20 @@ public class GameStatsHolder {
         mainPlayer = getPlayerByName(mainName);
     }
 
-    public void onGameAction(String actorName){
-        setPlayerDidSomething(actorName);
-
+    //ищем игрока и забираем у него деньги
+    private void playerSpendMoney(String name, int val){
+        this.players.forEach((i)->{
+            if(i.getName().equals(name)){
+                i.setMoney(i.getMoney()-val);
+                this.bank+=val;
+            }
+        });
     }
 
-    public void onpPlayerLeaves(String actorName){
-
-    }
-
-    public void onPlayerFold(String actorName){
-
+    public void clearAllPlayersCards(){
+        this.players.forEach((i)->{
+            i.setCards(new ArrayList<>());
+        });
     }
 
     private void setGamePlayersCards(Map<String, List<Integer>> cards){
@@ -82,11 +110,24 @@ public class GameStatsHolder {
                 i.setActive(activity);
     }
 
-    private void setPlayerDidSomething(String name){
-        for(Player i: players)
-            if(i.getName().equals(name))
-                i.setDidSomethingInThisRound(true);
+    public void setPlayerPos(String  name, int pos){
+        this.players.forEach((i)->{
+            if(i.getName().equals(name)) i.setPos(pos);
+        });
     }
+
+    public boolean checkIfPlaceIsNotTaken(int pos){
+        for (int i=0; i<this.players.size(); i++)
+            if(this.players.get(i).getPos()==pos)
+                return false;
+            return true;
+    }
+
+    //private void setPlayerDidSomething(String name){
+    //    for(Player i: players)
+    //        if(i.getName().equals(name))
+    //            i.setDidSomethingInThisRound(true);
+    //}
 
     public void setPlayerCards(String name, List<Integer> cards){
         for(Player i: players)
@@ -101,19 +142,20 @@ public class GameStatsHolder {
         return null;
     }
 
-
-    public long getHandPower(int count) {
+    //переименовал в getMainPlayerHandPower, так понятнее
+    public long getMainPlayerHandPower(int count) {
         Hand.Builder builder = new Hand.Builder();
-        for (int i = 0; i<count; i++){
+
+        for (int i = 0; i<count; i++)
             builder.addCommunityCard(Optional.of(new Card(deck.get(i))));
-        }
-        for (Integer card: mainPlayer.getCards()){
+
+        for (Integer card: mainPlayer.getCards())
             builder.addHoleCard(Optional.of(new Card(card)));
-        }
 
         return HandClassifier.getPowerStatic(builder.build());
-
     }
+
+    public boolean mainPlayerIsInGame(){ return this.mainPlayer.isActive(); }
 
     //TODO: метка
     public void deleteOpponent(String name) {
@@ -122,55 +164,31 @@ public class GameStatsHolder {
 
     public Player getMainPlayer(){ return mainPlayer; }
 
-    public int getPosPlayer(String name){
-        return players.indexOf(name);
-    }
+    public int getPosPlayer(String name){ return players.indexOf(name); }
 
-    public Integer getBank() {
-        return bank;
-    }
+    public Integer getBank() { return bank; }
 
-    public void setBank(Integer bank) {
-        this.bank = bank;
-    }
+    public void setBank(Integer bank) { this.bank = bank; }
 
-    public Integer getRate() {
-        return rate;
-    }
+    public Integer getRate() { return rate;  }
 
-    public void setRate(Integer rate) {
-        this.rate = rate;
-    }
+    public void setRate(Integer rate) { this.rate = rate; }
 
-    public String getLead() {
-        return lead;
-    }
+    public String getLead() { return lead; }
 
-    public void setLead(String lead) {
-        this.lead = lead;
-    }
+    public void setLead(String lead) { this.lead = lead; }
 
-    public List<Integer> getDeck() {
-        return deck;
-    }
+    public List<Integer> getDeck() { return deck; }
 
-    public void setDeck(List<Integer> deck) {
-        this.deck = deck;
-    }
+    public void setDeck(List<Integer> deck) { this.deck = deck; }
 
-    public List<Player> getPlayers() {
-        return players;
-    }
+    public List<Player> getPlayers() { return players; }
 
-    public void setPlayers(List<Player> players) {
-        this.players = players;
-    }
+    public void setPlayers(List<Player> players) { this.players = players; }
 
-    public int getNumberOfCardsOpened() {
-        return numberOfCardsOpened;
-    }
+    public int getRoundsNum() { return roundsNum;  }
 
-    public void setNumberOfCardsOpened(int numberOfCardsOpened) {
-        this.numberOfCardsOpened = numberOfCardsOpened;
-    }
+    public void setRoundsNum(int roundsNum) { this.roundsNum = roundsNum; }
+
+    public void increaseRoundsNum(){ this.roundsNum++; }
 }

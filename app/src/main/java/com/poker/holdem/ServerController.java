@@ -115,7 +115,7 @@ public class ServerController implements GameContract.Server {
             try{
                 EnterResp enterResp = MyDeserializer.desEnterLobbyResponce(args[0].toString());
                 if (enterResp.getDidenter())
-                    presenter.acceptMessageFromServerRestore(
+                    presenter.acceptMessageFromServerEnterLobby(
                             enterResp.getAllAsPlayers()
                             ,enterResp.getGamePlayersAsPlayers()
                             ,enterResp.getLobbyinfo().getCards().getDeck()
@@ -123,6 +123,7 @@ public class ServerController implements GameContract.Server {
                             ,enterResp.getLobbyinfo().getLead()
                             ,enterResp.getLobbyinfo().getRate()
                             ,enterResp.getLobbyinfo().getRounds_done()
+                            ,enterResp.getLobbyinfo().getBank()
                     );
                 else
                     Logger.getAnonymousLogger().info("<-----Didn't manage to Enter!");
@@ -137,14 +138,13 @@ public class ServerController implements GameContract.Server {
         public void call(Object... args) {
             try {
                 GameStartsResp gameStartsResp = MyDeserializer.desGameStartsResponce(args[0].toString());
-                presenter.acceptMessageFromServerRestore(
+                presenter.acceptMessageFromServerGameStarts(
                         gameStartsResp.getAllAsPlayers()
                         ,gameStartsResp.getGamePlayersAsPlayers()
                         ,gameStartsResp.getRoomparams().getCards().getDeck()
                         ,gameStartsResp.getPlayersCardsAsMap()
                         ,gameStartsResp.getLead()
                         ,gameStartsResp.getRoomparams().getRate()
-                        ,gameStartsResp.getRoomparams().getRounds_done()
                 );
             }catch (Exception e){
                 sendMessageOnServerLeave();
@@ -174,7 +174,11 @@ public class ServerController implements GameContract.Server {
         public void call(Object... args) {
             try{
                 PlayerAllInResp playerAllInResp = MyDeserializer.desPlayerAllInResp(args[0].toString());
-                presenter.acceptMessageFromServerOpponentAllIn(playerAllInResp.getName(), playerAllInResp.getNewlead());
+                presenter.acceptMessageFromServerOpponentAllIn(
+                        playerAllInResp.getName()
+                        , playerAllInResp.getNewlead()
+                        , playerAllInResp.getNewround()
+                );
             }catch (Exception e){
                 sendMessageOnServerLeave();
                 e.printStackTrace();
@@ -186,7 +190,11 @@ public class ServerController implements GameContract.Server {
         public void call(Object... args) {
             try{
                 PlayerCheckResp playerCheckResp = MyDeserializer.desPlayerCheckResp(args[0].toString());
-                presenter.acceptMessageFromServerOpponentCheck(playerCheckResp.getName(), playerCheckResp.getNewlead());
+                presenter.acceptMessageFromServerOpponentCheck(
+                        playerCheckResp.getName()
+                        , playerCheckResp.getNewlead()
+                        , playerCheckResp.getNewround()
+                );
             }catch (Exception e){
                 sendMessageOnServerLeave();
                 e.printStackTrace();
@@ -198,7 +206,11 @@ public class ServerController implements GameContract.Server {
         public void call(Object... args) {
             try{
                 PlayerFoldResp playerFoldResp = MyDeserializer.desPlayerFoldResp(args[0].toString());
-                presenter.acceptMessageFromServerOpponentFold(playerFoldResp.getName(), playerFoldResp.getNewlead());
+                presenter.acceptMessageFromServerOpponentFold(
+                        playerFoldResp.getName()
+                        , playerFoldResp.getNewlead()
+                        , playerFoldResp.getNewround()
+                );
             }catch (Exception e){
                 sendMessageOnServerLeave();
                 e.printStackTrace();
@@ -210,7 +222,11 @@ public class ServerController implements GameContract.Server {
         public void call(Object... args) {
             try{
                 PlayerLeftResp playerLeftResp = MyDeserializer.desPlayerLeftResp(args[0].toString());
-                presenter.acceptMessageFromServerOpponentLeft(playerLeftResp.getName(), playerLeftResp.getNewlead());
+                presenter.acceptMessageFromServerOpponentLeft(
+                        playerLeftResp.getName()
+                        , playerLeftResp.getNewlead()
+                        , playerLeftResp.getNewround()
+                );
             }catch (Exception e){
                 sendMessageOnServerLeave();
                 e.printStackTrace();
@@ -222,7 +238,12 @@ public class ServerController implements GameContract.Server {
         public void call(Object... args) {
             try{
                 PlayerRaiseResp playerRaiseResp = MyDeserializer.desPlayerRaiseResp(args[0].toString());
-                presenter.acceptMessageFromServerOpponentRaise(playerRaiseResp.getName(), playerRaiseResp.getRate(), playerRaiseResp.getNewlead());
+                presenter.acceptMessageFromServerOpponentRaise(
+                        playerRaiseResp.getName()
+                        , playerRaiseResp.getRate()
+                        , playerRaiseResp.getNewlead()
+                        ,playerRaiseResp.getNewround()
+                );
             }catch (Exception e){
                 sendMessageOnServerLeave();
                 e.printStackTrace();
@@ -276,6 +297,7 @@ public class ServerController implements GameContract.Server {
                             ,restoreResp.getRoomparams().getLead()
                             ,restoreResp.getRoomparams().getRate()
                             ,restoreResp.getRoomparams().getRounds_done()
+                            ,restoreResp.getRoomparams().getBank()
                     );
                 else
                     Logger.getAnonymousLogger().info("<-----Didn't manage to Restore!");
