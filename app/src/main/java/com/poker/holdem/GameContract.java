@@ -40,8 +40,6 @@ public interface GameContract {
         void acceptMessageFromServerOpponentStop(String name);
         void acceptMessageFromServerOpponentRestore(String name);
         void acceptMessageFromServerEndGame(Integer winVal, List<String> winners);
-        void acceptMessageFromServerAddCommunityCard(int card);
-        void acceptMessageFromServerAddCard(String playerName, int card);
         void acceptMessageFromServerEnterLobby(
                 List<Player> allplayers
                 ,List<Player> gameplayers

@@ -97,6 +97,11 @@ public class GameStatsHolder {
         return null;
     }
 
+    //TODO: метка
+    public void deleteOpponent(String name) {
+        players.remove(getPlayerByName(name));
+    }
+
     public Player getMainPlayer(){ return mainPlayer; }
 
     public int getPosPlayer(String name){
