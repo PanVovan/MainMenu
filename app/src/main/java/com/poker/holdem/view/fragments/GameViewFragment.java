@@ -64,11 +64,14 @@ public class GameViewFragment extends Fragment implements GameContract.View {
         }
     }
 
+
+    //TODO: посылать не прогресс, а деньги
     @OnClick(R.id.set_rate_button)
     void setRate() {
         if (setRateLayout.getVisibility() == View.VISIBLE){
             setRateLayout.setVisibility(View.INVISIBLE);
             setRateTextView.setText("");
+            presenter.raiseButtonClicked(raiseSeekBar.getValue());
             youRate.setText(raiseSeekBar.getValue().toString());
         }
     }
