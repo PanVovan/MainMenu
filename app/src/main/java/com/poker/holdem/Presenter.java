@@ -5,14 +5,11 @@ import android.content.Context;
 import com.poker.holdem.constants.Constants;
 import com.poker.holdem.logic.GameStatsHolder;
 import com.poker.holdem.logic.handlogic.Hand;
-import com.poker.holdem.logic.handlogic.card.Card;
 import com.poker.holdem.logic.player.Player;
-import com.poker.holdem.view.util.ViewControllerActionCode;
 
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
-import java.util.Optional;
 import java.util.Stack;
 import java.util.logging.Logger;
 
@@ -90,7 +87,7 @@ public class Presenter implements GameContract.Presenter {
     }
     @Override
     public void acceptMessageFromServerOpponentLeft(String name, String newLead) {
-
+        gameStats.deleteOpponent(name);
     }
     @Override
     public void acceptMessageFromServerOpponentStop(String name) {
@@ -104,36 +101,37 @@ public class Presenter implements GameContract.Presenter {
     public void acceptMessageFromServerEndGame(Integer winVal, List<String> winners) {
 
     }
+
     //TODO: сделать нормально
-    @Override
-    public void acceptMessageFromServerAddCommunityCard(int card) {
-        handBuilder.addCommunityCard(Optional.of(new Card(card)));
-        switch (handBuilder.getCommunityCards().size()){
-            case 1:
-                gameView.setCardView(ViewControllerActionCode.ADD_COMMUNITY_CARD_FIRST, card);
-                break;
-            case 2:
-                gameView.setCardView(ViewControllerActionCode.ADD_COMMUNITY_CARD_SECOND, card);
-                break;
-            case 3:
-                gameView.setCardView(ViewControllerActionCode.ADD_COMMUNITY_CARD_THIRD, card);
-                break;
-            case 4:
-                gameView.setCardView(ViewControllerActionCode.ADD_COMMUNITY_CARD_FOURTH, card);
-                break;
-            case 5:
-                gameView.setCardView(ViewControllerActionCode.ADD_COMMUNITY_CARD_FIFTH, card);
-                break;
-        }
-    }
+    //@Override
+    //public void acceptMessageFromServerAddCommunityCard(int card) {
+    //    handBuilder.addCommunityCard(Optional.of(new Card(card)));
+    //    switch (handBuilder.getCommunityCards().size()){
+    //        case 1:
+    //            gameView.setCardView(ViewControllerActionCode.ADD_COMMUNITY_CARD_FIRST, card);
+    //            break;
+    //        case 2:
+    //            gameView.setCardView(ViewControllerActionCode.ADD_COMMUNITY_CARD_SECOND, card);
+    //            break;
+    //        case 3:
+    //            gameView.setCardView(ViewControllerActionCode.ADD_COMMUNITY_CARD_THIRD, card);
+    //            break;
+    //        case 4:
+    //            gameView.setCardView(ViewControllerActionCode.ADD_COMMUNITY_CARD_FOURTH, card);
+    //            break;
+    //        case 5:
+    //            gameView.setCardView(ViewControllerActionCode.ADD_COMMUNITY_CARD_FIFTH, card);
+    //            break;
+    //    }
+    //}
 
     //TODO:не знаю, нужен ли этот метод
     //сервер выдаёт карты большими партиями, и лучше
     //это VV организовать в acceptMessageFromServerEnterLobby и т.п.
     //TODO: извлечь из префов имя игрока, или как что то еще в зависимость от сервера
     //имя извлечено
-    @Override
-    public void acceptMessageFromServerAddCard(String name, int card) {
+    // @Override
+    //public void acceptMessageFromServerAddCard(String name, int card) {
         /*String playername = PokerApplicationManager
                 .getInstance()
                 .getSharedPreferences(Constants.PREFS_NAME, Context.MODE_PRIVATE)
@@ -201,7 +199,7 @@ public class Presenter implements GameContract.Presenter {
                 }
             }
         }*/
-    }
+    //}
 
     @Override
     public void acceptMessageFromServerEnterLobby(
