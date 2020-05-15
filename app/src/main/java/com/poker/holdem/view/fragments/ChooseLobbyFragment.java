@@ -21,6 +21,7 @@ import com.poker.holdem.view.customparts.lobby_view.RoomRecyclerViewAdapter;
 import com.poker.holdem.view.util.NavigationHost;
 
 import java.util.ArrayList;
+import java.util.Objects;
 import java.util.logging.Logger;
 
 import butterknife.BindView;
@@ -41,6 +42,7 @@ public class ChooseLobbyFragment extends Fragment implements LobbyContract.MenuL
     @BindView(R.id.private_games) Button privateButton;
     @BindView(R.id.public_games) Button publicButton;
     @BindView(R.id.btn_navigate_to_main_menu) Button exitBtn;
+    @BindView(R.id.clear_lobbies) Button clear_lobbies_button;
 
     private ArrayList<RespRoom> lobbies = new ArrayList<>();
 
@@ -57,20 +59,11 @@ public class ChooseLobbyFragment extends Fragment implements LobbyContract.MenuL
         View view = inflater.inflate(R.layout.fragment_choose_lobby, container, false);
         ButterKnife.bind(this, view);
 
-
         adapter = new RoomRecyclerViewAdapter(lobbies, getContext());
         layoutManager = new LinearLayoutManager(getContext());
         sendMessageOnServerGetLobbies();
 
-
-
         return view;
-    }
-    @Override
-    public void onDestroy() {
-        super.onDestroy();
-        socket.off("getlobbies", onGetLobbies);
-        socket.disconnect();
     }
 
     private void setLobbies(){
@@ -86,12 +79,23 @@ public class ChooseLobbyFragment extends Fragment implements LobbyContract.MenuL
 
     @OnClick(R.id.btn_navigate_to_main_menu)
     void navigateToMainMenu (){
-        ((NavigationHost) getActivity()).navigateTo(new MainMenuFragment(), false);
+        ((NavigationHost) Objects.requireNonNull(getActivity())).navigateTo(new MainMenuFragment(), false);
+    }
+    @OnClick(R.id.clear_lobbies)
+    void clearLobbies(){
+        PokerApplicationManager applicationManager = (PokerApplicationManager) Objects.requireNonNull(getActivity()).getApplication();
+        if(applicationManager.getSocket() != null){
+            socket = applicationManager.getSocket();
+            socket.connect();
+            socket.emit("clearlobbies");
+            socket.disconnect();
+        }else
+            Logger.getAnonymousLogger().info("PokerApplicationManager return null object! ChooseLobby");
     }
 
     @Override
     public void sendMessageOnServerGetLobbies() {
-        PokerApplicationManager applicationManager = (PokerApplicationManager)getActivity().getApplication();
+        PokerApplicationManager applicationManager = (PokerApplicationManager) Objects.requireNonNull(getActivity()).getApplication();
         if(applicationManager.getSocket() != null){
             socket = applicationManager.getSocket();
 
@@ -105,7 +109,13 @@ public class ChooseLobbyFragment extends Fragment implements LobbyContract.MenuL
     private Emitter.Listener onGetLobbies = new Emitter.Listener() {
         @Override
         public void call(Object... args) {
+            Logger.getAnonymousLogger().info("<-"+args[0].toString());
             getActivity().runOnUiThread(() -> {
+                PokerApplicationManager applicationManager = (PokerApplicationManager)getActivity().getApplication();
+                if(applicationManager.getSocket() != null){
+                    socket = applicationManager.getSocket();
+                    socket.disconnect();
+                }
                 RespRooms roomsObject = MyDeserializer.desGetLobbiesResponce(args[0].toString());
                 lobbies.addAll(roomsObject.getRooms());
                 setLobbies();

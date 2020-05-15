@@ -34,16 +34,6 @@ import io.socket.emitter.Emitter;
 public class ServerController implements GameContract.Server {
 
     private GameContract.Presenter presenter;
-    private MyThread handlerThread;
-
-    ////Скорее всего он понадобится для прослушивания, но может и нет, я не шарю как это работает
-    //private Thread listenThread;
-
-    ////На всякий, если не понадобится
-    //@Override
-    //public void run() {
-
-    //}
 
     private Socket socket;
     private SharedPreferences prefs;
@@ -51,6 +41,7 @@ public class ServerController implements GameContract.Server {
     private String SESSION_TOKEN;
     private String PLAYER_NAME;
     private String ROOM_NAME = "";
+    private static  boolean toLog = true;
 
     ServerController(GameContract.Presenter presenter){
 
@@ -63,7 +54,6 @@ public class ServerController implements GameContract.Server {
                 .getSharedPreferences(Constants.PREFS_NAME, Context.MODE_PRIVATE)
                 .getString(Constants.PLAYER_NAME, "");
 
-        this.handlerThread = new MyThread("Server Thread");
         this.presenter = presenter;
 
         this.socket = PokerApplicationManager.getInstance().getSocket();
@@ -113,6 +103,7 @@ public class ServerController implements GameContract.Server {
         @Override
         public void call(Object... args) {
             try{
+                if (toLog) Logger.getAnonymousLogger().info("<-"+args[0].toString());
                 //Logger.getAnonymousLogger().info("<-resp: "+args[0].toString());
                 EnterResp enterResp = MyDeserializer.desEnterLobbyResponce(args[0].toString());
                 //Logger.getAnonymousLogger().info("<-server: "+enterResp.getLobbyinfo().getAllplayers().get(0).getPlayername());
@@ -140,6 +131,7 @@ public class ServerController implements GameContract.Server {
         @Override
         public void call(Object... args) {
             try {
+                if (toLog) Logger.getAnonymousLogger().info("<-"+args[0].toString());
                 GameStartsResp gameStartsResp = MyDeserializer.desGameStartsResponce(args[0].toString());
                 presenter.acceptMessageFromServerGameStarts(
                         gameStartsResp.getAllAsPlayers()
@@ -160,6 +152,7 @@ public class ServerController implements GameContract.Server {
         @Override
         public void call(Object... args) {
             try{
+                if (toLog) Logger.getAnonymousLogger().info("<-"+args[0].toString());
                 NewPlayerJoinResp newPlayerJoinResp = MyDeserializer.desNewPlayerJoinResp(args[0].toString());
                 Player player = new Player();
                 player.setMoney(newPlayerJoinResp.getMoney());
@@ -176,6 +169,7 @@ public class ServerController implements GameContract.Server {
         @Override
         public void call(Object... args) {
             try{
+                if (toLog) Logger.getAnonymousLogger().info("<-"+args[0].toString());
                 PlayerAllInResp playerAllInResp = MyDeserializer.desPlayerAllInResp(args[0].toString());
                 presenter.acceptMessageFromServerOpponentAllIn(
                         playerAllInResp.getName()
@@ -192,6 +186,7 @@ public class ServerController implements GameContract.Server {
         @Override
         public void call(Object... args) {
             try{
+                if (toLog) Logger.getAnonymousLogger().info("<-"+args[0].toString());
                 PlayerCheckResp playerCheckResp = MyDeserializer.desPlayerCheckResp(args[0].toString());
                 presenter.acceptMessageFromServerOpponentCheck(
                         playerCheckResp.getName()
@@ -208,6 +203,7 @@ public class ServerController implements GameContract.Server {
         @Override
         public void call(Object... args) {
             try{
+                if (toLog) Logger.getAnonymousLogger().info("<-"+args[0].toString());
                 PlayerFoldResp playerFoldResp = MyDeserializer.desPlayerFoldResp(args[0].toString());
                 presenter.acceptMessageFromServerOpponentFold(
                         playerFoldResp.getName()
@@ -224,6 +220,7 @@ public class ServerController implements GameContract.Server {
         @Override
         public void call(Object... args) {
             try{
+                if (toLog) Logger.getAnonymousLogger().info("<-"+args[0].toString());
                 PlayerLeftResp playerLeftResp = MyDeserializer.desPlayerLeftResp(args[0].toString());
                 presenter.acceptMessageFromServerOpponentLeft(
                         playerLeftResp.getName()
@@ -240,6 +237,7 @@ public class ServerController implements GameContract.Server {
         @Override
         public void call(Object... args) {
             try{
+                if (toLog) Logger.getAnonymousLogger().info("<-"+args[0].toString());
                 PlayerRaiseResp playerRaiseResp = MyDeserializer.desPlayerRaiseResp(args[0].toString());
                 presenter.acceptMessageFromServerOpponentRaise(
                         playerRaiseResp.getName()
@@ -257,6 +255,7 @@ public class ServerController implements GameContract.Server {
         @Override
         public void call(Object... args) {
             try{
+                if (toLog) Logger.getAnonymousLogger().info("<-"+args[0].toString());
                 String name = MyDeserializer.desPlayerStopsRespName(args[0].toString());
                 presenter.acceptMessageFromServerOpponentStop(name);
             }catch (Exception e){
@@ -269,6 +268,7 @@ public class ServerController implements GameContract.Server {
         @Override
         public void call(Object... args) {
             try{
+                if (toLog) Logger.getAnonymousLogger().info("<-"+args[0].toString());
                 String name = MyDeserializer.desPlayerRestoresRespName(args[0].toString());
                 presenter.acceptMessageFromServerOpponentRestore(name);
             }catch (Exception e){
@@ -281,6 +281,7 @@ public class ServerController implements GameContract.Server {
         @Override
         public void call(Object... args) {
             try{
+                if (toLog) Logger.getAnonymousLogger().info("<-"+args[0].toString());
                 RestoreResp restoreResp = MyDeserializer.desRestoreResp(args[0].toString());
 
                 //при восстановлении выдаётся новый токен, который нужно записать
@@ -313,6 +314,7 @@ public class ServerController implements GameContract.Server {
     };
     private Emitter.Listener onYouAllIn = args -> {
         try{
+            if (toLog) Logger.getAnonymousLogger().info("<-"+args[0].toString());
             YouAllInResp youAllInResp = MyDeserializer.desYouAllInResp(args[0].toString());
             if(!youAllInResp.getFlag()){
                 Logger.getAnonymousLogger().info("<-----Didn't manage to AllIn!");
@@ -324,6 +326,7 @@ public class ServerController implements GameContract.Server {
     };
     private Emitter.Listener onYouCheck = args -> {
         try{
+            if (toLog) Logger.getAnonymousLogger().info("<-"+args[0].toString());
             YouCheckResp youCheckResp = MyDeserializer.desYouCheckResp(args[0].toString());
             if(!youCheckResp.getFlag()){
                 Logger.getAnonymousLogger().info("<-----Didn't manage to Check!");
@@ -335,6 +338,7 @@ public class ServerController implements GameContract.Server {
     };
     private Emitter.Listener onYouFold = args -> {
         try{
+            if (toLog) Logger.getAnonymousLogger().info("<-"+args[0].toString());
             YouFoldResp youFoldResp = MyDeserializer.desYouFoldResp(args[0].toString());
             if(!youFoldResp.getFlag()){
                 Logger.getAnonymousLogger().info("<-----Didn't manage to Fold!");
@@ -346,6 +350,7 @@ public class ServerController implements GameContract.Server {
     };
     private Emitter.Listener onYouRaise = args -> {
         try{
+            if (toLog) Logger.getAnonymousLogger().info("<-"+args[0].toString());
             YouRaiseResp youRaiseResp = MyDeserializer.desYouRaiseResp(args[0].toString());
             if(!youRaiseResp.getFlag()){
                 Logger.getAnonymousLogger().info("<-----Didn't manage to Raise!");
@@ -357,6 +362,7 @@ public class ServerController implements GameContract.Server {
     };
     private Emitter.Listener onYouLeft = args -> {
         try{
+            if (toLog) Logger.getAnonymousLogger().info("<-"+args[0].toString());
             Integer myMoney = MyDeserializer.desYouLeft(args[0].toString());
             Logger.getAnonymousLogger().info("<--------In controller. I quit. My money: "+myMoney);
         }catch (Exception e){
@@ -369,6 +375,7 @@ public class ServerController implements GameContract.Server {
         @Override
         public void call(Object... args) {
             try{
+                if (toLog) Logger.getAnonymousLogger().info("<-"+args[0].toString());
                 EndgameResp endgameResp = MyDeserializer.desEndgameResp(args[0].toString());
                 presenter.acceptMessageFromServerEndGame(
                         endgameResp.getWinVal()
@@ -383,6 +390,7 @@ public class ServerController implements GameContract.Server {
 
     @Override
     public void sendMessageOnServerFold() {
+        if (toLog) Logger.getAnonymousLogger().info("<-sending");
         socket.emit("fold"
                 ,GetJSON.nameLobbynameToken(
                         this.PLAYER_NAME
@@ -394,6 +402,7 @@ public class ServerController implements GameContract.Server {
 
     @Override
     public void sendMessageOnServerCheck() {
+        if (toLog) Logger.getAnonymousLogger().info("<-sending");
         socket.emit("check"
                 ,GetJSON.nameLobbynameToken(
                         this.PLAYER_NAME
@@ -405,6 +414,7 @@ public class ServerController implements GameContract.Server {
 
     @Override
     public void sendMessageOnServerRaise(int rate) {
+        if (toLog) Logger.getAnonymousLogger().info("<-sending");
         socket.emit("raise"
                 ,GetJSON.nameLobbynameTokenRate(
                         this.PLAYER_NAME
@@ -417,6 +427,7 @@ public class ServerController implements GameContract.Server {
 
     @Override
     public void sendMessageOnServerAllIn() {
+        if (toLog) Logger.getAnonymousLogger().info("<-sending");
         socket.emit("allin"
                 ,GetJSON.nameLobbynameToken(
                         this.PLAYER_NAME
@@ -428,6 +439,7 @@ public class ServerController implements GameContract.Server {
 
     @Override
     public void sendMessageOnServerLeave() {
+        if (toLog) Logger.getAnonymousLogger().info("<-sending");
         socket.emit("leavelobby"
                 ,GetJSON.nameLobbynameToken(
                         this.PLAYER_NAME
@@ -440,6 +452,7 @@ public class ServerController implements GameContract.Server {
 
     @Override
     public void sendMessageOnServerStop() {
+        if (toLog) Logger.getAnonymousLogger().info("<-sending");
         socket.emit("stop"
                 ,GetJSON.nameLobbynameToken(
                         this.PLAYER_NAME
@@ -451,6 +464,7 @@ public class ServerController implements GameContract.Server {
 
     @Override
     public void sendMessageOnServerRestore() {
+        if (toLog) Logger.getAnonymousLogger().info("<-sending");
         socket.emit("restore"
                 ,GetJSON.nameLobbynameToken(
                         this.ROOM_NAME
@@ -462,6 +476,7 @@ public class ServerController implements GameContract.Server {
 
     @Override
     public void sendMessageOnServerHandPower(long power) {
+        if (toLog) Logger.getAnonymousLogger().info("<-sending");
         socket.emit("myhandpower"
                 ,GetJSON.nameTokenPower(
                         this.PLAYER_NAME
@@ -473,6 +488,7 @@ public class ServerController implements GameContract.Server {
 
     @Override
     public void sendMessageOnServerEnterLobby(String roomName) {
+        if (toLog) Logger.getAnonymousLogger().info("<-sending");
         this.ROOM_NAME = roomName;
         socket.emit("enterlobby",
                 GetJSON.nameLobbynameToken(

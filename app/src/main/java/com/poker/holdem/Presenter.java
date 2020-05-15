@@ -226,6 +226,8 @@ public class Presenter implements GameContract.Presenter {
                 ,bank
                 ,rounds_done
         );
+
+        if(!isgamerunning) gameStats.setPlayerCards(gameStats.getMainPlayerName(), new ArrayList<>());
         gameView.setPlayerView(gameStats.getMainPlayer());
         gameStats.setPlayerPos(
                 this.PLAYER_NAME
@@ -236,8 +238,8 @@ public class Presenter implements GameContract.Presenter {
         if(isgamerunning) {
             showFirstFreeCards();
             checkIfShouldOpenNewCard();
+            sitThePlayers();
         }
-        sitThePlayers();
 
     }
     @Override
@@ -309,9 +311,10 @@ public class Presenter implements GameContract.Presenter {
 
     private void sitThePlayers(){
         this.gameStats.getPlayers().forEach((i) -> {
-                    if (gameStats.checkIfPlaceIsNotTaken(ViewControllerActionCode.POSITION_OPPONENT_FIRST))
+                    if (gameStats.checkIfPlaceIsNotTaken(ViewControllerActionCode.POSITION_OPPONENT_FIRST)) {
+                        Logger.getAnonymousLogger().info("opponent first seat is empty. sitting the player "+i.getName());
                         i.setPos(ViewControllerActionCode.POSITION_OPPONENT_FIRST);
-                    if (gameStats.checkIfPlaceIsNotTaken(ViewControllerActionCode.POSITION_OPPONENT_SECOND))
+                    }if (gameStats.checkIfPlaceIsNotTaken(ViewControllerActionCode.POSITION_OPPONENT_SECOND))
                         i.setPos(ViewControllerActionCode.POSITION_OPPONENT_SECOND);
                     if (gameStats.checkIfPlaceIsNotTaken(ViewControllerActionCode.POSITION_OPPONENT_THIRD))
                         i.setPos(ViewControllerActionCode.POSITION_OPPONENT_THIRD);

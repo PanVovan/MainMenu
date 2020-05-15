@@ -14,6 +14,7 @@ public class DesPlayerLeftResp implements JsonDeserializer<PlayerLeftResp> {
     public PlayerLeftResp deserialize(JsonElement json, Type typeOfT, JsonDeserializationContext context) throws JsonParseException {
         JsonObject jsonObject = json.getAsJsonObject();
         PlayerLeftResp playerLeftResp = new PlayerLeftResp();
+        Logger.getAnonymousLogger().info("<----"+jsonObject.getAsString());
         playerLeftResp.setName(jsonObject.get("name").getAsString());
         try {
             playerLeftResp.setNewlead(jsonObject.get("newlead").getAsString());

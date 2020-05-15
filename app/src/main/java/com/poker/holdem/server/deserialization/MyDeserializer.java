@@ -36,10 +36,13 @@ import com.poker.holdem.server.deserialization.getlobbies.RespRoom;
 import com.poker.holdem.server.deserialization.getlobbies.RespRooms;
 import com.poker.holdem.server.deserialization.newplayerjoin.DesNewPlayerJoinResp;
 import com.poker.holdem.server.deserialization.newplayerjoin.NewPlayerJoinResp;
+import com.poker.holdem.server.deserialization.playerallin.DesPlayerAllInResp;
 import com.poker.holdem.server.deserialization.playerallin.PlayerAllInResp;
 import com.poker.holdem.server.deserialization.playercheck.DesPlayerCheckResp;
 import com.poker.holdem.server.deserialization.playercheck.PlayerCheckResp;
+import com.poker.holdem.server.deserialization.playerfold.DesPlayerFoldResp;
 import com.poker.holdem.server.deserialization.playerfold.PlayerFoldResp;
+import com.poker.holdem.server.deserialization.playerleft.DesPlayerLeftResp;
 import com.poker.holdem.server.deserialization.playerleft.PlayerLeftResp;
 import com.poker.holdem.server.deserialization.playerraise.DesPlayerRaiseResp;
 import com.poker.holdem.server.deserialization.playerraise.PlayerRaiseResp;
@@ -219,7 +222,7 @@ public class MyDeserializer {
 
     public static PlayerAllInResp desPlayerAllInResp(String resp){
         Gson gson = new GsonBuilder()
-                .registerTypeAdapter(PlayerCheckResp.class, new DesPlayerCheckResp())
+                .registerTypeAdapter(PlayerAllInResp.class, new DesPlayerAllInResp())
                 .create();
         return gson.fromJson(resp, PlayerAllInResp.class);
     }
@@ -227,7 +230,7 @@ public class MyDeserializer {
 
     public static PlayerFoldResp desPlayerFoldResp(String resp){
         Gson gson = new GsonBuilder()
-                .registerTypeAdapter(PlayerCheckResp.class, new DesPlayerCheckResp())
+                .registerTypeAdapter(PlayerFoldResp.class, new DesPlayerFoldResp())
                 .create();
         return gson.fromJson(resp, PlayerFoldResp.class);
     }
@@ -235,7 +238,7 @@ public class MyDeserializer {
 
     public static PlayerLeftResp desPlayerLeftResp(String resp){
         Gson gson = new GsonBuilder()
-                .registerTypeAdapter(PlayerCheckResp.class, new DesPlayerCheckResp())
+                .registerTypeAdapter(PlayerLeftResp.class, new DesPlayerLeftResp())
                 .create();
         return gson.fromJson(resp, PlayerLeftResp.class);
     }

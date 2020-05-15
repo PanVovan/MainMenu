@@ -53,11 +53,22 @@
         android:layout_width="138dp"
         android:layout_height="55dp"
         android:layout_marginStart="60dp"
-        android:layout_marginLeft="60dp"
         android:adjustViewBounds="true"
         android:background="@drawable/button"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toEndOf="@+id/private_games" />
+
+    <Button
+        android:id="@+id/clear_lobbies"
+        android:text="CLEAR"
+        android:textSize="20sp"
+        android:layout_width="80dp"
+        android:layout_height="55dp"
+        android:layout_marginStart="30dp"
+        android:adjustViewBounds="true"
+        android:background="@drawable/button"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/new_lobby" />
 
     <Button
         android:id="@+id/btn_navigate_to_main_menu"
