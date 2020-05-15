@@ -206,6 +206,7 @@ public class Presenter implements GameContract.Presenter {
             ,Integer base_rate
             ,Integer rounds_done
             ,Integer bank
+            ,boolean isgamerunning
     ) {
         //Logger logger = Logger.getAnonymousLogger();
         //logger.info("<--------Entered lobby!");
@@ -232,8 +233,10 @@ public class Presenter implements GameContract.Presenter {
         );
 
         //TODO: ACHTUNG! тут мы показываем первые три карты на столе
-        showFirstFreeCards();
-        checkIfShouldOpenNewCard();
+        if(isgamerunning) {
+            showFirstFreeCards();
+            checkIfShouldOpenNewCard();
+        }
         sitThePlayers();
 
     }
@@ -247,6 +250,7 @@ public class Presenter implements GameContract.Presenter {
             ,Integer rate
             ,Integer rounds_done
             ,Integer bank
+            ,boolean isgamerunning
     ) {
         gameStats.setGame(
                 allplayers

@@ -55,10 +55,13 @@ import com.poker.holdem.server.deserialization.restore.RestoreRPCardsPlayer;
 import com.poker.holdem.server.deserialization.restore.RestoreRPPlayer;
 import com.poker.holdem.server.deserialization.restore.RestoreResp;
 import com.poker.holdem.server.deserialization.restore.RestoreRoomParams;
+import com.poker.holdem.server.deserialization.youallin.DesYouAllInResp;
 import com.poker.holdem.server.deserialization.youallin.YouAllInResp;
 import com.poker.holdem.server.deserialization.youcheck.DesYouCheckResp;
 import com.poker.holdem.server.deserialization.youcheck.YouCheckResp;
+import com.poker.holdem.server.deserialization.youfold.DesYouFoldResp;
 import com.poker.holdem.server.deserialization.youfold.YouFoldResp;
+import com.poker.holdem.server.deserialization.youraise.DesYouRaiseResp;
 import com.poker.holdem.server.deserialization.youraise.YouRaiseResp;
 
 public class MyDeserializer {
@@ -172,7 +175,7 @@ public class MyDeserializer {
 
     public static YouRaiseResp desYouRaiseResp(String resp){
         Gson gson = new GsonBuilder()
-                .registerTypeAdapter(YouRaiseResp.class, new DesPlayerCheckResp())
+                .registerTypeAdapter(YouRaiseResp.class, new DesYouRaiseResp())
                 .create();
         return gson.fromJson(resp, YouRaiseResp.class);
     }
@@ -180,7 +183,7 @@ public class MyDeserializer {
 
     public static YouAllInResp desYouAllInResp(String resp){
         Gson gson = new GsonBuilder()
-                .registerTypeAdapter(YouCheckResp.class, new DesYouCheckResp())
+                .registerTypeAdapter(YouAllInResp.class, new DesYouAllInResp())
                 .create();
         return gson.fromJson(resp, YouAllInResp.class);
     }
@@ -188,7 +191,7 @@ public class MyDeserializer {
 
     public static YouFoldResp desYouFoldResp(String resp){
         Gson gson = new GsonBuilder()
-                .registerTypeAdapter(YouCheckResp.class, new DesYouCheckResp())
+                .registerTypeAdapter(YouFoldResp.class, new DesYouFoldResp())
                 .create();
         return gson.fromJson(resp, YouFoldResp.class);
     }

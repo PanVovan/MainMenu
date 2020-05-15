@@ -56,6 +56,7 @@ public interface GameContract {
                 ,Integer base_rate
                 ,Integer rounds_done
                 ,Integer bank
+                ,boolean isgamerunning
         );
         void acceptMessageFromServerRestore(
                 List<Player> allplayers
@@ -66,6 +67,7 @@ public interface GameContract {
                 ,Integer base_rate
                 ,Integer rounds_done
                 ,Integer bank
+                ,boolean isgamerunning
         );
         void acceptMessageFromServerGameStarts(
                 List<Player> allplayers

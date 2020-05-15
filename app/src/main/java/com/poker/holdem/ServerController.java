@@ -113,7 +113,7 @@ public class ServerController implements GameContract.Server {
         @Override
         public void call(Object... args) {
             try{
-                Logger.getAnonymousLogger().info("<-resp: "+args[0].toString());
+                //Logger.getAnonymousLogger().info("<-resp: "+args[0].toString());
                 EnterResp enterResp = MyDeserializer.desEnterLobbyResponce(args[0].toString());
                 //Logger.getAnonymousLogger().info("<-server: "+enterResp.getLobbyinfo().getAllplayers().get(0).getPlayername());
                 if (enterResp.getDidenter())
@@ -126,6 +126,7 @@ public class ServerController implements GameContract.Server {
                             ,enterResp.getLobbyinfo().getRate()
                             ,enterResp.getLobbyinfo().getRounds_done()
                             ,enterResp.getLobbyinfo().getBank()
+                            ,enterResp.getLobbyinfo().getIsgamerunning()
                     );
                 else
                     Logger.getAnonymousLogger().info("<-----Didn't manage to Enter!");
@@ -300,6 +301,7 @@ public class ServerController implements GameContract.Server {
                             ,restoreResp.getRoomparams().getRate()
                             ,restoreResp.getRoomparams().getRounds_done()
                             ,restoreResp.getRoomparams().getBank()
+                            ,restoreResp.getRoomparams().getIsgamerunning()
                     );
                 else
                     Logger.getAnonymousLogger().info("<-----Didn't manage to Restore!");
@@ -361,6 +363,7 @@ public class ServerController implements GameContract.Server {
             //sendMessageOnServerLeave();
             e.printStackTrace();
         }
+
     };
     private Emitter.Listener onEndGame = new Emitter.Listener() {
         @Override

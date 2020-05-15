@@ -12,7 +12,7 @@ import java.util.ArrayList;
 public class DesGSRPCardsPlayer implements JsonDeserializer<GameStartsRPCardsPlayer> {
     @Override
     public GameStartsRPCardsPlayer deserialize(JsonElement json, Type typeOfT, JsonDeserializationContext context) throws JsonParseException {
-        JsonObject jsonObject = new JsonObject();
+        JsonObject jsonObject = json.getAsJsonObject();
         GameStartsRPCardsPlayer gameStartsRPCardsPlayer = new GameStartsRPCardsPlayer();
 
         gameStartsRPCardsPlayer.setPlayername(jsonObject.get("playername").getAsString());

@@ -75,7 +75,7 @@ public class GameStatsHolder {
         setGamePlayersCards(playersCardsMap);
         //чтобы каждый раз не искать
         mainPlayer = getPlayerByName(mainName);
-        Logger.getAnonymousLogger().info("name: "+mainName);
+        //Logger.getAnonymousLogger().info("name: "+mainName);
         mainPlayerName = mainName;
     }
 
@@ -175,7 +175,7 @@ public class GameStatsHolder {
     }
 
     public Player getMainPlayer(){
-        Logger.getAnonymousLogger().info("mainPlayername"+mainPlayerName+ " ");
+        //Logger.getAnonymousLogger().info("mainPlayername"+mainPlayerName+ " ");
         return getPlayerByName(mainPlayerName); }
 
     public int getPosPlayer(String name){
