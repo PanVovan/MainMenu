@@ -126,7 +126,7 @@ public class GameViewFragment extends Fragment implements GameContract.View {
         //вот это нужно, чтбы на сервере быгов не было
         int a = presenter.exitButtonClicked();
 
-        //TODO: почему так?
+        //T ODO: почему так?
         getActivity().finish();
 
     }
