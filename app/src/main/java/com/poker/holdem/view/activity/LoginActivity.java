@@ -71,12 +71,6 @@ public class LoginActivity extends AppCompatActivity implements LobbyContract.Re
 
     @Override
     public void sendMessageOnServerRegister(String name, String password, Integer picture, Fragment fragment) {
-        //FragmentTransaction transaction =
-        //        getSupportFragmentManager()
-        //                .beginTransaction()
-        //                .hide(fragment);
-        //transaction.addToBackStack(null);
-        //transaction.commit();
         if(!name.equals("")&&!password.equals("")){
             Logger.getAnonymousLogger().info(name+"<------------->"+password);
             playerPassword = password;

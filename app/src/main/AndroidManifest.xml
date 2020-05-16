@@ -22,8 +22,7 @@
             android:name=".view.activity.SplashActivity"
             android:label="@string/app_name"
             android:screenOrientation="userLandscape"
-            android:theme="@style/SplashTheme"
-            android:noHistory="true">
+            android:theme="@style/SplashTheme">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -36,8 +35,15 @@
             android:noHistory="true"/>
         <activity
             android:name=".view.activity.MainActivity"
-            android:screenOrientation="userLandscape"
-            android:noHistory="true"/>
+            android:screenOrientation="userLandscape">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+
+
     </application>
 
 </manifest>
