@@ -25,7 +25,6 @@ public class DesGSRoomParams implements JsonDeserializer<GameStartsRoomParams> {
 
         GameStartsRPCards cards = context.deserialize(jsonObject.get("cards").getAsJsonObject(), GameStartsRPCards.class);
         gameStartsRoomParams.setCards(cards);
-
         ArrayList<GameStartsRPPlayer> gamePlayers = new ArrayList<>();
         for (JsonElement i: jsonObject.get("playersingame").getAsJsonArray())
             gamePlayers.add(context.deserialize(i.getAsJsonObject(), GameStartsRPPlayer.class));
