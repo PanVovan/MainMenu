@@ -81,7 +81,7 @@ public class ChooseLobbyFragment extends Fragment implements LobbyContract.MenuL
 
     @OnClick(R.id.new_lobby)
     void createLobby(){
-        Objects.requireNonNull((NavigationHost)getActivity()).navigateTo(new CreateLobbyFragment(), false);
+        Objects.requireNonNull((NavigationHost)getActivity()).navigateTo(new CreateLobbyFragment(), true);
     }
 
     @OnClick(R.id.btn_navigate_to_main_menu)
