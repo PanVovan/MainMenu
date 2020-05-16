@@ -65,6 +65,15 @@ public class Presenter implements GameContract.Presenter {
     public Integer exitButtonClicked(){           //Intent intent) {
         //intent.putExtra("money", gameStats.getPlayerByName(this.PLAYER_NAME).getMoney());
         serverController.sendMessageOnServerLeave();
+        PokerApplicationManager.getInstance()
+                .getSharedPreferences(Constants.PREFS_NAME, Context.MODE_PRIVATE)
+                .edit()
+                .putInt(
+                        Constants.PLAYER_MONEY
+                        ,gameStats
+                                .getPlayerByName(this.PLAYER_NAME)
+                                .getMoney()
+                        ).apply();
         return gameStats.getPlayerByName(this.PLAYER_NAME).getMoney();
 
     }

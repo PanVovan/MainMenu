@@ -6,5 +6,6 @@ public class Constants {
     public static String AUTH_TOKEN = "authtoken";
     public static String PLAYER_NAME = "playername";
     public static String PLAYER_PICTURE = "playerpicture";
+    public static String PLAYER_MONEY = "playermoney";
     public static String SESSION_TOKEN = "sessiontoken";
 }

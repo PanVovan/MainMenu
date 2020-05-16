@@ -42,17 +42,17 @@ public class MainMenuFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_main_menu, container, false);
         ButterKnife.bind(this, view);
         //хз, тут ошибку кидает
-        //playerMoney.setText(
-        //        getActivity()
-        //        .getIntent()
-        //         .getIntExtra("money", 0)
-        //);
-        //player_pic.setBackground(PictureView.getPic(
-        //        getContext()
-        //        ,getActivity()
-        //                .getSharedPreferences(Constants.PREFS_NAME, Context.MODE_PRIVATE)
-        //                .getInt(Constants.PLAYER_PICTURE, 1)
-        //));
+        playerMoney.setText(
+                getActivity()
+                .getSharedPreferences(Constants.PREFS_NAME, Context.MODE_PRIVATE)
+                 .getInt("money", 0)
+        );
+        player_pic.setBackground(PictureView.getPic(
+                getContext()
+                ,getActivity()
+                        .getSharedPreferences(Constants.PREFS_NAME, Context.MODE_PRIVATE)
+                        .getInt(Constants.PLAYER_PICTURE, 1)
+        ));
         return view;
     }
 
