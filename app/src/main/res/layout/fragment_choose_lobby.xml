@@ -56,7 +56,9 @@
         android:adjustViewBounds="true"
         android:background="@drawable/button"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/private_games" />
+        app:layout_constraintStart_toEndOf="@+id/private_games"
+        android:text="@string/create_lobby"
+        android:textSize="20sp"/>
 
     <Button
         android:id="@+id/clear_lobbies"

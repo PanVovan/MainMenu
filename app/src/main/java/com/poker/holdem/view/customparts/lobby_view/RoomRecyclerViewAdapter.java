@@ -17,6 +17,7 @@ import com.poker.holdem.server.deserialization.getlobbies.RespRoom;
 import com.poker.holdem.view.activity.GameActivity;
 
 import java.util.ArrayList;
+import java.util.Locale;
 import java.util.logging.Logger;
 
 import butterknife.BindView;
@@ -49,8 +50,8 @@ public class RoomRecyclerViewAdapter extends RecyclerView.Adapter<RoomRecyclerVi
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         RespRoom room = rooms.get(position);
-        holder.playersActive.setText(room.getLength().toString());
-        holder.minRate.setText(room.getRate().toString());
+        holder.playersActive.setText(String.format(Locale.ENGLISH, "%d", room.getLength()));
+        holder.minRate.setText(String.format(Locale.ENGLISH, "%d", room.getRate()));
         holder.lobbyName.setText(room.getName());
 
     }
@@ -72,18 +73,17 @@ public class RoomRecyclerViewAdapter extends RecyclerView.Adapter<RoomRecyclerVi
 
         @OnClick
         public void onClick() {
-            if(Integer.parseInt(playersActive.getText().toString().trim()) < 5)
+            if(Integer.parseInt(playersActive.getText().toString().trim()) < 5) {
                 context.startActivity(
                         new Intent(
                                 context
-                                ,GameActivity.class
+                                , GameActivity.class
                         ).putExtra(
                                 "room"
-                                ,lobbyName.getText().toString()
+                                , lobbyName.getText().toString()
                         )
                 );
-            else {
-                //TODO: в runOnUiThread показывать Toast типа "тебе сюда нельзя"
+            }else {
                 Toast.makeText(context, "The lobby is full!", Toast.LENGTH_SHORT).show();
                 Logger.getAnonymousLogger().info("<--Player attempts to enter a full lobby.");
             }

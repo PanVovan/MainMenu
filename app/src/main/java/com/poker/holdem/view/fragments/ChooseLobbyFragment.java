@@ -44,6 +44,7 @@ public class ChooseLobbyFragment extends Fragment implements LobbyContract.MenuL
     @BindView(R.id.public_games) Button publicButton;
     @BindView(R.id.btn_navigate_to_main_menu) Button exitBtn;
     @BindView(R.id.clear_lobbies) Button clear_lobbies_button;
+    @BindView(R.id.new_lobby) Button newLobby;
 
     private ArrayList<RespRoom> lobbies = new ArrayList<>();
 
@@ -76,6 +77,11 @@ public class ChooseLobbyFragment extends Fragment implements LobbyContract.MenuL
     @OnClick(R.id.public_games)
     void showPublicLobby() {
         label.setBackgroundResource(R.drawable.public_label);
+    }
+
+    @OnClick(R.id.new_lobby)
+    void createLobby(){
+        Objects.requireNonNull((NavigationHost)getActivity()).navigateTo(new CreateLobbyFragment(), false);
     }
 
     @OnClick(R.id.btn_navigate_to_main_menu)
