@@ -1,6 +1,7 @@
 package com.poker.holdem.view.fragments;
 
 import android.os.Bundle;
+import android.os.Handler;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -116,16 +117,15 @@ public class ChooseLobbyFragment extends Fragment implements LobbyContract.MenuL
         @Override
         public void call(Object... args) {
             Logger.getAnonymousLogger().info("<-"+args[0].toString());
-            getActivity().runOnUiThread(() -> {
-                PokerApplicationManager applicationManager = (PokerApplicationManager)getActivity().getApplication();
-                if(applicationManager.getSocket() != null){
-                    socket = applicationManager.getSocket();
-                    socket.disconnect();
-                }
-                RespRooms roomsObject = MyDeserializer.desGetLobbiesResponce(args[0].toString());
-                lobbies.addAll(roomsObject.getRooms());
-                setLobbies();
-            });
+            PokerApplicationManager applicationManager = PokerApplicationManager.getInstance();
+            if(applicationManager.getSocket() != null){
+                socket = applicationManager.getSocket();
+                socket.disconnect();
+            }
+            RespRooms roomsObject = MyDeserializer.desGetLobbiesResponce(args[0].toString());
+            lobbies.addAll(roomsObject.getRooms());
+            getActivity()
+                    .runOnUiThread(() -> setLobbies());
         }
     };
 }

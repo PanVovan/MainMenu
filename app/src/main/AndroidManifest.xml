@@ -5,87 +5,45 @@ package="com.poker.holdem">
 
 <uses-permission android:name="android.permission.INTERNET" />
 
-<application
-    android:name=".PokerApplicationManager"
-    android:allowBackup="true"
-    android:icon="@drawable/game_icon_spades"
-    android:label="@string/app_name"
-    android:roundIcon="@drawable/game_icon_spades"
-    android:supportsRtl="true"
-    android:theme="@style/AppTheme"
-    android:usesCleartextTraffic="true">
-    <activity
-        android:name=".view.activity.LoginActivity"
-        android:screenOrientation="userLandscape"
-        android:noHistory="true"/>
-    <activity
-        android:name=".view.activity.SplashActivity"
+    <application
+        android:name=".PokerApplicationManager"
+        android:allowBackup="true"
+        android:icon="@drawable/game_icon_spades"
         android:label="@string/app_name"
-        android:screenOrientation="userLandscape"
-        android:theme="@style/SplashTheme">
-        <intent-filter>
-            <action android:name="android.intent.action.MAIN" />
+        android:roundIcon="@drawable/game_icon_spades"
+        android:supportsRtl="true"
+        android:theme="@style/AppTheme"
+        android:usesCleartextTraffic="true">
+        <activity
+            android:name=".view.activity.LoginActivity"
+            android:screenOrientation="userLandscape"
+            android:noHistory="true"/>
+        <activity
+            android:name=".view.activity.SplashActivity"
+            android:label="@string/app_name"
+            android:screenOrientation="userLandscape"
+            android:theme="@style/SplashTheme">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
 
-            <category android:name="android.intent.category.LAUNCHER" />
-        </intent-filter>
-    </activity>
-    <activity
-        android:name=".view.activity.GameActivity"
-        android:screenOrientation="userLandscape"
-        android:noHistory="true"/>
-    <activity
-        android:name=".view.activity.MainActivity"
-        android:screenOrientation="userLandscape">
-        <intent-filter>
-            <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name=".view.activity.GameActivity"
+            android:screenOrientation="userLandscape"
+            android:noHistory="true"/>
+        <activity
+            android:name=".view.activity.MainActivity"
+            android:screenOrientation="userLandscape">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
 
-            <category android:name="android.intent.category.DEFAULT" />
-        </intent-filter>
-    </activity>
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
 
-</application>
+
+    </application>
 
 </manifest>
-    <!--?xml version="1.0" encoding="utf-8"?>
-    <manifest- - xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:tools="http://schemas.android.com/tools"
-        package="com.poker.holdem">
-
-        <uses-permission android:name="android.permission.INTERNET" />
-
-        <application
-            android:name=".PokerApplicationManager"
-            android:allowBackup="true"
-            android:icon="@drawable/game_icon_spades"
-            android:label="@string/app_name"
-            android:roundIcon="@drawable/game_icon_spades"
-            android:supportsRtl="true"
-            android:theme="@style/AppTheme"
-            android:usesCleartextTraffic="true">
-            <activity
-                android:name=".view.activity.LoginActivity"
-                android:screenOrientation="userLandscape"
-                android:noHistory="true"/>
-            <activity
-                android:name=".view.activity.SplashActivity"
-                android:label="@string/app_name"
-                android:screenOrientation="userLandscape"
-                android:theme="@style/SplashTheme"
-                android:noHistory="true">
-                <intent-filter>
-                    <action android:name="android.intent.action.MAIN" />
-
-                    <category android:name="android.intent.category.LAUNCHER" />
-                </intent-filter>
-            </activity>
-            <activity
-                android:name=".view.activity.GameActivity"
-                android:screenOrientation="userLandscape"
-                android:noHistory="true"/>
-            <activity
-                android:name=".view.activity.MainActivity"
-                android:screenOrientation="userLandscape"
-                android:noHistory="true"/>
-        </application>
-
-    </manifest-->
