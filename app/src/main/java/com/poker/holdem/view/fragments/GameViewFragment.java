@@ -30,6 +30,7 @@ import com.poker.holdem.view.util.ViewControllerActionCode;
 
 import java.util.Locale;
 import java.util.Objects;
+import java.util.logging.Logger;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -118,9 +119,11 @@ public class GameViewFragment extends Fragment implements GameContract.View {
     void exit(){
         //TODO: ACHTUNG! здесь мы выходим в MainActivity
         Objects.requireNonNull(getActivity()).runOnUiThread(() -> Toast.makeText(getContext(), "Left lobby", Toast.LENGTH_SHORT).show());
-        Intent intent = new Intent(getActivity(), MainActivity.class);
-        intent.putExtra("money", presenter.exitButtonClicked());
-        startActivity(intent);
+        //Intent intent = new Intent(getActivity(), MainActivity.class);
+        //intent.putExtra("money", presenter.exitButtonClicked());
+        //startActivity(intent);
+        getActivity().finish();
+
     }
 
     @Override
@@ -200,13 +203,16 @@ public class GameViewFragment extends Fragment implements GameContract.View {
 
     @Override
     public void setOpponentView(int pos, Player player){
+        String name = player.getName();
+        int money = player.getMoney();
+        int picture = player.getNumOfPicture();
         Objects.requireNonNull(getActivity()).runOnUiThread(()->{
-            String name = player.getName();
-            int money = player.getMoney();
-            int picture = player.getNumOfPicture();
+
             switch (pos){
                 case ViewControllerActionCode.POSITION_OPPONENT_FIRST:
                     firstOpponentLayout.setVisibility(View.VISIBLE);
+
+                    Logger.getAnonymousLogger().info("is start");
                     firstOpponentName.setText(name);
                     firstOpponentMoney.setText(String.format(Locale.ENGLISH,"%d",money));
                     firstOpponentIcon.setBackground(PictureView.getPic(getContext(), picture));
@@ -252,25 +258,25 @@ public class GameViewFragment extends Fragment implements GameContract.View {
     public void clearOpponentView(int pos){
         Objects.requireNonNull(getActivity()).runOnUiThread(()->{
             switch (pos){
-                case 1:
+                case ViewControllerActionCode.POSITION_OPPONENT_FIRST:
                     firstOpponentLayout.setVisibility(View.INVISIBLE);
                     firstOpponentName.setText("");
                     firstOpponentMoney.setText("");
                     firstOpponentIcon.setBackground(null);
                     break;
-                case 2:
+                case ViewControllerActionCode.POSITION_OPPONENT_SECOND:
                     secondOpponentLayout.setVisibility(View.INVISIBLE);
                     secondOpponentName.setText("");
                     secondOpponentMoney.setText("");
                     secondOpponentIcon.setBackground(null);
                     break;
-                case 3:
+                case ViewControllerActionCode.POSITION_OPPONENT_THIRD:
                     thirdOpponentLayout.setVisibility(View.INVISIBLE);
                     thirdOpponentName.setText("");
                     thirdOpponentMoney.setText("");
                     thirdOpponentIcon.setBackground(null);
                     break;
-                case 4:
+                case ViewControllerActionCode.POSITION_OPPONENT_FOURTH:
                     fourthOpponentLayout.setVisibility(View.INVISIBLE);
                     fourthOpponentName.setText("");
                     fourthOpponentMoney.setText("");

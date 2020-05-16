@@ -41,24 +41,4 @@ public class GameActivity extends AppCompatActivity implements NavigationHost {
 
         transaction.commit();
     }
-
-    //@Override
-    public void clearCards(int typeOfClear) {
-
-    }
-
-   // @Override
-    public void setCardView(int action, int card) {
-
-    }
-
-    //@Override
-    public void setOpponentView(int pos, String name, Integer money, int picture) {
-
-    }
-
-    //@Override
-    public void setPlayerView(Integer money, int picture) {
-
-    }
 }

@@ -13,6 +13,8 @@ public class DesYouRaiseResp implements JsonDeserializer<YouRaiseResp> {
     public YouRaiseResp deserialize(JsonElement json, Type typeOfT, JsonDeserializationContext context) throws JsonParseException {
         JsonObject jsonObject = json.getAsJsonObject();
         YouRaiseResp youRaiseResp = new YouRaiseResp();
+
+
         youRaiseResp.setFlag(jsonObject.get("flag").getAsBoolean());
         youRaiseResp.setNewlead(jsonObject.get("newlead").getAsString());
         youRaiseResp.setNewround(jsonObject.get("newround").getAsBoolean());
