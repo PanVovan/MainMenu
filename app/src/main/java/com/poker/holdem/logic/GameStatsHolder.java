@@ -147,7 +147,7 @@ public class GameStatsHolder {
     }
 
     public Player getPlayerByName(String name){
-        Player result = new Player();
+        Player result = null;
         for (int i=0; i<players.size(); i++)
             if(players.get(i).getName().equals(name))
                 result =  players.get(i);

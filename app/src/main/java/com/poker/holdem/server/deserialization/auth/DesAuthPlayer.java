@@ -25,6 +25,7 @@ public class DesAuthPlayer implements JsonDeserializer<AuthPlayer> {
         //тупо берём поля, и присваиваем их классу
         authPlayer.setId(jsonObject.get("id").getAsInt());
         try {
+            Logger.getAnonymousLogger().info(jsonObject.toString());
             authPlayer.setMoney(jsonObject.get("money").getAsInt());
         }catch (Exception e){
             authPlayer.setMoney(0);
