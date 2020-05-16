@@ -18,7 +18,6 @@ public class DesGSRPPlayer implements JsonDeserializer<GameStartsRPPlayer> {
         gameStartsRPPlayer.setName(jsonObject.get("name").getAsString());
         gameStartsRPPlayer.setPicture(jsonObject.get("picture").getAsInt());
 
-
         return gameStartsRPPlayer;
     }
 }

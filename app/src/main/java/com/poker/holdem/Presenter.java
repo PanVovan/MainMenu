@@ -235,7 +235,6 @@ public class Presenter implements GameContract.Presenter {
                 ,ViewControllerActionCode.POSITION_MAIN_PLAYER
         );
 
-        //TODO: ACHTUNG! тут мы показываем первые три карты на столе
         if(isgamerunning) {
             showFirstFreeCards();
             checkIfShouldOpenNewCard();

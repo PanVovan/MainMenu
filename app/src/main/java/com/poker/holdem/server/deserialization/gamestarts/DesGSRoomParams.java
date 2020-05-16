@@ -8,6 +8,7 @@ import com.google.gson.JsonParseException;
 
 import java.lang.reflect.Type;
 import java.util.ArrayList;
+import java.util.logging.Logger;
 
 public class DesGSRoomParams implements JsonDeserializer<GameStartsRoomParams> {
     @Override
@@ -25,15 +26,17 @@ public class DesGSRoomParams implements JsonDeserializer<GameStartsRoomParams> {
 
         GameStartsRPCards cards = context.deserialize(jsonObject.get("cards").getAsJsonObject(), GameStartsRPCards.class);
         gameStartsRoomParams.setCards(cards);
+
         ArrayList<GameStartsRPPlayer> gamePlayers = new ArrayList<>();
         for (JsonElement i: jsonObject.get("playersingame").getAsJsonArray())
             gamePlayers.add(context.deserialize(i.getAsJsonObject(), GameStartsRPPlayer.class));
         gameStartsRoomParams.setPlayersingame(gamePlayers);
 
         ArrayList<GameStartsRPPlayer> allPlayers = new ArrayList<>();
-        for (JsonElement i: jsonObject.get("allplayers").getAsJsonArray())
+        for (JsonElement i: jsonObject.get("allplayers").getAsJsonArray()) {
             allPlayers.add(context.deserialize(i.getAsJsonObject(), GameStartsRPPlayer.class));
-        gameStartsRoomParams.setPlayersingame(allPlayers);
+        }
+        gameStartsRoomParams.setAllplayers(allPlayers);
 
 
         return gameStartsRoomParams;
