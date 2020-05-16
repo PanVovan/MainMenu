@@ -205,7 +205,7 @@ public class GameViewFragment extends Fragment implements GameContract.View {
             int money = player.getMoney();
             int picture = player.getNumOfPicture();
             switch (pos){
-                case 1:
+                case ViewControllerActionCode.POSITION_OPPONENT_FIRST:
                     firstOpponentLayout.setVisibility(View.VISIBLE);
                     firstOpponentName.setText(name);
                     firstOpponentMoney.setText(String.format(Locale.ENGLISH,"%d",money));
@@ -215,7 +215,7 @@ public class GameViewFragment extends Fragment implements GameContract.View {
                         setInvisibleOpponentCard(ViewControllerActionCode.ADD_FIRST_OPPONENT_SECOND_CARD);
                     }
                     break;
-                case 2:
+                case ViewControllerActionCode.POSITION_OPPONENT_SECOND:
                     secondOpponentLayout.setVisibility(View.VISIBLE);
                     secondOpponentName.setText(name);
                     secondOpponentMoney.setText(String.format(Locale.ENGLISH,"%d",money));
@@ -225,7 +225,7 @@ public class GameViewFragment extends Fragment implements GameContract.View {
                         setInvisibleOpponentCard(ViewControllerActionCode.ADD_SECOND_OPPONENT_SECOND_CARD);
                     }
                     break;
-                case 3:
+                case ViewControllerActionCode.POSITION_OPPONENT_THIRD:
                     thirdOpponentLayout.setVisibility(View.VISIBLE);
                     thirdOpponentName.setText(name);
                     thirdOpponentMoney.setText(String.format(Locale.ENGLISH,"%d",money));
@@ -235,7 +235,7 @@ public class GameViewFragment extends Fragment implements GameContract.View {
                         setInvisibleOpponentCard(ViewControllerActionCode.ADD_THIRD_OPPONENT_SECOND_CARD);
                     }
                     break;
-                case 4:
+                case ViewControllerActionCode.POSITION_OPPONENT_FOURTH:
                     fourthOpponentLayout.setVisibility(View.VISIBLE);
                     fourthOpponentName.setText(name);
                     fourthOpponentMoney.setText(String.format(Locale.ENGLISH,"%d",money));

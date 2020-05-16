@@ -208,6 +208,7 @@ public class Presenter implements GameContract.Presenter {
             ,Integer bank
             ,boolean isgamerunning
     ) {
+        Logger.getAnonymousLogger().info("got players:"+allplayers.size());
         //Logger logger = Logger.getAnonymousLogger();
         //logger.info("<--------Entered lobby!");
         //logger.info("My money: " + allplayers.get(0).getMoney());
@@ -238,9 +239,8 @@ public class Presenter implements GameContract.Presenter {
         if(isgamerunning) {
             showFirstFreeCards();
             checkIfShouldOpenNewCard();
-            sitThePlayers();
         }
-
+        sitThePlayers();
     }
     @Override
     public void acceptMessageFromServerRestore(
@@ -278,6 +278,7 @@ public class Presenter implements GameContract.Presenter {
             ,String lead
             ,Integer base_rate
     ) {
+        Logger.getAnonymousLogger().info("Starting game..."+allplayers.size());
         gameStats.setGame(
                 allplayers
                 ,allplayers
@@ -310,16 +311,21 @@ public class Presenter implements GameContract.Presenter {
     }
 
     private void sitThePlayers(){
+        Logger.getAnonymousLogger().info("Sitting the players, their number is: "+gameStats.getPlayers().size());
         this.gameStats.getPlayers().forEach((i) -> {
-                    if (gameStats.checkIfPlaceIsNotTaken(ViewControllerActionCode.POSITION_OPPONENT_FIRST)) {
-                        Logger.getAnonymousLogger().info("opponent first seat is empty. sitting the player "+i.getName());
-                        i.setPos(ViewControllerActionCode.POSITION_OPPONENT_FIRST);
-                    }if (gameStats.checkIfPlaceIsNotTaken(ViewControllerActionCode.POSITION_OPPONENT_SECOND))
-                        i.setPos(ViewControllerActionCode.POSITION_OPPONENT_SECOND);
-                    if (gameStats.checkIfPlaceIsNotTaken(ViewControllerActionCode.POSITION_OPPONENT_THIRD))
-                        i.setPos(ViewControllerActionCode.POSITION_OPPONENT_THIRD);
-                    if (gameStats.checkIfPlaceIsNotTaken(ViewControllerActionCode.POSITION_OPPONENT_FOURTH))
-                        i.setPos(ViewControllerActionCode.POSITION_OPPONENT_FOURTH);
+                    if (!i.getName().equals(this.PLAYER_NAME)) {
+                        if (gameStats.checkIfPlaceIsNotTaken(ViewControllerActionCode.POSITION_OPPONENT_FIRST)) {
+                            Logger.getAnonymousLogger().info("opponent first seat is empty. sitting the player " + i.getName());
+                            i.setPos(ViewControllerActionCode.POSITION_OPPONENT_FIRST);
+                        }
+                        if (gameStats.checkIfPlaceIsNotTaken(ViewControllerActionCode.POSITION_OPPONENT_SECOND))
+                            i.setPos(ViewControllerActionCode.POSITION_OPPONENT_SECOND);
+                        if (gameStats.checkIfPlaceIsNotTaken(ViewControllerActionCode.POSITION_OPPONENT_THIRD))
+                            i.setPos(ViewControllerActionCode.POSITION_OPPONENT_THIRD);
+                        if (gameStats.checkIfPlaceIsNotTaken(ViewControllerActionCode.POSITION_OPPONENT_FOURTH))
+                            i.setPos(ViewControllerActionCode.POSITION_OPPONENT_FOURTH);
+                        gameView.setOpponentView(i.getPos(), i);
+                    }
                 }
         );
     }

@@ -74,13 +74,13 @@ public class ViewControllerActionCode {
     public static final int POSITION_OPPONENT_FOURTH    = 604;
     public static final int POSITION_MAIN_PLAYER        = 605;
 
-    public static int getPosition(int pos){
-        switch (pos){
-            case 1:
-
-        }
-        return -1;
-    }
+    //public static int getPosition(int pos){
+    //    switch (pos){
+    //        case 1:
+//
+    //    }
+    //    return -1;
+    //}
 
 
 }
