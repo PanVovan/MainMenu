@@ -289,6 +289,7 @@ public class Presenter implements GameContract.Presenter {
                 ,0
                 ,0
         );
+        gameView.setPlayerView(gameStats.getMainPlayer());
         showFirstFreeCards();
         sitThePlayers();
         serverController.sendMessageOnServerHandPower(gameStats.getMainPlayerHandPower(5));

@@ -122,6 +122,11 @@ public class GameViewFragment extends Fragment implements GameContract.View {
         //Intent intent = new Intent(getActivity(), MainActivity.class);
         //intent.putExtra("money", presenter.exitButtonClicked());
         //startActivity(intent);
+
+        //вот это нужно, чтбы на сервере быгов не было
+        presenter.exitButtonClicked();
+
+        //TODO: почему так?
         getActivity().finish();
 
     }
@@ -206,13 +211,13 @@ public class GameViewFragment extends Fragment implements GameContract.View {
         String name = player.getName();
         int money = player.getMoney();
         int picture = player.getNumOfPicture();
+        Logger.getAnonymousLogger().info("picture "+picture+" of "+player.getName());
         Objects.requireNonNull(getActivity()).runOnUiThread(()->{
-
             switch (pos){
                 case ViewControllerActionCode.POSITION_OPPONENT_FIRST:
                     firstOpponentLayout.setVisibility(View.VISIBLE);
 
-                    Logger.getAnonymousLogger().info("is start");
+                    Logger.getAnonymousLogger().info("sitting the player in view"+name);
                     firstOpponentName.setText(name);
                     firstOpponentMoney.setText(String.format(Locale.ENGLISH,"%d",money));
                     firstOpponentIcon.setBackground(PictureView.getPic(getContext(), picture));
