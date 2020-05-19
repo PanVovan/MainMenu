@@ -124,7 +124,7 @@ public class ChooseLobbyFragment extends Fragment implements LobbyContract.MenuL
             }
             RespRooms roomsObject = MyDeserializer.desGetLobbiesResponce(args[0].toString());
             lobbies.addAll(roomsObject.getRooms());
-            getActivity()
+            Objects.requireNonNull(getActivity())
                     .runOnUiThread(() -> setLobbies());
         }
     };

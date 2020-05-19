@@ -14,6 +14,11 @@ import java.util.Map;
 
 public interface GameContract {
     interface View {
+        void setLead(int pos);
+        void setBank(int val);
+        void showWinners(List<String> winners);
+        void setRate(int val);
+
         //установить значения
         void clearCards (int typeOfClear);
         void setCardView (int action, int card);
@@ -33,6 +38,7 @@ public interface GameContract {
         void foldButtonClicked();
         void checkButtonClicked();
         void raiseButtonClicked(int rate);
+        void allInButtonClicked();
 
         Integer exitButtonClicked();
 
@@ -43,7 +49,7 @@ public interface GameContract {
         void acceptMessageFromServerOpponentAllIn(String name, String nextLead, boolean didRoundChange);
         void acceptMessageFromServerOpponentFold(String name, String nextLead, boolean didRoundChange);
         void acceptMessageFromServerOpponentLeft(String name, String nextLead, boolean didRoundChange);
-        void acceptMessageFromServerOpponentLefMeDidSomething(String nextLead, boolean didRoundChange);
+        void acceptMessageFromServerOpponentMeDidSomething(String nextLead, boolean didRoundChange);
         void acceptMessageFromServerOpponentStop(String name);
         void acceptMessageFromServerOpponentRestore(String name);
         void acceptMessageFromServerEndGame(Integer winVal, List<String> winners);
@@ -80,7 +86,6 @@ public interface GameContract {
 
     }
 
-
     interface Server{
         void sendMessageOnServerFold();
         void sendMessageOnServerCheck();
@@ -93,7 +98,4 @@ public interface GameContract {
         void sendMessageOnServerEnterLobby(String roomName);
         void disconnect();
     }
-
-
-
 }

@@ -2,6 +2,9 @@ package com.poker.holdem.view.fragments;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Canvas;
+import android.graphics.ColorFilter;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -12,8 +15,10 @@ import android.widget.SeekBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.constraintlayout.widget.ConstraintLayout;
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 
 import com.poker.holdem.GameContract;
@@ -28,6 +33,7 @@ import com.poker.holdem.view.grafic.CardView;
 import com.poker.holdem.view.grafic.PictureView;
 import com.poker.holdem.view.util.ViewControllerActionCode;
 
+import java.util.List;
 import java.util.Locale;
 import java.util.Objects;
 import java.util.logging.Logger;
@@ -79,10 +85,7 @@ public class GameViewFragment extends Fragment implements GameContract.View {
             setRateLayout.setVisibility(View.INVISIBLE);
             setRateTextView.setText("");
             presenter.raiseButtonClicked(raiseSeekBar.getValue());
-            //студия подсказывает сделать так
-            //"%d" - целое
-            //локаль - способ вывлда
-            youRate.setText(String.format(Locale.ENGLISH,"%d",raiseSeekBar.getValue()));
+            setRate(raiseSeekBar.getValue());
         }
     }
 
@@ -109,6 +112,15 @@ public class GameViewFragment extends Fragment implements GameContract.View {
         };
     }
 
+    /*
+        @BindView(R.id.exit_button)                 Button exitButton;
+    @BindView(R.id.check_button)                Button checkButton;
+    @BindView(R.id.game_info_button)            Button gameInfoButton;
+    @BindView(R.id.raise_button)                Button raiseButton;
+    @BindView(R.id.fold_button)                 Button foldButton;
+    @BindView(R.id.set_rate_button)             Button setRateButton;
+     */
+
     @OnClick(R.id.game_container)
     void clickOnContainer(){
         if(setRateLayout.getVisibility() == View.VISIBLE && Objects.requireNonNull(getView()).getId() != R.id.set_rate_layout)
@@ -131,6 +143,89 @@ public class GameViewFragment extends Fragment implements GameContract.View {
 
     }
 
+    @OnClick(R.id.check_button)
+    void checkClick(){ presenter.checkButtonClicked(); }
+
+    @OnClick(R.id.fold_button)
+    void foldClick(){ presenter.foldButtonClicked(); }
+
+    @OnClick(R.id.all_in_button)
+    void allInClick(){}
+
+    @Override
+    public void setRate(int val){
+        youRate.setText(String.format(Locale.ENGLISH, "%d", val));
+    }
+    @Override
+    public void showWinners(List<String> winners){
+        Logger.getAnonymousLogger().info("Showing winners");
+        Objects.requireNonNull(getActivity()).runOnUiThread(()->{
+            //FIXME: хз, но тосты не показываются
+            Toast.makeText(
+                    getContext()
+                    ,"Game over!"
+                    ,Toast.LENGTH_SHORT
+            ).show();
+            for (String i : winners) {
+                Toast.makeText(
+                        getContext()
+                        ,"Winner! "+i
+                        ,Toast.LENGTH_SHORT
+                ).show();
+            }
+            try {
+                Thread.sleep(2000);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        });
+    }
+    @Override
+    public void setBank(int val){
+        Objects.requireNonNull(getActivity()).runOnUiThread(()->{
+            if (val == ViewControllerActionCode.NONE) {
+                bankTextView.setText("");
+            } else {
+                bankTextView.setText(String.format(Locale.ENGLISH, "%d", val));
+            }
+        });
+
+    }
+    @Override
+    public void setLead(int pos){
+        Objects.requireNonNull(getActivity()).runOnUiThread(()->{
+            Drawable leadHighliting = ContextCompat.getDrawable(
+                    Objects.requireNonNull(getContext())
+                    , R.drawable.golden_gradient
+            );
+            switch (pos){
+                case ViewControllerActionCode.POSITION_MAIN_PLAYER:
+                    playerLayout.setBackground(leadHighliting);
+                    break;
+                case ViewControllerActionCode.POSITION_OPPONENT_FIRST:
+                    firstOpponentLayout.setBackground(leadHighliting);
+                    break;
+                case ViewControllerActionCode.POSITION_OPPONENT_SECOND:
+                    secondOpponentLayout.setBackground(leadHighliting);
+                    break;
+                case ViewControllerActionCode.POSITION_OPPONENT_THIRD:
+                    thirdOpponentLayout.setBackground(leadHighliting);
+                    break;
+                case ViewControllerActionCode.POSITION_OPPONENT_FOURTH:
+                    fourthOpponentLayout.setBackground(leadHighliting);
+                    break;
+                case ViewControllerActionCode.NONE:
+                    //сбрасываем всех ведущих
+                    //хз,можно ли так
+                    //или сделать отдельный пустой рисунок
+                    playerLayout.setBackground(null);
+                    firstOpponentLayout.setBackground(null);
+                    secondOpponentLayout.setBackground(null);
+                    thirdOpponentLayout.setBackground(null);
+                    fourthOpponentLayout.setBackground(null);
+            }
+        });
+    }
     @Override
     public void updatePlayerMoney(int pos, Integer money){
         Objects.requireNonNull(getActivity()).runOnUiThread(()->{
@@ -205,13 +300,13 @@ public class GameViewFragment extends Fragment implements GameContract.View {
             }
         });
     }
-
     @Override
     public void setOpponentView(int pos, Player player){
         String name = player.getName();
         int money = player.getMoney();
         int picture = player.getNumOfPicture();
         Logger.getAnonymousLogger().info("picture "+picture+" of "+player.getName());
+        Drawable playerPicDrawable = PictureView.getPic(getContext(), picture);
         Objects.requireNonNull(getActivity()).runOnUiThread(()->{
             switch (pos){
                 case ViewControllerActionCode.POSITION_OPPONENT_FIRST:
@@ -220,7 +315,7 @@ public class GameViewFragment extends Fragment implements GameContract.View {
                     Logger.getAnonymousLogger().info("sitting the player in view"+name);
                     firstOpponentName.setText(name);
                     firstOpponentMoney.setText(String.format(Locale.ENGLISH,"%d",money));
-                    firstOpponentIcon.setBackground(PictureView.getPic(getContext(), picture));
+                    firstOpponentIcon.setBackground(playerPicDrawable);
                     if(player.isActive()){
                         setInvisibleOpponentCard(ViewControllerActionCode.ADD_FIRST_OPPONENT_FIRST_CARD);
                         setInvisibleOpponentCard(ViewControllerActionCode.ADD_FIRST_OPPONENT_SECOND_CARD);
@@ -230,7 +325,7 @@ public class GameViewFragment extends Fragment implements GameContract.View {
                     secondOpponentLayout.setVisibility(View.VISIBLE);
                     secondOpponentName.setText(name);
                     secondOpponentMoney.setText(String.format(Locale.ENGLISH,"%d",money));
-                    firstOpponentIcon.setBackground(PictureView.getPic(getContext(), picture));
+                    secondOpponentIcon.setBackground(playerPicDrawable);
                     if(player.isActive()){
                         setInvisibleOpponentCard(ViewControllerActionCode.ADD_SECOND_OPPONENT_FIRST_CARD);
                         setInvisibleOpponentCard(ViewControllerActionCode.ADD_SECOND_OPPONENT_SECOND_CARD);
@@ -240,7 +335,7 @@ public class GameViewFragment extends Fragment implements GameContract.View {
                     thirdOpponentLayout.setVisibility(View.VISIBLE);
                     thirdOpponentName.setText(name);
                     thirdOpponentMoney.setText(String.format(Locale.ENGLISH,"%d",money));
-                    firstOpponentIcon.setBackground(PictureView.getPic(getContext(), picture));
+                    thirdOpponentIcon.setBackground(playerPicDrawable);
                     if(player.isActive()){
                         setInvisibleOpponentCard(ViewControllerActionCode.ADD_THIRD_OPPONENT_FIRST_CARD);
                         setInvisibleOpponentCard(ViewControllerActionCode.ADD_THIRD_OPPONENT_SECOND_CARD);
@@ -250,7 +345,7 @@ public class GameViewFragment extends Fragment implements GameContract.View {
                     fourthOpponentLayout.setVisibility(View.VISIBLE);
                     fourthOpponentName.setText(name);
                     fourthOpponentMoney.setText(String.format(Locale.ENGLISH,"%d",money));
-                    firstOpponentIcon.setBackground(PictureView.getPic(getContext(), picture));
+                    fourthOpponentIcon.setBackground(playerPicDrawable);
                     if(player.isActive()){
                         setInvisibleOpponentCard(ViewControllerActionCode.ADD_FOURTH_OPPONENT_FIRST_CARD);
                         setInvisibleOpponentCard(ViewControllerActionCode.ADD_FOURTH_OPPONENT_SECOND_CARD);
@@ -261,13 +356,15 @@ public class GameViewFragment extends Fragment implements GameContract.View {
     }
     @Override
     public void clearOpponentView(int pos){
+        Logger.getAnonymousLogger().info("removing "+pos+" "+(pos==ViewControllerActionCode.POSITION_OPPONENT_FIRST));
         Objects.requireNonNull(getActivity()).runOnUiThread(()->{
             switch (pos){
                 case ViewControllerActionCode.POSITION_OPPONENT_FIRST:
-                    firstOpponentLayout.setVisibility(View.INVISIBLE);
+                    Logger.getAnonymousLogger().info("removing frist opponent");
                     firstOpponentName.setText("");
                     firstOpponentMoney.setText("");
                     firstOpponentIcon.setBackground(null);
+                    firstOpponentLayout.setVisibility(View.INVISIBLE);
                     break;
                 case ViewControllerActionCode.POSITION_OPPONENT_SECOND:
                     secondOpponentLayout.setVisibility(View.INVISIBLE);
@@ -435,6 +532,7 @@ public class GameViewFragment extends Fragment implements GameContract.View {
     @BindView(R.id.raise_button)                Button raiseButton;
     @BindView(R.id.fold_button)                 Button foldButton;
     @BindView(R.id.set_rate_button)             Button setRateButton;
+    @BindView(R.id.all_in_button)               Button allInButton;
 
     //карты
     @BindView(R.id.first_community_card)        ImageView firstCommunityCard;
@@ -474,7 +572,8 @@ public class GameViewFragment extends Fragment implements GameContract.View {
     @BindView(R.id.fourth_opponent_icon)        ImageView fourthOpponentIcon;
 
     //Банк
-    @BindView(R.id.bank_textview)               TextView bankTextView;
+    @BindView(R.id.bank_text_view)               TextView bankTextView;
+    @BindView(R.id.bank_layout)                  ConstraintLayout bankLayout;
 
     //Ставка
     @BindView(R.id.set_rate_textview)           TextView setRateTextView;
@@ -486,6 +585,7 @@ public class GameViewFragment extends Fragment implements GameContract.View {
     @BindView(R.id.second_opponent_layout)      ConstraintLayout secondOpponentLayout;
     @BindView(R.id.third_opponent_layout)       ConstraintLayout thirdOpponentLayout;
     @BindView(R.id.fourth_opponent_layout)      ConstraintLayout fourthOpponentLayout;
+    @BindView(R.id.player_layout)               ConstraintLayout playerLayout;
 
     @BindView(R.id.set_rate_layout)             ConstraintLayout setRateLayout;
 }

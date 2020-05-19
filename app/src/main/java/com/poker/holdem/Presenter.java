@@ -48,17 +48,69 @@ public class Presenter implements GameContract.Presenter {
     //Тут то, что мы получаем от GameViewFragment
     @Override
     public void foldButtonClicked() {
-        serverController.sendMessageOnServerFold();
+        if(gameStats.getLead().equals(this.PLAYER_NAME)) {
+            serverController.sendMessageOnServerFold();
+            gameStats.setPlayerActivity(this.PLAYER_NAME, false);
+            gameView.setPlayerView(gameStats.getMainPlayer());
+        }else
+            Toast.makeText(
+                    PokerApplicationManager.getInstance().getApplicationContext()
+                    ,"You can't do it now!"
+                    ,Toast.LENGTH_SHORT
+            ).show();
+
     }
 
     @Override
     public void checkButtonClicked() {
-        serverController.sendMessageOnServerCheck();
+        if(gameStats.getLead().equals(this.PLAYER_NAME)
+                && gameStats.getPlayerMoney(this.PLAYER_NAME)>=gameStats.getRate()) {
+            serverController.sendMessageOnServerCheck();
+            gameStats.onMeSpendMoney(gameStats.getRate());
+            gameView.setPlayerView(gameStats.getMainPlayer());
+        }else
+            Toast.makeText(
+                    PokerApplicationManager.getInstance().getApplicationContext()
+                    ,"You can't do it now!"
+                    ,Toast.LENGTH_SHORT
+            ).show();
     }
 
     @Override
     public void raiseButtonClicked(int rate) {
-        serverController.sendMessageOnServerRaise(rate);
+        if(gameStats.getLead().equals(this.PLAYER_NAME)
+                && gameStats.getPlayerMoney(this.PLAYER_NAME)>=rate
+                && rate >= gameStats.getRate()) {
+            serverController.sendMessageOnServerRaise(rate);
+            gameStats.setRate(rate);
+            gameStats.onMeSpendMoney(rate);
+            gameView.setRate(rate);
+            gameView.setPlayerView(gameStats.getMainPlayer());
+        }else
+            Toast.makeText(
+                    PokerApplicationManager.getInstance().getApplicationContext()
+                    ,"You can't do it now!"
+                    ,Toast.LENGTH_SHORT
+            ).show();
+    }
+
+    @Override
+    public void allInButtonClicked(){
+        if(gameStats.getLead().equals(this.PLAYER_NAME)
+                && gameStats.getPlayerMoney(this.PLAYER_NAME)>=0) {
+                serverController.sendMessageOnServerAllIn();
+                gameStats.onMeSpendMoney(
+                        gameStats
+                                .getPlayerByName(this.PLAYER_NAME)
+                                .getMoney()
+                );
+                gameView.setPlayerView(gameStats.getMainPlayer());
+        }else
+            Toast.makeText(
+                    PokerApplicationManager.getInstance().getApplicationContext()
+                    ,"You can't do it now!"
+                    ,Toast.LENGTH_SHORT
+            ).show();
     }
 
     @Override
@@ -103,6 +155,9 @@ public class Presenter implements GameContract.Presenter {
         if(didRoundChange) gameStats.increaseRoundsNum();
         checkIfShouldOpenNewCard();
         gameStats.setLead(newLead);
+        //получаем место того игрока, который будет ходить следующим
+        gameView.setLead(gameStats.getPlayerByName(newLead).getPos());
+        gameView.setBank(gameStats.getBank());
         gameView.updatePlayerMoney(
                 gameStats.getPlayerByName(name).getPos()
                 ,gameStats.getPlayerByName(name).getMoney()
@@ -114,6 +169,9 @@ public class Presenter implements GameContract.Presenter {
         if(didRoundChange) gameStats.increaseRoundsNum();
         checkIfShouldOpenNewCard();
         gameStats.setLead(newLead);
+        gameView.setRate(rate);
+        gameView.setLead(gameStats.getPlayerByName(newLead).getPos());
+        gameView.setBank(gameStats.getBank());
         gameView.updatePlayerMoney(
                 gameStats.getPlayerByName(name).getPos()
                 ,gameStats.getPlayerByName(name).getMoney()
@@ -125,6 +183,8 @@ public class Presenter implements GameContract.Presenter {
         if(didRoundChange) gameStats.increaseRoundsNum();
         checkIfShouldOpenNewCard();
         gameStats.setLead(newLead);
+        gameView.setLead(gameStats.getPlayerByName(newLead).getPos());
+        gameView.setBank(gameStats.getBank());
         gameView.updatePlayerMoney(
                 gameStats.getPlayerByName(name).getPos()
                 ,gameStats.getPlayerByName(name).getMoney()
@@ -136,16 +196,20 @@ public class Presenter implements GameContract.Presenter {
         if(didRoundChange) gameStats.increaseRoundsNum();
         checkIfShouldOpenNewCard();
         gameStats.setLead(newLead);
+        gameView.setLead(gameStats.getPlayerByName(newLead).getPos());
+        gameView.setBank(gameStats.getBank());
         gameView.updatePlayerMoney(
                 gameStats.getPlayerByName(name).getPos()
                 ,gameStats.getPlayerByName(name).getMoney()
         );
     }
     @Override
-    public void acceptMessageFromServerOpponentLefMeDidSomething(String nextLead, boolean didRoundChange){
+    public void acceptMessageFromServerOpponentMeDidSomething(String nextLead, boolean didRoundChange){
         if(didRoundChange) gameStats.increaseRoundsNum();
         checkIfShouldOpenNewCard();
         gameStats.setLead(nextLead);
+        gameView.setLead(gameStats.getPlayerByName(nextLead).getPos());
+        gameView.setBank(gameStats.getBank());
         gameView.updatePlayerMoney(
                 gameStats.getPlayerByName(this.PLAYER_NAME).getPos()
                 ,gameStats.getPlayerByName(this.PLAYER_NAME).getMoney()
@@ -153,28 +217,31 @@ public class Presenter implements GameContract.Presenter {
     }
     @Override
     public void acceptMessageFromServerOpponentLeft(String name, String newLead, boolean didRoundChange) {
-        gameStats.deleteOpponent(name);
-        if(didRoundChange) gameStats.increaseRoundsNum();
-        checkIfShouldOpenNewCard();
         switch (gameStats.getPosPlayer(name)){
-            case 0:
+            case ViewControllerActionCode.POSITION_OPPONENT_FIRST:
                 gameView.clearCards(ViewControllerActionCode.CLEAR_FIRST_OPPONENT_CARDS);
-                gameView.clearOpponentView(1);
+                gameView.clearOpponentView(ViewControllerActionCode.POSITION_OPPONENT_FIRST);
                 break;
-            case 1:
+            case ViewControllerActionCode.POSITION_OPPONENT_SECOND:
                 gameView.clearCards(ViewControllerActionCode.CLEAR_SECOND_OPPONENT_CARDS);
-                gameView.clearOpponentView(2);
+                gameView.clearOpponentView(ViewControllerActionCode.POSITION_OPPONENT_SECOND);
                 break;
-            case 2:
+            case ViewControllerActionCode.POSITION_OPPONENT_THIRD:
                 gameView.clearCards(ViewControllerActionCode.CLEAR_THIRD_OPPONENT_CARDS);
-                gameView.clearOpponentView(3);
+                gameView.clearOpponentView(ViewControllerActionCode.POSITION_OPPONENT_THIRD);
                 break;
-            case 3:
+            case ViewControllerActionCode.POSITION_OPPONENT_FOURTH:
                 gameView.clearCards(ViewControllerActionCode.CLEAR_FOURTH_OPPONENT_CARDS);
-                gameView.clearOpponentView(4);
+                gameView.clearOpponentView(ViewControllerActionCode.POSITION_OPPONENT_FOURTH);
                 break;
         }
+        //ВАЖНО: сначала надо очищать во вью,
+        //а потом уже в логике
+        //иначе gameStats.getPosPlayer(name) вернёт не то
+        gameStats.deleteOpponent(name);
+        if(didRoundChange) gameStats.increaseRoundsNum();
         gameStats.setLead(newLead);
+        checkIfShouldOpenNewCard();
     }
     @Override
     public void acceptMessageFromServerOpponentStop(String name) {
@@ -189,6 +256,8 @@ public class Presenter implements GameContract.Presenter {
     public void acceptMessageFromServerEndGame(Integer winVal, List<String> winners) {
         gameStats.onEndGame(winVal, winners);
         showCardsWhenGameIsDone();
+        Logger.getAnonymousLogger().info("first winner "+winners.get(0));
+        gameView.showWinners(winners);
 
         //TODO: *романтическая пауза*
         //вот тут нужно сделать задержку, чтобы игрок полюбовался на
@@ -197,6 +266,7 @@ public class Presenter implements GameContract.Presenter {
         //карт у игроков больше нет, убираем
         gameStats.clearAllPlayersCards();
         gameView.clearCards(ViewControllerActionCode.CLEAR_ALL_CARDS);
+        gameView.setLead(ViewControllerActionCode.NONE);
 
         //вот так нехитро обновляем деньги игроков
         gameStats.getPlayers().forEach((i) -> gameView.updatePlayerMoney(
@@ -217,14 +287,6 @@ public class Presenter implements GameContract.Presenter {
             ,Integer bank
             ,boolean isgamerunning
     ) {
-        Logger.getAnonymousLogger().info("got players:"+allplayers.size());
-        //Logger logger = Logger.getAnonymousLogger();
-        //logger.info("<--------Entered lobby!");
-        //logger.info("My money: " + allplayers.get(0).getMoney());
-        //allplayers.forEach((i)->{
-        //    logger.info(i.getName()+"  "+i.getMoney());
-        //});
-        //сначала сделал отдельными методами, но потом решил вынести
         gameStats.setGame(
                 allplayers
                 ,gameplayers
@@ -239,6 +301,9 @@ public class Presenter implements GameContract.Presenter {
 
         if(!isgamerunning) gameStats.setPlayerCards(gameStats.getMainPlayerName(), new ArrayList<>());
         gameView.setPlayerView(gameStats.getMainPlayer());
+        if(isgamerunning){
+            gameView.setBank(bank);
+        }
         gameStats.setPlayerPos(
                 this.PLAYER_NAME
                 ,ViewControllerActionCode.POSITION_MAIN_PLAYER
@@ -262,6 +327,7 @@ public class Presenter implements GameContract.Presenter {
             ,Integer bank
             ,boolean isgamerunning
     ) {
+        if(isgamerunning) gameView.setBank(bank);
         gameStats.setGame(
                 allplayers
                 ,gameplayers
@@ -273,8 +339,11 @@ public class Presenter implements GameContract.Presenter {
                 ,bank
                 ,rounds_done
         );
-        showFirstFreeCards();
-        checkIfShouldOpenNewCard();
+        if (isgamerunning) {
+            gameView.setRate(rate);
+            showFirstFreeCards();
+            checkIfShouldOpenNewCard();
+        }
         sitThePlayers();
     }
     @Override
@@ -299,8 +368,11 @@ public class Presenter implements GameContract.Presenter {
                 ,0
         );
         gameView.setPlayerView(gameStats.getMainPlayer());
+        gameView.setBank(0);
         showFirstFreeCards();
         sitThePlayers();
+        gameView.setRate(base_rate);
+        gameView.setLead(gameStats.getPosPlayer(gameStats.getLead()));
         serverController.sendMessageOnServerHandPower(gameStats.getMainPlayerHandPower(5));
     }
 
@@ -346,31 +418,24 @@ public class Presenter implements GameContract.Presenter {
 
     //типа мы будем при каждом действии спрашивать себя
     // "а не надо ли мне открыть ещё одну community card?"
-    private static int roundNum = 0;
     private void checkIfShouldOpenNewCard(){
         int roundNow = gameStats.getRoundsNum();
-        if(roundNow > this.roundNum){
-            switch (roundNow){
-                case 1:
-                    gameView.setCardView(
+        int cardsOpened = gameStats.getCardsOpened();
+
+        if(roundNow >= 1 && cardsOpened < 4) {
+            gameView.setCardView(
                     ViewControllerActionCode.ADD_COMMUNITY_CARD_FOURTH
-                        ,gameStats.getDeck().get(3)
-                    ); break;
-                case 2:
-                    gameView.setCardView(
-                            ViewControllerActionCode.ADD_COMMUNITY_CARD_FIFTH
-                            ,gameStats.getDeck().get(4)
-                    ); break;
-                default:
-                    //у нас открыты все карты
-            }
+                    , gameStats.getDeck().get(3)
+            );
+            gameStats.setCardsOpened(4);
         }
-        this.roundNum++;
-        //если у нас баг, и вдруг не открытыми осталось
-        //больше одной карты, от мы откроем ещё столько,
-        //сколько нужно
-        if(gameStats.getRoundsNum() > this.roundNum)
-            checkButtonClicked();
+        if(roundNow >= 2 && cardsOpened < 5) {
+            gameView.setCardView(
+                    ViewControllerActionCode.ADD_COMMUNITY_CARD_FIFTH
+                    , gameStats.getDeck().get(4)
+            );
+            gameStats.setCardsOpened(5);
+        }
     }
 
     //когда игра заканчивается, нужно увидеть карты

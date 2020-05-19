@@ -9,6 +9,7 @@ import com.google.gson.JsonObject;
 import com.google.gson.JsonParseException;
 
 import java.lang.reflect.Type;
+import java.util.logging.Logger;
 
 public class DesEndGameResp implements JsonDeserializer<EndgameResp> {
 
@@ -23,8 +24,10 @@ public class DesEndGameResp implements JsonDeserializer<EndgameResp> {
             endgameResp.setWinVal(jsonObject.get("win_val").getAsInt());
 
         JsonArray winners = jsonObject.get("winners").getAsJsonArray();
-        for(JsonElement i: winners)
-            winners.add(i.getAsString());
+        for(JsonElement i: winners) {
+            endgameResp.addWinner(i.getAsString());
+        }
+
         return endgameResp;
     }
 }

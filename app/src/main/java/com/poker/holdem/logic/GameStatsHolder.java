@@ -4,6 +4,7 @@ import com.poker.holdem.logic.handlogic.Hand;
 import com.poker.holdem.logic.handlogic.card.Card;
 import com.poker.holdem.logic.handlogic.combination.HandClassifier;
 import com.poker.holdem.logic.player.Player;
+import com.poker.holdem.view.util.ViewControllerActionCode;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -21,18 +22,54 @@ public class GameStatsHolder {
     private Integer rate;
     private String lead;
     private int roundsNum;
+    //TODO: переименовать spisokPedikov
+    private List<String> spisokPedikov = new ArrayList<>();
+    private int cardsOpened;
 
-    public void onPlayerRaise(String name, int newRate){
-        this.rate = newRate; playerSpendMoney(name, rate);
+    public void onNewRound(){
+        //удалить всех, кто в прошлом раунде
+        //сделал all in или fold
+        this.spisokPedikov.forEach((name)->{
+            this.players.forEach((player)->{
+                if(player.getName().equals(name))
+                    player.setActive(false);
+            });
+        });
     }
-    public void onPlayerFold(String name){  }
+
+    public void playerGetsMoney(String name, int val){
+        this.players.forEach((i)->{
+            if(i.getName().equals(name)){
+                i.setMoney(i.getMoney()+val);
+            }
+        });
+    }
+    public void onMeSpendMoney(int val){
+        playerSpendMoney(this.mainPlayerName, val);
+        //если закончились деньги, мы должны стать неактивны
+        if(this.getPlayerMoney(mainPlayerName) <= 0)
+            this.setPlayerActivity(mainPlayerName, false);
+    }
+    public void onPlayerRaise(String name, int newRate){
+        this.rate = newRate;
+        //ACHTUNG! когда мы делаем рейз, то с сервера придёт
+        //имя игрока (наше)
+        //но в этом случае ставка УЖЕ БУДЕТ ВЫЧТЕНА (Presenter.raiseButtonClicked())
+        if (!name.equals(mainPlayerName))
+            playerSpendMoney(name, rate);
+    }
+    public void onPlayerFold(String name){
+        setPlayerActivity(name, false);
+    }
     public void onPlayerCheck(String name){ playerSpendMoney(name, rate); }
     public void onPlayerAllIn(String name){
+        this.spisokPedikov.add(name);
         playerSpendMoney(name, getPlayerByName(name).getMoney());
     }
     public void onPlayerStop(String name){}
     public void onPlayerRestore(String name){}
     public void onEndGame(int win_val, List<String> winners){
+        this.spisokPedikov = new ArrayList<>();
         this.bank = 0;
         this.players.forEach((i)->{
             if(winners.contains(i.getName()))
@@ -45,7 +82,6 @@ public class GameStatsHolder {
         this.players.add(player);
     }
 
-
     public void setGame(
             List<Player> allplayers
             ,List<Player> activePlayers
@@ -57,12 +93,14 @@ public class GameStatsHolder {
             ,Integer bank
             ,Integer roundNum
     ){
+        this.cardsOpened = 3;
+        this.spisokPedikov = new ArrayList<>();
         this.roundsNum = roundNum;
         this.bank = bank;
         //иницивлизируем так <- не всегда
         //List<> это ArrayList<>
-        players = allplayers;//new ArrayList<>(allplayers);
-        deck = new ArrayList<>(cardsOnTable);
+        this.players = allplayers;//new ArrayList<>(allplayers);
+        this.deck = new ArrayList<>(cardsOnTable);
         this.rate = base_rate;
         this.lead = lead;
         //предопределяем всех неактивными
@@ -74,9 +112,13 @@ public class GameStatsHolder {
         //...
         setGamePlayersCards(playersCardsMap);
         //чтобы каждый раз не искать
-        mainPlayer = getPlayerByName(mainName);
+        this.mainPlayer = getPlayerByName(mainName);
         //Logger.getAnonymousLogger().info("name: "+mainName);
-        mainPlayerName = mainName;
+        this.mainPlayerName = mainName;
+        this.players.forEach((i)->{
+            if(i.getName().equals(mainName))
+                i.setPos(ViewControllerActionCode.POSITION_MAIN_PLAYER);
+        });
     }
 
     //ищем игрока и забираем у него деньги
@@ -89,6 +131,13 @@ public class GameStatsHolder {
         });
         if(name.equals(mainPlayerName))
             mainPlayer = getPlayerByName(mainPlayerName);
+    }
+
+    public int getPlayerMoney(String name){
+        for(int i=0; i<this.players.size(); i++)
+            if(this.players.get(i).getName().equals(name))
+                return this.players.get(i).getMoney();
+            return -1;
     }
 
     public void clearAllPlayersCards(){
@@ -109,12 +158,14 @@ public class GameStatsHolder {
         mainPlayer = getPlayerByName(mainPlayerName);
     }
 
-    private void setPlayerActivity(String name, boolean activity){
-        for(Player i: players)
-            if(i.getName().equals(name))
+    public void setPlayerActivity(String name, boolean activity){
+        for(Player i: players) {
+            if (i.getName().equals(name))
                 i.setActive(activity);
-        if(name.equals(mainPlayerName))
-            mainPlayer = getPlayerByName(mainPlayerName);
+            if(!activity)
+                i.setCards(new ArrayList<>());
+        }
+
     }
 
     public void setPlayerPos(String  name, int pos){
@@ -181,7 +232,7 @@ public class GameStatsHolder {
     public int getPosPlayer(String name){
         for(int i=0; i<players.size(); i++) {
             if (name.equals(players.get(i).getName()))
-                return i;
+                return players.get(i).getPos();
         }
         return -1;
     }
@@ -210,7 +261,7 @@ public class GameStatsHolder {
 
     public void setRoundsNum(int roundsNum) { this.roundsNum = roundsNum; }
 
-    public void increaseRoundsNum(){ this.roundsNum++; }
+    public void increaseRoundsNum(){ this.roundsNum++; onNewRound(); }
 
     public String getMainPlayerName() {
         return mainPlayerName;
@@ -218,5 +269,13 @@ public class GameStatsHolder {
 
     public void setMainPlayerName(String mainPlayerName) {
         this.mainPlayerName = mainPlayerName;
+    }
+
+    public int getCardsOpened() {
+        return cardsOpened;
+    }
+
+    public void setCardsOpened(int cardsOpened) {
+        this.cardsOpened = cardsOpened;
     }
 }

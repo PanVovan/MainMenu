@@ -12,10 +12,13 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 
+import com.poker.holdem.PokerApplicationManager;
 import com.poker.holdem.R;
 import com.poker.holdem.constants.Constants;
 import com.poker.holdem.view.grafic.PictureView;
 import com.poker.holdem.view.util.NavigationHost;
+
+import java.util.Locale;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -42,17 +45,18 @@ public class MainMenuFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_main_menu, container, false);
         ButterKnife.bind(this, view);
         //TODO: исправить ошибку с потереё activity
-        //playerMoney.setText(
-        //        getActivity()
-        //        .getSharedPreferences(Constants.PREFS_NAME, Context.MODE_PRIVATE)
-        //         .getInt("money", 0)
-        //);
-        //player_pic.setBackground(PictureView.getPic(
-        //        getContext()
-        //        ,getActivity()
-        //                .getSharedPreferences(Constants.PREFS_NAME, Context.MODE_PRIVATE)
-        //                .getInt(Constants.PLAYER_PICTURE, 1)
-        //));
+        Integer money = PokerApplicationManager.getInstance()
+                .getSharedPreferences(Constants.PREFS_NAME, Context.MODE_PRIVATE)
+                .getInt(Constants.PLAYER_MONEY, 0);
+        playerMoney.setText(
+                String.format(Locale.ENGLISH, "%d", money)
+        );
+        player_pic.setBackground(PictureView.getPic(
+                getContext()
+                ,PokerApplicationManager.getInstance()
+                        .getSharedPreferences(Constants.PREFS_NAME, Context.MODE_PRIVATE)
+                        .getInt(Constants.PLAYER_PICTURE, 1)
+        ));
         return view;
     }
 
