@@ -175,13 +175,16 @@ public class GameViewFragment extends Fragment implements GameContract.View {
 
     @Override
     public void setRate(int val){
-        youRate.setText(String.format(Locale.ENGLISH, "%d", val));
+        Objects.requireNonNull(getActivity()).runOnUiThread(()->
+            youRate.setText(String.format(Locale.ENGLISH, "%d", val)));
+
     }
     @Override
     public void showWinners(HashMap<Integer, List<Integer> > winnersCards) {
         Objects.requireNonNull(getActivity()).runOnUiThread(()->{
             Logger.getAnonymousLogger().info("Showing winners");
-            for (Map.Entry<Integer, List<Integer>> i : winnersCards.entrySet())
+            for (Map.Entry<Integer, List<Integer>> i : winnersCards.entrySet()) {
+                if(i.getValue().isEmpty()) continue;
                 switch (i.getKey()) {
                     case ViewControllerActionCode.POSITION_MAIN_PLAYER:
                         firstHoleCard.setBackground(
@@ -231,6 +234,7 @@ public class GameViewFragment extends Fragment implements GameContract.View {
                                 , i.getValue().get(1)
                         );
                 }
+            }
         });
     }
     @Override

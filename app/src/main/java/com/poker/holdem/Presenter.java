@@ -273,9 +273,9 @@ public class Presenter implements GameContract.Presenter {
     }
     @Override
     public void acceptMessageFromServerEndGame(Integer winVal, List<String> winners) {
+        gameView.showWinners(gameStats.getWinningPlayersCards(winners));
         gameStats.onEndGame(winVal, winners);
         showCardsWhenGameIsDone();
-        gameView.showWinners(gameStats.getWinningPlayersCards(winners));
 
         //TODO: *романтическая пауза*
         //вот тут нужно сделать задержку, чтобы игрок полюбовался на
@@ -320,9 +320,7 @@ public class Presenter implements GameContract.Presenter {
 
         if(!isgamerunning) gameStats.setPlayerCards(gameStats.getMainPlayerName(), new ArrayList<>());
         gameView.setPlayerView(gameStats.getMainPlayer());
-        if(isgamerunning){
-            gameView.setBank(bank);
-        }
+
         gameStats.setPlayerPos(
                 this.PLAYER_NAME
                 ,ViewControllerActionCode.POSITION_MAIN_PLAYER
@@ -331,6 +329,8 @@ public class Presenter implements GameContract.Presenter {
         if(isgamerunning) {
             showFirstFreeCards();
             checkIfShouldOpenNewCard();
+            gameView.setBank(bank);
+            gameView.setLead(gameStats.getPosPlayer(gameStats.getLead()));
         }
         sitThePlayers();
     }
