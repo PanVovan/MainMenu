@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -7,18 +8,81 @@
     tools:context=".view.fragments.CreateAccFragment"
     android:background="@drawable/main_menu_background">
 
-    <ImageView
-        android:id="@+id/choose_image_iv"
+    <FrameLayout
+        android:id="@+id/picture_layout_create_acc"
+        app:layout_constraintRight_toLeftOf="@id/create_window"
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_marginTop="100dp"
+        android:layout_marginRight="2dp"
+        android:layout_width="@dimen/create_account_frame_with"
+        android:layout_height="@dimen/create_account_frame_heigth"
+        >
+        <ImageView
+            android:id="@+id/choose_image_iv"
+            android:layout_width="@dimen/create_account_image_with"
+            android:layout_height="@dimen/create_account_image_heigth"
+            android:background="@drawable/playerpic_default"
+            android:layout_gravity="center"
+            />
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@drawable/frame_gamer"/>
+
+    </FrameLayout>
+    <Button
+        android:id="@+id/button_next_picture"
+        app:layout_constraintTop_toBottomOf="@id/picture_layout_create_acc"
+        app:layout_constraintLeft_toLeftOf="@id/picture_layout_create_acc"
+        android:layout_marginLeft="4dp"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:text=""
+        android:textSize="25dp"
+        android:textAlignment="center"
+        android:background="@drawable/button"
+        android:textColor="@color/my_black"
+        />
+    <Button
+        android:id="@+id/button_previous_picture"
+        app:layout_constraintTop_toBottomOf="@id/picture_layout_create_acc"
+        app:layout_constraintRight_toRightOf="@id/picture_layout_create_acc"
+        android:layout_marginTop="3dp"
+        android:layout_marginRight="4dp"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:background="@drawable/button"
+        android:text=""
+        android:textSize="25dp"
+        android:textAlignment="center"
+        android:textColor="@color/my_black"
+        />
+    <!--androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/choode_img_rv"
+        android:visibility="visible"
+        android:layout_width="@dimen/create_account_select_img_recyclerview_width"
+        android:layout_height="@dimen/create_account_select_img_recyclerview_height"
+        app:layout_constraintBottom_toBottomOf="@id/picture_layout_create_acc"
+        app:layout_constraintRight_toRightOf="@id/picture_layout_create_acc"
+        android:layout_marginRight="30dp"
+        /-->
+    <!--androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/choose_image_rv"
+        android:orientation="horizontal"
         android:layout_width="@dimen/create_account_image_with"
         android:layout_height="@dimen/create_account_image_heigth"
         android:background="@color/splash_primairy"
         android:layout_gravity="center_vertical|left"
-        />
+        /-->
 
     <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/create_window"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        android:layout_marginTop="80dp"
+        android:layout_marginRight="60dp"
         android:layout_width="@dimen/login_fragments_window_width"
         android:layout_height="@dimen/login_fragments_window_height"
-        android:layout_gravity="center_vertical|right"
         android:orientation="vertical"
         android:background="@drawable/button"
         >
@@ -91,4 +155,4 @@
             />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
-</FrameLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

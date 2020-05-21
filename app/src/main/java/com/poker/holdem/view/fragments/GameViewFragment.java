@@ -198,6 +198,14 @@ public class GameViewFragment extends Fragment implements GameContract.View {
                     Objects.requireNonNull(getContext())
                     , R.drawable.golden_gradient
             );
+            //сбрасываем всех ведущих
+            //хз,можно ли так
+            //или сделать отдельный пустой рисунок
+            playerLayout.setBackground(null);
+            firstOpponentLayout.setBackground(null);
+            secondOpponentLayout.setBackground(null);
+            thirdOpponentLayout.setBackground(null);
+            fourthOpponentLayout.setBackground(null);
             switch (pos){
                 case ViewControllerActionCode.POSITION_MAIN_PLAYER:
                     playerLayout.setBackground(leadHighliting);
@@ -214,15 +222,6 @@ public class GameViewFragment extends Fragment implements GameContract.View {
                 case ViewControllerActionCode.POSITION_OPPONENT_FOURTH:
                     fourthOpponentLayout.setBackground(leadHighliting);
                     break;
-                case ViewControllerActionCode.NONE:
-                    //сбрасываем всех ведущих
-                    //хз,можно ли так
-                    //или сделать отдельный пустой рисунок
-                    playerLayout.setBackground(null);
-                    firstOpponentLayout.setBackground(null);
-                    secondOpponentLayout.setBackground(null);
-                    thirdOpponentLayout.setBackground(null);
-                    fourthOpponentLayout.setBackground(null);
             }
         });
     }

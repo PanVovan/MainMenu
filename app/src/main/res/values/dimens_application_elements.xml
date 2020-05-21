@@ -36,7 +36,14 @@
     <dimen name="sign_in_window_et_width">250dp</dimen>
     <dimen name="sign_in_window_et_text_size">20sp</dimen>
 
-    <dimen name="create_account_image_with">200dp</dimen>
-    <dimen name="create_account_image_heigth">300dp</dimen>
+    <dimen name="create_account_frame_with">120dp</dimen>
+    <dimen name="create_account_frame_heigth">150dp</dimen>
+    <dimen name="create_account_image_with">70dp</dimen>
+    <dimen name="create_account_image_heigth">100dp</dimen>
     <dimen name="create_account_image_"></dimen>
+
+    <dimen name="create_account_select_img_recyclerview_height">200dp</dimen>
+    <dimen name="create_account_select_img_recyclerview_width">120dp</dimen>
+    <dimen name="create_account_select_img_img_height">100dp</dimen>
+    <dimen name="create_account_select_img_img_width">70dp</dimen>
 </resources>
