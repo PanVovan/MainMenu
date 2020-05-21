@@ -77,7 +77,6 @@
         android:layout_height="25dp"
         android:layout_alignParentBottom="true"
         android:layout_marginEnd="16dp"
-        android:layout_marginRight="16dp"
         android:layout_marginBottom="16dp"
         android:layout_toStartOf="@+id/fold_button"
         app:layout_constraintLeft_toLeftOf="@+id/fold_button"
@@ -176,7 +175,7 @@
         </FrameLayout>
 
         <ProgressBar
-            android:id="@+id/progressBar"
+            android:id="@+id/player_hand_power_progress_bar"
             style="@style/Widget.AppCompat.ProgressBar.Horizontal"
             android:layout_width="110dp"
             android:layout_height="15dp"

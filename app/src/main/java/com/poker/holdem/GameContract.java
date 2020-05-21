@@ -9,6 +9,7 @@ import android.content.Intent;
 
 import com.poker.holdem.logic.player.Player;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -16,7 +17,7 @@ public interface GameContract {
     interface View {
         void setLead(int pos);
         void setBank(int val);
-        void showWinners(List<String> winners);
+        void showWinners(HashMap<Integer, List<Integer> > winnersCards);
         void setRate(int val);
 
         //установить значения
@@ -33,6 +34,9 @@ public interface GameContract {
     }
 
     interface Presenter{
+        //для отображения во вью
+        int getRate();
+        int getPlayerMoney();
 
         //Обработчик нажатий кнопок
         void foldButtonClicked();
@@ -40,7 +44,7 @@ public interface GameContract {
         void raiseButtonClicked(int rate);
         void allInButtonClicked();
 
-        Integer exitButtonClicked();
+        void exitButtonClicked();
 
         //Если чето с сервера приходит
         void acceptMessageFromServerNewPlayerJoin(Player player);  //Там по ходу посмотрим что передается, как и везде

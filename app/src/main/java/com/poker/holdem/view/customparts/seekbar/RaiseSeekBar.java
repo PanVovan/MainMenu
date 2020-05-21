@@ -4,6 +4,7 @@ import android.content.Context;
 import android.graphics.Canvas;
 import android.util.AttributeSet;
 import android.view.MotionEvent;
+import android.widget.SeekBar;
 
 
 public class RaiseSeekBar extends androidx.appcompat.widget.AppCompatSeekBar {
@@ -26,10 +27,10 @@ public class RaiseSeekBar extends androidx.appcompat.widget.AppCompatSeekBar {
         super(context, attrs);
     }
 
+    @Override
     protected void onSizeChanged(int w, int h, int oldw, int oldh) {
         super.onSizeChanged(h, w, oldh, oldw);
     }
-
     @Override
     protected synchronized void onDraw(Canvas canvas) {
         canvas.rotate(-90);

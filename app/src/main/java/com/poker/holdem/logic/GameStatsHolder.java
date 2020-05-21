@@ -7,10 +7,10 @@ import com.poker.holdem.logic.player.Player;
 import com.poker.holdem.view.util.ViewControllerActionCode;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
-import java.util.logging.Logger;
 
 
 public class GameStatsHolder {
@@ -18,23 +18,42 @@ public class GameStatsHolder {
     private String mainPlayerName;
     private List<Player> players = new ArrayList<>();
     private List<Integer> deck = new ArrayList<>();
-    private Integer bank;
-    private Integer rate;
-    private String lead;
-    private int roundsNum;
-    //TODO: переименовать spisokPedikov
-    private List<String> spisokPedikov = new ArrayList<>();
-    private int cardsOpened;
+    private Integer bank = 0;
+    private Integer rate = 0;
+    private String lead = "";
+    private int roundsNum = 0;
+    private List<String> listOfPlayersReadyToFinishGame = new ArrayList<>();
+    private int cardsOpened = 0;
+    private boolean isGameRunning = false;
+    //индикатор того, что игрок что-то сделал, и в этом ходу ему не надо больше ничего
+    //делать; это проверка "а не отправили ли мы уже что-нибудь, в сервер ещё не ответил?";
+    //игрок может быстро нажать кнопку несколько раз, пока ответ с сервера
+    //будет идти; это может плохо сказаться как на работе клиента,
+    //так и на работе сервера
+    private boolean playerPushedButton = false;
 
-    public void onNewRound(){
-        //удалить всех, кто в прошлом раунде
-        //сделал all in или fold
-        this.spisokPedikov.forEach((name)->{
-            this.players.forEach((player)->{
-                if(player.getName().equals(name))
+    //нам нужно показать во вью карты игроков-победителей
+    public HashMap<Integer, List<Integer> > getWinningPlayersCards(List<String> winners){
+        HashMap<Integer, List<Integer>> result = new HashMap<>();
+        for (Player i: this.players)
+            if(winners.contains(i.getName()))
+                result.put(i.getPos(), i.getCards());
+        return result;
+    }
+
+    private void onNewRound(){
+        //если все готовы (нет денег/пошли ва-банк)
+        //то удалять никого не надо, т.к. игра заканчивается
+        boolean isGameEnd = this.listOfPlayersReadyToFinishGame.size()
+                                    == this.players.size();
+        if(!isGameEnd) {
+            //удалить всех, кто в прошлом раунде
+            //сделал all in или fold
+            this.listOfPlayersReadyToFinishGame.forEach((name) -> this.players.forEach((player) -> {
+                if (player.getName().equals(name))
                     player.setActive(false);
-            });
-        });
+            }));
+        }
     }
 
     public void playerGetsMoney(String name, int val){
@@ -63,13 +82,14 @@ public class GameStatsHolder {
     }
     public void onPlayerCheck(String name){ playerSpendMoney(name, rate); }
     public void onPlayerAllIn(String name){
-        this.spisokPedikov.add(name);
+        this.listOfPlayersReadyToFinishGame.add(name);
         playerSpendMoney(name, getPlayerByName(name).getMoney());
     }
     public void onPlayerStop(String name){}
     public void onPlayerRestore(String name){}
     public void onEndGame(int win_val, List<String> winners){
-        this.spisokPedikov = new ArrayList<>();
+        this.isGameRunning = false;
+        this.listOfPlayersReadyToFinishGame = new ArrayList<>();
         this.bank = 0;
         this.players.forEach((i)->{
             if(winners.contains(i.getName()))
@@ -93,8 +113,10 @@ public class GameStatsHolder {
             ,Integer bank
             ,Integer roundNum
     ){
+        this.isGameRunning = true;
+        this.playerPushedButton = false;
         this.cardsOpened = 3;
-        this.spisokPedikov = new ArrayList<>();
+        this.listOfPlayersReadyToFinishGame = new ArrayList<>();
         this.roundsNum = roundNum;
         this.bank = bank;
         //иницивлизируем так <- не всегда
@@ -220,7 +242,6 @@ public class GameStatsHolder {
 
     public boolean mainPlayerIsInGame(){ return getPlayerByName(mainPlayerName).isActive(); }
 
-    //TODO: метка
     public void deleteOpponent(String name) {
         players.remove(getPlayerByName(name));
     }
@@ -241,11 +262,11 @@ public class GameStatsHolder {
 
     public void setBank(Integer bank) { this.bank = bank; }
 
-    public Integer getRate() { return rate;  }
+    public Integer getRate() { return rate; }
 
     public void setRate(Integer rate) { this.rate = rate; }
 
-    public String getLead() { return lead; }
+    public String getLead() { return lead==null ?"":lead; }
 
     public void setLead(String lead) { this.lead = lead; }
 
@@ -277,5 +298,21 @@ public class GameStatsHolder {
 
     public void setCardsOpened(int cardsOpened) {
         this.cardsOpened = cardsOpened;
+    }
+
+    public boolean isPlayerPushedButton() {
+        return playerPushedButton;
+    }
+
+    public void setPlayerPushedButton(boolean playerPushedButton) {
+        this.playerPushedButton = playerPushedButton;
+    }
+
+    public boolean isGameRunning() {
+        return isGameRunning;
+    }
+
+    public void setGameRunning(boolean gameRunning) {
+        isGameRunning = gameRunning;
     }
 }

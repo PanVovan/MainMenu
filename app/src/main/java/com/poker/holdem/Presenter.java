@@ -1,21 +1,16 @@
 package com.poker.holdem;
 
-import android.app.Activity;
 import android.content.Context;
-import android.content.Intent;
 import android.widget.Toast;
 
 import com.poker.holdem.constants.Constants;
 import com.poker.holdem.logic.GameStatsHolder;
 import com.poker.holdem.logic.player.Player;
-import com.poker.holdem.view.activity.MainActivity;
 import com.poker.holdem.view.util.ViewControllerActionCode;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 import java.util.Map;
-import java.util.Stack;
 import java.util.logging.Logger;
 
 public class Presenter implements GameContract.Presenter {
@@ -48,10 +43,14 @@ public class Presenter implements GameContract.Presenter {
     //Тут то, что мы получаем от GameViewFragment
     @Override
     public void foldButtonClicked() {
-        if(gameStats.getLead().equals(this.PLAYER_NAME)) {
+        if(gameStats.getLead().equals(this.PLAYER_NAME)
+                && !gameStats.isPlayerPushedButton()
+                && gameStats.isGameRunning()
+        ) {
             serverController.sendMessageOnServerFold();
             gameStats.setPlayerActivity(this.PLAYER_NAME, false);
             gameView.setPlayerView(gameStats.getMainPlayer());
+            gameStats.setPlayerPushedButton(true);
         }else
             Toast.makeText(
                     PokerApplicationManager.getInstance().getApplicationContext()
@@ -64,9 +63,13 @@ public class Presenter implements GameContract.Presenter {
     @Override
     public void checkButtonClicked() {
         if(gameStats.getLead().equals(this.PLAYER_NAME)
-                && gameStats.getPlayerMoney(this.PLAYER_NAME)>=gameStats.getRate()) {
+                && gameStats.getPlayerMoney(this.PLAYER_NAME)>=gameStats.getRate()
+                && !gameStats.isPlayerPushedButton()
+                && gameStats.isGameRunning()
+        ) {
             serverController.sendMessageOnServerCheck();
             gameStats.onMeSpendMoney(gameStats.getRate());
+            gameStats.setPlayerPushedButton(true);
             gameView.setPlayerView(gameStats.getMainPlayer());
         }else
             Toast.makeText(
@@ -78,12 +81,16 @@ public class Presenter implements GameContract.Presenter {
 
     @Override
     public void raiseButtonClicked(int rate) {
-        if(gameStats.getLead().equals(this.PLAYER_NAME)
-                && gameStats.getPlayerMoney(this.PLAYER_NAME)>=rate
-                && rate >= gameStats.getRate()) {
+        if(gameStats.getLead().equals(this.PLAYER_NAME)                 //если игрок- ведущий
+                && gameStats.getPlayerMoney(this.PLAYER_NAME)>=rate     //если денег хватает на ставку
+                && rate >= gameStats.getRate()                          //если указанная стака больше существующей
+                && !gameStats.isPlayerPushedButton()                    //ксли игрок ещё ничего не делал в ходу
+                && gameStats.isGameRunning()                            //если идёт игра
+        ) {
             serverController.sendMessageOnServerRaise(rate);
             gameStats.setRate(rate);
             gameStats.onMeSpendMoney(rate);
+            gameStats.setPlayerPushedButton(true);
             gameView.setRate(rate);
             gameView.setPlayerView(gameStats.getMainPlayer());
         }else
@@ -95,9 +102,17 @@ public class Presenter implements GameContract.Presenter {
     }
 
     @Override
+    public int getPlayerMoney(){ return this.gameStats.getPlayerMoney(this.PLAYER_NAME); }
+
+    public int getRate(){ return this.gameStats.getRate(); }
+
+    @Override
     public void allInButtonClicked(){
-        if(gameStats.getLead().equals(this.PLAYER_NAME)
-                && gameStats.getPlayerMoney(this.PLAYER_NAME)>=0) {
+        if(gameStats.getLead().equals(this.PLAYER_NAME)             //если игрок- ведущий
+                && gameStats.getPlayerMoney(this.PLAYER_NAME)>=0    //если деньги есть
+                && !gameStats.isPlayerPushedButton()                //если игрок ещё ничего не делал в ходу
+                && gameStats.isGameRunning()                        //если идёт игра
+        ) {
                 serverController.sendMessageOnServerAllIn();
                 gameStats.onMeSpendMoney(
                         gameStats
@@ -105,6 +120,7 @@ public class Presenter implements GameContract.Presenter {
                                 .getMoney()
                 );
                 gameView.setPlayerView(gameStats.getMainPlayer());
+                gameStats.setPlayerPushedButton(true);
         }else
             Toast.makeText(
                     PokerApplicationManager.getInstance().getApplicationContext()
@@ -114,8 +130,7 @@ public class Presenter implements GameContract.Presenter {
     }
 
     @Override
-    public Integer exitButtonClicked(){           //Intent intent) {
-        //intent.putExtra("money", gameStats.getPlayerByName(this.PLAYER_NAME).getMoney());
+    public void exitButtonClicked(){
         serverController.sendMessageOnServerLeave();
         PokerApplicationManager.getInstance()
                 .getSharedPreferences(Constants.PREFS_NAME, Context.MODE_PRIVATE)
@@ -126,8 +141,6 @@ public class Presenter implements GameContract.Presenter {
                                 .getPlayerByName(this.PLAYER_NAME)
                                 .getMoney()
                         ).apply();
-        return gameStats.getPlayerByName(this.PLAYER_NAME).getMoney();
-
     }
 
     //То, что мы получаем от сервера
@@ -162,6 +175,7 @@ public class Presenter implements GameContract.Presenter {
                 gameStats.getPlayerByName(name).getPos()
                 ,gameStats.getPlayerByName(name).getMoney()
         );
+        if(newLead.equals(this.PLAYER_NAME)) gameStats.setPlayerPushedButton(false);
     }
     @Override
     public void acceptMessageFromServerOpponentRaise(String name, Integer rate, String newLead, boolean didRoundChange) {
@@ -176,6 +190,7 @@ public class Presenter implements GameContract.Presenter {
                 gameStats.getPlayerByName(name).getPos()
                 ,gameStats.getPlayerByName(name).getMoney()
         );
+        if(newLead.equals(this.PLAYER_NAME)) gameStats.setPlayerPushedButton(false);
     }
     @Override
     public void acceptMessageFromServerOpponentAllIn(String name, String newLead, boolean didRoundChange) {
@@ -189,6 +204,7 @@ public class Presenter implements GameContract.Presenter {
                 gameStats.getPlayerByName(name).getPos()
                 ,gameStats.getPlayerByName(name).getMoney()
         );
+        if(newLead.equals(this.PLAYER_NAME)) gameStats.setPlayerPushedButton(false);
     }
     @Override
     public void acceptMessageFromServerOpponentFold(String name, String newLead, boolean didRoundChange) {
@@ -202,6 +218,7 @@ public class Presenter implements GameContract.Presenter {
                 gameStats.getPlayerByName(name).getPos()
                 ,gameStats.getPlayerByName(name).getMoney()
         );
+        if(newLead.equals(this.PLAYER_NAME)) gameStats.setPlayerPushedButton(false);
     }
     @Override
     public void acceptMessageFromServerOpponentMeDidSomething(String nextLead, boolean didRoundChange){
@@ -214,6 +231,7 @@ public class Presenter implements GameContract.Presenter {
                 gameStats.getPlayerByName(this.PLAYER_NAME).getPos()
                 ,gameStats.getPlayerByName(this.PLAYER_NAME).getMoney()
         );
+        if(nextLead.equals(this.PLAYER_NAME)) gameStats.setPlayerPushedButton(false);
     }
     @Override
     public void acceptMessageFromServerOpponentLeft(String name, String newLead, boolean didRoundChange) {
@@ -242,6 +260,7 @@ public class Presenter implements GameContract.Presenter {
         if(didRoundChange) gameStats.increaseRoundsNum();
         gameStats.setLead(newLead);
         checkIfShouldOpenNewCard();
+        if(newLead.equals(this.PLAYER_NAME)) gameStats.setPlayerPushedButton(false);
     }
     @Override
     public void acceptMessageFromServerOpponentStop(String name) {
@@ -256,12 +275,12 @@ public class Presenter implements GameContract.Presenter {
     public void acceptMessageFromServerEndGame(Integer winVal, List<String> winners) {
         gameStats.onEndGame(winVal, winners);
         showCardsWhenGameIsDone();
-        Logger.getAnonymousLogger().info("first winner "+winners.get(0));
-        gameView.showWinners(winners);
+        gameView.showWinners(gameStats.getWinningPlayersCards(winners));
 
         //TODO: *романтическая пауза*
         //вот тут нужно сделать задержку, чтобы игрок полюбовался на
         //карты победителей (свои карты)
+
 
         //карт у игроков больше нет, убираем
         gameStats.clearAllPlayersCards();

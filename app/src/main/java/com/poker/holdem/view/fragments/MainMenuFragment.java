@@ -19,6 +19,7 @@ import com.poker.holdem.view.grafic.PictureView;
 import com.poker.holdem.view.util.NavigationHost;
 
 import java.util.Locale;
+import java.util.Objects;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -44,7 +45,6 @@ public class MainMenuFragment extends Fragment {
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_main_menu, container, false);
         ButterKnife.bind(this, view);
-        //TODO: исправить ошибку с потереё activity
         Integer money = PokerApplicationManager.getInstance()
                 .getSharedPreferences(Constants.PREFS_NAME, Context.MODE_PRIVATE)
                 .getInt(Constants.PLAYER_MONEY, 0);
@@ -62,22 +62,22 @@ public class MainMenuFragment extends Fragment {
 
     @OnClick(R.id.bthStartGame)
     void startFindLobbies () {
-        ((NavigationHost) getActivity()).navigateTo(new ChooseLobbyFragment(), true);
+        ((NavigationHost) Objects.requireNonNull(getActivity())).navigateTo(new ChooseLobbyFragment(), true);
     }
 
     @OnClick(R.id.btn_navigate_to_main_menu)
     void exit(){
-        getActivity().finish();
+        Objects.requireNonNull(getActivity()).finish();
     }
 
     @OnClick(R.id.settingsBtn)
     void settings(){
-        ((NavigationHost) getActivity()).navigateTo(new SettingsFragment(), true);
+        ((NavigationHost) Objects.requireNonNull(getActivity())).navigateTo(new SettingsFragment(), true);
     }
 
     @OnClick(R.id.helpBtn)
     void help(){
-        ((NavigationHost) getActivity()).navigateTo(new HelpFragment(), true);
+        ((NavigationHost) Objects.requireNonNull(getActivity())).navigateTo(new HelpFragment(), true);
     }
 
 }

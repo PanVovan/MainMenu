@@ -37,8 +37,8 @@
         android:layout_marginLeft="4dp"
         android:layout_width="30dp"
         android:layout_height="30dp"
-        android:text=""
-        android:textSize="25dp"
+        android:text="@string/less_than"
+        android:textSize="25sp"
         android:textAlignment="center"
         android:background="@drawable/button"
         android:textColor="@color/my_black"
@@ -52,8 +52,8 @@
         android:layout_width="30dp"
         android:layout_height="30dp"
         android:background="@drawable/button"
-        android:text=""
-        android:textSize="25dp"
+        android:text="@string/greater_than"
+        android:textSize="25sp"
         android:textAlignment="center"
         android:textColor="@color/my_black"
         />
@@ -80,7 +80,7 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         android:layout_marginTop="80dp"
-        android:layout_marginRight="60dp"
+        android:layout_marginEnd="60dp"
         android:layout_width="@dimen/login_fragments_window_width"
         android:layout_height="@dimen/login_fragments_window_height"
         android:orientation="vertical"
@@ -111,7 +111,8 @@
                 android:id="@+id/name_et_create"
                 android:layout_width="@dimen/sign_in_window_et_width"
                 android:layout_height="match_parent"
-                android:textColor="@color/my_black"/>
+                android:textColor="@color/my_black"
+                android:inputType="text"/>
         </androidx.constraintlayout.widget.ConstraintLayout>
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/password_input_field"

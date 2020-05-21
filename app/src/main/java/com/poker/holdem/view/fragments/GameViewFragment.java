@@ -33,8 +33,10 @@ import com.poker.holdem.view.grafic.CardView;
 import com.poker.holdem.view.grafic.PictureView;
 import com.poker.holdem.view.util.ViewControllerActionCode;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
+import java.util.Map;
 import java.util.Objects;
 import java.util.logging.Logger;
 
@@ -45,6 +47,7 @@ import butterknife.OnClick;
 public class GameViewFragment extends Fragment implements GameContract.View {
 
     private GameContract.Presenter presenter;
+
 
     private String ROOM_NAME = "";
 
@@ -67,39 +70,75 @@ public class GameViewFragment extends Fragment implements GameContract.View {
         presenter = new Presenter(this, this.ROOM_NAME);
     }
 
+
+    /*
+        //TODO: ОСТОРОЖНО, МАГИЯ
+         когда мы открываем панель рейз,
+         то изначально в индикаторе стоит текущая ставка в лобби
+         когда мы двигаем ползунок вверх, то значение на индикаторе изменяется
+         по формуле:
+          [значение] = [текущая ставка]+
+            [прогресс]*( ([деньги игрока]-[текущая ставка]) / [максимальное значение сикбара] )
+         WYSIWUG -- итоговая ставка считается по той же формуле
+     */
     @OnClick(R.id.raise_button)
     void visibilitySetRateLayout(){
         if (setRateLayout.getVisibility() == View.INVISIBLE){
+            //новая ставка не должна быть меньше предыдущей
+            setRateTextView.setText(
+                    String.format(Locale.ENGLISH,"%d",presenter.getRate())
+            );
             setRateLayout.setVisibility(View.VISIBLE);
+            raiseSeekBar.setValue(0);
         }
         else {
             setRateLayout.setVisibility(View.INVISIBLE);
         }
     }
 
-
-    //TODO: посылать не прогресс, а деньги
     @OnClick(R.id.set_rate_button)
     void setRate() {
         if (setRateLayout.getVisibility() == View.VISIBLE){
             setRateLayout.setVisibility(View.INVISIBLE);
             setRateTextView.setText("");
-            presenter.raiseButtonClicked(raiseSeekBar.getValue());
-            setRate(raiseSeekBar.getValue());
+            //[значение] = [текущая ставка]+
+            //   [прогресс]*( ([деньги игрока]-[текущая ставка]) / [максимальное значение сикбара])
+            // тут целочисленное деление не подходит,
+            //используем float
+            int rate        = presenter.getRate();
+            float diff      = (float)( presenter.getPlayerMoney() - rate );
+            float max       = (float)raiseSeekBar.getMax();
+            float pro_gress = (float)raiseSeekBar.getValue();
+            int newProgress = rate +
+                    +(int)( pro_gress * ( diff / max ));
+            presenter.raiseButtonClicked(newProgress);
+
+            setRate(newProgress);
         }
     }
 
     @OnClick(R.id.game_info_button)
     void info(){
-        //хуйня
+        //подсказки по игре в покер
     }
 
     private SeekBar.OnSeekBarChangeListener changeListener(){
         return new SeekBar.OnSeekBarChangeListener() {
             @Override
             public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
-                setRateTextView.setText(String.format(Locale.ENGLISH,"%d",progress));
                 raiseSeekBar.setValue(progress);
+                //[значение] = [текущая ставка]+
+                // [прогресс]*(([деньги игрока]-[текущая ставка]) / [максимальное значение сикбара])
+
+                //т.к. int a/int b (a<b) = 0, приходится использовать float
+                int rate        = presenter.getRate();
+                float diff      = (float)( presenter.getPlayerMoney() - rate );
+                float max       = (float)seekBar.getMax();
+                float pro_gress = (float)progress;
+                int newProgress = rate +
+                        +(int)( pro_gress * ( diff / max ));
+                setRateTextView.setText(String.format(Locale.ENGLISH,"%d",newProgress));
+
             }
             @Override
             public void onStartTrackingTouch(SeekBar seekBar) {
@@ -112,15 +151,6 @@ public class GameViewFragment extends Fragment implements GameContract.View {
         };
     }
 
-    /*
-        @BindView(R.id.exit_button)                 Button exitButton;
-    @BindView(R.id.check_button)                Button checkButton;
-    @BindView(R.id.game_info_button)            Button gameInfoButton;
-    @BindView(R.id.raise_button)                Button raiseButton;
-    @BindView(R.id.fold_button)                 Button foldButton;
-    @BindView(R.id.set_rate_button)             Button setRateButton;
-     */
-
     @OnClick(R.id.game_container)
     void clickOnContainer(){
         if(setRateLayout.getVisibility() == View.VISIBLE && Objects.requireNonNull(getView()).getId() != R.id.set_rate_layout)
@@ -129,18 +159,9 @@ public class GameViewFragment extends Fragment implements GameContract.View {
 
     @OnClick(R.id.exit_button)
     void exit(){
-        //TODO: ACHTUNG! здесь мы выходим в MainActivity
         Objects.requireNonNull(getActivity()).runOnUiThread(() -> Toast.makeText(getContext(), "Left lobby", Toast.LENGTH_SHORT).show());
-        //Intent intent = new Intent(getActivity(), MainActivity.class);
-        //intent.putExtra("money", presenter.exitButtonClicked());
-        //startActivity(intent);
-
-        //вот это нужно, чтбы на сервере быгов не было
-        int a = presenter.exitButtonClicked();
-
-        //T ODO: почему так?
+        presenter.exitButtonClicked();
         getActivity().finish();
-
     }
 
     @OnClick(R.id.check_button)
@@ -157,27 +178,59 @@ public class GameViewFragment extends Fragment implements GameContract.View {
         youRate.setText(String.format(Locale.ENGLISH, "%d", val));
     }
     @Override
-    public void showWinners(List<String> winners){
-        Logger.getAnonymousLogger().info("Showing winners");
+    public void showWinners(HashMap<Integer, List<Integer> > winnersCards) {
         Objects.requireNonNull(getActivity()).runOnUiThread(()->{
-            //FIXME: хз, но тосты не показываются
-            Toast.makeText(
-                    getContext()
-                    ,"Game over!"
-                    ,Toast.LENGTH_SHORT
-            ).show();
-            for (String i : winners) {
-                Toast.makeText(
-                        getContext()
-                        ,"Winner! "+i
-                        ,Toast.LENGTH_SHORT
-                ).show();
-            }
-            try {
-                Thread.sleep(2000);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
+            Logger.getAnonymousLogger().info("Showing winners");
+            for (Map.Entry<Integer, List<Integer>> i : winnersCards.entrySet())
+                switch (i.getKey()) {
+                    case ViewControllerActionCode.POSITION_MAIN_PLAYER:
+                        firstHoleCard.setBackground(
+                                CardView.initDrawableVisibleCard(
+                                        getContext(), i.getValue().get(0)));
+                        secondHoleCard.setBackground(
+                                CardView.initDrawableVisibleCard(
+                                        getContext(), i.getValue().get(1)));
+                        break;
+                    case ViewControllerActionCode.POSITION_OPPONENT_FIRST:
+                        setOpponentCard(
+                                ViewControllerActionCode.ADD_FIRST_OPPONENT_FIRST_CARD
+                                , i.getValue().get(0)
+                        );
+                        setOpponentCard(
+                                ViewControllerActionCode.ADD_FIRST_OPPONENT_SECOND_CARD
+                                , i.getValue().get(1)
+                        );
+                        break;
+                    case ViewControllerActionCode.POSITION_OPPONENT_SECOND:
+                        setOpponentCard(
+                                ViewControllerActionCode.ADD_SECOND_OPPONENT_FIRST_CARD
+                                , i.getValue().get(0)
+                        );
+                        setOpponentCard(
+                                ViewControllerActionCode.ADD_SECOND_OPPONENT_SECOND_CARD
+                                , i.getValue().get(1)
+                        );
+                        break;
+                    case ViewControllerActionCode.POSITION_OPPONENT_THIRD:
+                        setOpponentCard(
+                                ViewControllerActionCode.ADD_THIRD_OPPONENT_FIRST_CARD
+                                , i.getValue().get(0)
+                        );
+                        setOpponentCard(
+                                ViewControllerActionCode.ADD_THIRD_OPPONENT_SECOND_CARD
+                                , i.getValue().get(1)
+                        );
+                        break;
+                    case ViewControllerActionCode.POSITION_OPPONENT_FOURTH:
+                        setOpponentCard(
+                                ViewControllerActionCode.ADD_FOURTH_OPPONENT_FIRST_CARD
+                                , i.getValue().get(0)
+                        );
+                        setOpponentCard(
+                                ViewControllerActionCode.ADD_FOURTH_OPPONENT_SECOND_CARD
+                                , i.getValue().get(1)
+                        );
+                }
         });
     }
     @Override
@@ -587,4 +640,6 @@ public class GameViewFragment extends Fragment implements GameContract.View {
     @BindView(R.id.player_layout)               ConstraintLayout playerLayout;
 
     @BindView(R.id.set_rate_layout)             ConstraintLayout setRateLayout;
+
+    //прогрессбар
 }
