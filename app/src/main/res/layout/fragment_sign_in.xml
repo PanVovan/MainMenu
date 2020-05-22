@@ -34,6 +34,7 @@
                 android:textStyle="normal"/>
 
             <EditText
+                android:inputType="text"
                 app:layout_constraintRight_toRightOf="parent"
                 android:id="@+id/name_et"
                 android:layout_width="@dimen/sign_in_window_et_width"
@@ -72,7 +73,7 @@
             android:id="@+id/sign_in_btn"
             android:layout_width="@dimen/sign_in_window_button_width"
             android:layout_height="@dimen/sign_in_window_button_height"
-            android:background="@drawable/button"
+            android:background="@drawable/frame5"
             app:layout_constraintTop_toBottomOf="@id/password_input_field"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"

@@ -45,18 +45,27 @@ public class MainMenuFragment extends Fragment {
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_main_menu, container, false);
         ButterKnife.bind(this, view);
-        Integer money = PokerApplicationManager.getInstance()
+        Integer money = Objects.requireNonNull(PokerApplicationManager.getInstance()
                 .getSharedPreferences(Constants.PREFS_NAME, Context.MODE_PRIVATE)
-                .getInt(Constants.PLAYER_MONEY, 0);
-        playerMoney.setText(
-                String.format(Locale.ENGLISH, "%d", money)
-        );
-        player_pic.setBackground(PictureView.getPic(
-                getContext()
-                ,PokerApplicationManager.getInstance()
-                        .getSharedPreferences(Constants.PREFS_NAME, Context.MODE_PRIVATE)
-                        .getInt(Constants.PLAYER_PICTURE, 1)
-        ));
+                .getInt(Constants.PLAYER_MONEY, 0));
+        try {
+            playerMoney.setText(
+                    String.format(Locale.ENGLISH, "%d", money)
+            );
+        }catch (Exception e){
+            playerMoney.setText(R.string.undefined); //undefined
+        }
+        try {
+            player_pic.setBackground(PictureView.getPic(
+                    getContext()
+                    , PokerApplicationManager.getInstance()
+                            .getSharedPreferences(Constants.PREFS_NAME, Context.MODE_PRIVATE)
+                            .getInt(Constants.PLAYER_PICTURE, 1)
+            ));
+        }catch (Exception e){
+            player_pic.setBackground(PictureView.getPic(getContext(), 0));
+        }
+
         return view;
     }
 

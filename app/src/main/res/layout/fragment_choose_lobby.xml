@@ -29,11 +29,11 @@
         tools:layout_editor_absoluteY="-9dp" />
 
     <Button
-        android:id="@+id/public_games"
-        android:layout_width="138dp"
+        android:id="@+id/reload_lobbies_btn"
+        android:layout_width="55dp"
         android:layout_height="55dp"
         android:adjustViewBounds="true"
-        android:background="@drawable/button"
+        android:background="@drawable/reload_pic_button1dark"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
 
@@ -42,11 +42,10 @@
         android:layout_width="138dp"
         android:layout_height="55dp"
         android:layout_marginStart="30dp"
-        android:layout_marginLeft="30dp"
         android:adjustViewBounds="true"
         android:background="@drawable/button"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/public_games" />
+        app:layout_constraintStart_toEndOf="@+id/reload_lobbies_btn" />
 
     <Button
         android:id="@+id/new_lobby"
@@ -62,7 +61,7 @@
 
     <Button
         android:id="@+id/clear_lobbies"
-        android:text="CLEAR"
+        android:text="@string/clear"
         android:textSize="20sp"
         android:layout_width="80dp"
         android:layout_height="55dp"

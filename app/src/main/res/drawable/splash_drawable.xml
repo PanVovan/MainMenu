@@ -6,7 +6,7 @@
     <item>
         <bitmap
             android:gravity="center"
-            android:src="@drawable/game_icon_spades"/>
+            android:src="@drawable/game_icon_spades_little"/>
     </item>
 
 </layer-list>

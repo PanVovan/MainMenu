@@ -15,7 +15,6 @@ import android.widget.ImageView;
 import com.poker.holdem.LobbyContract;
 import com.poker.holdem.R;
 import com.poker.holdem.view.grafic.PictureView;
-import com.poker.holdem.view.util.ChooseImageHost;
 
 import java.util.Arrays;
 import java.util.List;
@@ -29,7 +28,7 @@ import butterknife.OnClick;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class CreateAccFragment extends Fragment implements ChooseImageHost {
+public class CreateAccFragment extends Fragment {
 
     private View view;
 
@@ -91,10 +90,5 @@ public class CreateAccFragment extends Fragment implements ChooseImageHost {
         Logger.getAnonymousLogger().info("<------------"+name+"  "+ password);
         ((LobbyContract.Registrator) Objects.requireNonNull(getActivity()))
                 .sendMessageOnServerRegister(name, password, pic_pos, this);
-    }
-
-    @Override
-    public void receivePlayerPicture(int pictureCode) {
-
     }
 }

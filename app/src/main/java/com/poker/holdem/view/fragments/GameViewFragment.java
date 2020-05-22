@@ -1,9 +1,6 @@
 package com.poker.holdem.view.fragments;
 
 import android.content.Context;
-import android.content.Intent;
-import android.graphics.Canvas;
-import android.graphics.ColorFilter;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -11,11 +8,10 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.SeekBar;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.core.content.ContextCompat;
@@ -26,8 +22,8 @@ import com.poker.holdem.PokerApplicationManager;
 import com.poker.holdem.Presenter;
 import com.poker.holdem.R;
 import com.poker.holdem.constants.Constants;
+import com.poker.holdem.logic.handlogic.combination.HandCombination;
 import com.poker.holdem.logic.player.Player;
-import com.poker.holdem.view.activity.MainActivity;
 import com.poker.holdem.view.customparts.seekbar.RaiseSeekBar;
 import com.poker.holdem.view.grafic.CardView;
 import com.poker.holdem.view.grafic.PictureView;
@@ -38,6 +34,8 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Objects;
+import java.util.Timer;
+import java.util.TimerTask;
 import java.util.logging.Logger;
 
 import butterknife.BindView;
@@ -70,17 +68,39 @@ public class GameViewFragment extends Fragment implements GameContract.View {
         presenter = new Presenter(this, this.ROOM_NAME);
     }
 
+    @Override
+    public void onStop() {
+        super.onStop();
+        /*
+            серверу нужно знать, когда игрок выходит из
+            лобби; если игрок не отправит запрос на выход,
+            а потом снова зайдёт, возможна ошибка сервера
+            (например, вышел из приложения, оно остановилось,
+            а игрок всё ещё считается активным на сервере)
+         */
+        presenter.onViewStopped();
+        //  Вообще, это не срабатывает,
+        //  но мало ли
+        youDisconnectedLayout.setVisibility(View.VISIBLE);
+        gameElementsLayout.setVisibility(View.GONE);
+    }
+
+    @OnClick(R.id.you_disconnected_button)
+    void getOutAfterDisconnect(){
+        Logger.getAnonymousLogger().info("you disconnect btn clicked");
+        Objects.requireNonNull(getActivity()).finish();
+    }
 
     /*
-        //TODO: ОСТОРОЖНО, МАГИЯ
-         когда мы открываем панель рейз,
-         то изначально в индикаторе стоит текущая ставка в лобби
-         когда мы двигаем ползунок вверх, то значение на индикаторе изменяется
-         по формуле:
-          [значение] = [текущая ставка]+
-            [прогресс]*( ([деньги игрока]-[текущая ставка]) / [максимальное значение сикбара] )
-         WYSIWUG -- итоговая ставка считается по той же формуле
-     */
+            //TODO: ОСТОРОЖНО, МАГИЯ
+             когда мы открываем панель рейз,
+             то изначально в индикаторе стоит текущая ставка в лобби
+             когда мы двигаем ползунок вверх, то значение на индикаторе изменяется
+             по формуле:
+              [значение] = [текущая ставка]+
+                [прогресс]*( ([деньги игрока]-[текущая ставка]) / [максимальное значение сикбара] )
+             WYSIWUG -- итоговая ставка считается по той же формуле
+         */
     @OnClick(R.id.raise_button)
     void visibilitySetRateLayout(){
         if (setRateLayout.getVisibility() == View.INVISIBLE){
@@ -112,8 +132,6 @@ public class GameViewFragment extends Fragment implements GameContract.View {
             int newProgress = rate +
                     +(int)( pro_gress * ( diff / max ));
             presenter.raiseButtonClicked(newProgress);
-
-            setRate(newProgress);
         }
     }
 
@@ -159,9 +177,8 @@ public class GameViewFragment extends Fragment implements GameContract.View {
 
     @OnClick(R.id.exit_button)
     void exit(){
-        Objects.requireNonNull(getActivity()).runOnUiThread(() -> Toast.makeText(getContext(), "Left lobby", Toast.LENGTH_SHORT).show());
         presenter.exitButtonClicked();
-        getActivity().finish();
+        Objects.requireNonNull(getActivity()).finish();
     }
 
     @OnClick(R.id.check_button)
@@ -171,14 +188,41 @@ public class GameViewFragment extends Fragment implements GameContract.View {
     void foldClick(){ presenter.foldButtonClicked(); }
 
     @OnClick(R.id.all_in_button)
-    void allInClick(){}
+    void allInClick(){ presenter.allInButtonClicked(); }
 
     @Override
     public void setRate(int val){
         Objects.requireNonNull(getActivity()).runOnUiThread(()->
             youRate.setText(String.format(Locale.ENGLISH, "%d", val)));
-
     }
+
+    @Override
+    public void setHandPowerProgressBarProgress(HandCombination combination) {
+        Objects.requireNonNull(getActivity()).runOnUiThread(()->{
+                playerHandPowerProgressBar.setProgress(combination.getValue());
+                playerHandCombinationName.setText(combination.toString());
+        });
+    }
+
+    @Override
+    public void showGameEventMessage(String message, int timeInMillis ){
+        Objects.requireNonNull(getActivity())
+                .runOnUiThread(()-> messageBox.setText(message));
+        Timer timer = new Timer();
+
+        timer.schedule(new TimerTask() {
+            @Override
+            public void run() {
+                //вот тут неожиданность --
+                //когда мы выходим раньше, чем таймер сработал, то всё ломается
+                //поэтому ловим ошибки
+                try {
+                    Objects.requireNonNull(getActivity())
+                            .runOnUiThread(() -> messageBox.setText(""));
+                }catch (Exception e){}
+            }}, timeInMillis);
+    }
+
     @Override
     public void showWinners(HashMap<Integer, List<Integer> > winnersCards) {
         Objects.requireNonNull(getActivity()).runOnUiThread(()->{
@@ -589,6 +633,7 @@ public class GameViewFragment extends Fragment implements GameContract.View {
     @BindView(R.id.fold_button)                 Button foldButton;
     @BindView(R.id.set_rate_button)             Button setRateButton;
     @BindView(R.id.all_in_button)               Button allInButton;
+    @BindView(R.id.you_disconnected_button)     Button youDisconnectedBtn;
 
     //карты
     @BindView(R.id.first_community_card)        ImageView firstCommunityCard;
@@ -643,7 +688,12 @@ public class GameViewFragment extends Fragment implements GameContract.View {
     @BindView(R.id.fourth_opponent_layout)      ConstraintLayout fourthOpponentLayout;
     @BindView(R.id.player_layout)               ConstraintLayout playerLayout;
 
-    @BindView(R.id.set_rate_layout)             ConstraintLayout setRateLayout;
+    @BindView(R.id.game_elements_layout)        ConstraintLayout gameElementsLayout;
+    @BindView(R.id.you_disconnected_layout)     ConstraintLayout youDisconnectedLayout;
 
-    //прогрессбар
+    @BindView(R.id.set_rate_layout)             ConstraintLayout setRateLayout;
+    @BindView(R.id.message_box)                 TextView messageBox;
+
+    @BindView(R.id.player_hand_power_progress_bar)  ProgressBar playerHandPowerProgressBar;
+    @BindView(R.id.player_hand_combination_name)    TextView playerHandCombinationName;
 }

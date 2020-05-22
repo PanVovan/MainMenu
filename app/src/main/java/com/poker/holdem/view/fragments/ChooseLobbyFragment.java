@@ -41,7 +41,7 @@ public class ChooseLobbyFragment extends Fragment implements LobbyContract.MenuL
 
     @BindView(R.id.stat_of_menu) ImageView label;
     @BindView(R.id.private_games) Button privateButton;
-    @BindView(R.id.public_games) Button publicButton;
+    @BindView(R.id.reload_lobbies_btn) Button reloadLobbiesBtn;
     @BindView(R.id.btn_navigate_to_main_menu) Button exitBtn;
     @BindView(R.id.clear_lobbies) Button clear_lobbies_button;
     @BindView(R.id.new_lobby) Button newLobby;
@@ -74,9 +74,9 @@ public class ChooseLobbyFragment extends Fragment implements LobbyContract.MenuL
         recyclerView.setLayoutManager(layoutManager);
     }
 
-    @OnClick(R.id.public_games)
-    void showPublicLobby() {
-        label.setBackgroundResource(R.drawable.public_label);
+    @OnClick(R.id.reload_lobbies_btn)
+    void reloadLobbies() {
+        sendMessageOnServerGetLobbies();
     }
 
     @OnClick(R.id.new_lobby)
@@ -123,6 +123,7 @@ public class ChooseLobbyFragment extends Fragment implements LobbyContract.MenuL
                 socket.disconnect();
             }
             RespRooms roomsObject = MyDeserializer.desGetLobbiesResponce(args[0].toString());
+            lobbies.clear();
             lobbies.addAll(roomsObject.getRooms());
             Objects.requireNonNull(getActivity())
                     .runOnUiThread(() -> setLobbies());

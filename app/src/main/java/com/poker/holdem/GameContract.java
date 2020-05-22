@@ -7,6 +7,7 @@ package com.poker.holdem;
 import android.app.Activity;
 import android.content.Intent;
 
+import com.poker.holdem.logic.handlogic.combination.HandCombination;
 import com.poker.holdem.logic.player.Player;
 
 import java.util.HashMap;
@@ -15,6 +16,9 @@ import java.util.Map;
 
 public interface GameContract {
     interface View {
+        void setHandPowerProgressBarProgress(HandCombination combination);
+        void showGameEventMessage(String message, int timeInMillis);
+
         void setLead(int pos);
         void setBank(int val);
         void showWinners(HashMap<Integer, List<Integer> > winnersCards);
@@ -34,6 +38,8 @@ public interface GameContract {
     }
 
     interface Presenter{
+        void onViewStopped();
+
         //для отображения во вью
         int getRate();
         int getPlayerMoney();

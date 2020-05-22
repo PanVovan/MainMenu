@@ -11,6 +11,48 @@
     tools:context=".view.fragments.GameViewFragment">
 
     <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/you_disconnected_layout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:visibility="gone"
+        >
+        <TextView
+            android:id="@+id/you_disconnected_info_text"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/you_disconnected"
+            android:textColor="@color/splash_primairy"
+            android:textSize="@dimen/you_disconnected_layout_text_size"
+            />
+        <Button
+            android:id="@+id/you_disconnected_button"
+            android:layout_width="100dp"
+            android:layout_height="50dp"
+            android:background="@drawable/button"
+            android:text="@string/ok"
+            android:textSize="@dimen/you_disconnected_layout_button_text_size"
+            android:textColor="@color/my_black"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/you_disconnected_info_text"
+            android:layout_marginTop="10dp"
+            />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+    <!--
+        Коварный план - чтобы можно было сразу
+        убрать все элементы
+    -->
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/game_elements_layout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:visibility="visible"
+        >
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/bank_layout"
         android:layout_width="80dp"
         android:layout_height="50dp"
@@ -45,7 +87,7 @@
         android:background="@drawable/button"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        android:text="ALL IN"/>
+        android:text="@string/all_in"/>
 
     <Button
         android:id="@+id/exit_button"
@@ -84,7 +126,7 @@
         android:background="@drawable/button"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        android:text="CHECK"/>
+        android:text="@string/check"/>
     <Button
         android:id="@+id/fold_button"
         android:layout_width="100dp"
@@ -97,7 +139,7 @@
         android:background="@drawable/button"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/check_button"
-        android:text="FOLD"/>
+        android:text="@string/fold"/>
     <Button
         android:id="@+id/raise_button"
         android:layout_width="100dp"
@@ -110,7 +152,7 @@
         android:background="@drawable/button"
         app:layout_constraintBottom_toTopOf="@+id/fold_button"
         app:layout_constraintEnd_toEndOf="parent"
-        android:text="RAISE"/>
+        android:text="@string/raise"/>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/player_layout"
@@ -162,9 +204,8 @@
             android:id="@+id/player_money"
             android:layout_width="110dp"
             android:layout_height="30dp"
-            android:layout_marginBottom="15dp"
             android:background="@drawable/text_view"
-            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintBottom_toTopOf="@id/player_hand_combination_name"
             app:layout_constraintEnd_toEndOf="parent">
 
             <TextView
@@ -174,16 +215,28 @@
                 android:layout_gravity="center_vertical|center_horizontal"/>
         </FrameLayout>
 
+        <TextView
+            android:id="@+id/player_hand_combination_name"
+            android:layout_width="110dp"
+            android:layout_height="10dp"
+            app:layout_constraintBottom_toTopOf="@id/player_hand_power_progress_bar"
+            app:layout_constraintRight_toRightOf="parent"
+            android:textSize="@dimen/player_hand_combination_name_text_size"
+            android:textAlignment="viewStart"
+            android:textColor="@color/splash_primairy"
+            />
+
         <ProgressBar
             android:id="@+id/player_hand_power_progress_bar"
             style="@style/Widget.AppCompat.ProgressBar.Horizontal"
             android:layout_width="110dp"
             android:layout_height="15dp"
             android:background="@color/myTransparent"
-            android:indeterminate="true"
+            android:indeterminate="false"
             android:indeterminateTintMode="src_atop"
+            android:progressTint="@color/splash_primairy"
             android:max="18"
-            android:progress="20"
+            android:progress="1"
 
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent" />
@@ -251,6 +304,7 @@
             android:background="@drawable/text_view">
             <TextView
                 android:id="@+id/first_opponent_money"
+                android:textSize="@dimen/opponent_view_text_size"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical|center_horizontal"/>
@@ -267,6 +321,7 @@
 
             <TextView
                 android:id="@+id/first_opponent_name"
+                android:textSize="@dimen/opponent_view_text_size"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical|center_horizontal"/>
@@ -340,6 +395,7 @@
             android:background="@drawable/text_view">
             <TextView
                 android:id="@+id/second_opponent_money"
+                android:textSize="@dimen/opponent_view_text_size"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical|center_horizontal"/>
@@ -356,6 +412,7 @@
 
             <TextView
                 android:id="@+id/second_opponent_name"
+                android:textSize="@dimen/opponent_view_text_size"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical|center_horizontal"/>
@@ -398,6 +455,7 @@
 
             <ImageView
                 android:id="@+id/third_opponent_frame"
+                android:textSize="@dimen/opponent_view_text_size"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:background="@drawable/frame_gamer"/>
@@ -431,6 +489,7 @@
             android:background="@drawable/text_view">
             <TextView
                 android:id="@+id/third_opponent_money"
+                android:textSize="@dimen/opponent_view_text_size"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical|center_horizontal"/>
@@ -447,6 +506,7 @@
 
             <TextView
                 android:id="@+id/third_opponent_name"
+                android:textSize="@dimen/opponent_view_text_size"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical|center_horizontal"/>
@@ -522,6 +582,7 @@
             android:background="@drawable/text_view">
             <TextView
                 android:id="@+id/fourth_opponent_money"
+                android:textSize="@dimen/opponent_view_text_size"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical|center_horizontal"/>
@@ -538,6 +599,7 @@
 
             <TextView
                 android:id="@+id/fourth_opponent_name"
+                android:textSize="@dimen/opponent_view_text_size"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical|center_horizontal"/>
@@ -673,5 +735,23 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/player_layout"
         app:layout_constraintStart_toStartOf="parent" />
+
+        <!--
+            Нам нужна змена простых тостов
+        -->
+        <TextView
+            android:id="@+id/message_box"
+            android:layout_width="@dimen/message_box_width"
+            android:layout_height="@dimen/message_box_height"
+            app:layout_constraintBottom_toTopOf="@id/player_layout"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_marginBottom="10dp"
+
+            android:textColor="@color/splash_primairy"
+            android:textSize="20sp"
+            android:textAlignment="center"/>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

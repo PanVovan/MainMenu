@@ -3,6 +3,7 @@ package com.poker.holdem.logic;
 import com.poker.holdem.logic.handlogic.Hand;
 import com.poker.holdem.logic.handlogic.card.Card;
 import com.poker.holdem.logic.handlogic.combination.HandClassifier;
+import com.poker.holdem.logic.handlogic.combination.HandCombination;
 import com.poker.holdem.logic.player.Player;
 import com.poker.holdem.view.util.ViewControllerActionCode;
 
@@ -11,6 +12,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 
 public class GameStatsHolder {
@@ -34,11 +37,10 @@ public class GameStatsHolder {
 
     //нам нужно показать во вью карты игроков-победителей
     public HashMap<Integer, List<Integer> > getWinningPlayersCards(List<String> winners){
-        HashMap<Integer, List<Integer>> result = new HashMap<>();
-        for (Player i: this.players)
-            if(winners.contains(i.getName()))
-                result.put(i.getPos(), i.getCards());
-        return result;
+        return (HashMap<Integer, List<Integer>>)this.players
+                .stream()
+                .filter(x -> winners.contains(x.getName()))
+                .collect(Collectors.toMap(Player::getPos, Player::getCards));
     }
 
     private void onNewRound(){
@@ -49,18 +51,17 @@ public class GameStatsHolder {
         if(!isGameEnd) {
             //удалить всех, кто в прошлом раунде
             //сделал all in или fold
-            this.listOfPlayersReadyToFinishGame.forEach((name) -> this.players.forEach((player) -> {
-                if (player.getName().equals(name))
-                    player.setActive(false);
-            }));
+            players.forEach((x)->{
+                if(listOfPlayersReadyToFinishGame.contains(x.getName()))
+                    x.setActive(false);
+            });
         }
     }
 
     public void playerGetsMoney(String name, int val){
-        this.players.forEach((i)->{
-            if(i.getName().equals(name)){
+        this.players.forEach(i->{
+            if(i.getName().equals(name))
                 i.setMoney(i.getMoney()+val);
-            }
         });
     }
     public void onMeSpendMoney(int val){
@@ -163,15 +164,14 @@ public class GameStatsHolder {
     }
 
     public void clearAllPlayersCards(){
-        this.players.forEach((i)-> i.setCards(new ArrayList<>()));
+        this.players.forEach( i -> i.setCards(new ArrayList<>()));
     }
 
     private void setGamePlayersCards(Map<String, List<Integer>> cards){
         for(Player i: players)
             if(i.isActive())
                 i.setCards(
-                        cards.get(i.getName())
-                );
+                        cards.get(i.getName()));
     }
 
     private void setActivePlayers(List<Player> gamePlayers){
@@ -187,7 +187,6 @@ public class GameStatsHolder {
             if(!activity)
                 i.setCards(new ArrayList<>());
         }
-
     }
 
     public void setPlayerPos(String  name, int pos){
@@ -238,6 +237,18 @@ public class GameStatsHolder {
             builder.addHoleCard(Optional.of(new Card(card)));
 
         return HandClassifier.getPowerStatic(builder.build());
+    }
+
+    public HandCombination getMainPlayerHandCombinationRank(int count) {
+        Hand.Builder builder = new Hand.Builder();
+
+        for (int i = 0; i<count && i<6; i++)
+            builder.addCommunityCard(Optional.of(new Card(deck.get(i))));
+
+        for (Integer card: getPlayerByName(mainPlayerName).getCards())
+            builder.addHoleCard(Optional.of(new Card(card)));
+
+        return HandClassifier.classifyPokerHand(builder.build()).getCombinationRank();
     }
 
     public boolean mainPlayerIsInGame(){ return getPlayerByName(mainPlayerName).isActive(); }

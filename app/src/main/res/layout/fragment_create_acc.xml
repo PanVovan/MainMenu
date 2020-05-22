@@ -13,7 +13,7 @@
         app:layout_constraintRight_toLeftOf="@id/create_window"
         app:layout_constraintTop_toTopOf="parent"
         android:layout_marginTop="100dp"
-        android:layout_marginRight="2dp"
+        android:layout_marginEnd="2dp"
         android:layout_width="@dimen/create_account_frame_with"
         android:layout_height="@dimen/create_account_frame_heigth"
         >
@@ -27,35 +27,27 @@
         <ImageView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:background="@drawable/frame_gamer"/>
+            android:background="@drawable/frame3"/>
 
     </FrameLayout>
     <Button
         android:id="@+id/button_next_picture"
         app:layout_constraintTop_toBottomOf="@id/picture_layout_create_acc"
         app:layout_constraintLeft_toLeftOf="@id/picture_layout_create_acc"
-        android:layout_marginLeft="4dp"
+        android:layout_marginStart="4dp"
         android:layout_width="30dp"
         android:layout_height="30dp"
-        android:text="@string/less_than"
-        android:textSize="25sp"
-        android:textAlignment="center"
-        android:background="@drawable/button"
-        android:textColor="@color/my_black"
+        android:background="@drawable/button_prev"
         />
     <Button
         android:id="@+id/button_previous_picture"
         app:layout_constraintTop_toBottomOf="@id/picture_layout_create_acc"
         app:layout_constraintRight_toRightOf="@id/picture_layout_create_acc"
         android:layout_marginTop="3dp"
-        android:layout_marginRight="4dp"
+        android:layout_marginEnd="4dp"
         android:layout_width="30dp"
         android:layout_height="30dp"
-        android:background="@drawable/button"
-        android:text="@string/greater_than"
-        android:textSize="25sp"
-        android:textAlignment="center"
-        android:textColor="@color/my_black"
+        android:background="@drawable/button_next"
         />
     <!--androidx.recyclerview.widget.RecyclerView
         android:id="@+id/choode_img_rv"
@@ -146,7 +138,7 @@
             android:id="@+id/create_account_btn"
             android:layout_width="@dimen/sign_in_window_button_width"
             android:layout_height="@dimen/sign_in_window_button_height"
-            android:background="@drawable/button"
+            android:background="@drawable/frame5"
             app:layout_constraintTop_toBottomOf="@id/password_input_field"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"

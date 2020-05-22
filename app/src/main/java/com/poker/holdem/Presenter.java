@@ -1,12 +1,12 @@
 package com.poker.holdem;
 
 import android.content.Context;
-import android.widget.Toast;
 
 import com.poker.holdem.constants.Constants;
 import com.poker.holdem.logic.GameStatsHolder;
 import com.poker.holdem.logic.player.Player;
 import com.poker.holdem.view.util.ViewControllerActionCode;
+import com.poker.holdem.view.util.ViewControllerTimerConst;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -52,12 +52,8 @@ public class Presenter implements GameContract.Presenter {
             gameView.setPlayerView(gameStats.getMainPlayer());
             gameStats.setPlayerPushedButton(true);
         }else
-            Toast.makeText(
-                    PokerApplicationManager.getInstance().getApplicationContext()
-                    ,"You can't do it now!"
-                    ,Toast.LENGTH_SHORT
-            ).show();
-
+            gameView.showGameEventMessage("You can't do it now!",
+                                        ViewControllerTimerConst.TIME_SHORT);
     }
 
     @Override
@@ -72,11 +68,8 @@ public class Presenter implements GameContract.Presenter {
             gameStats.setPlayerPushedButton(true);
             gameView.setPlayerView(gameStats.getMainPlayer());
         }else
-            Toast.makeText(
-                    PokerApplicationManager.getInstance().getApplicationContext()
-                    ,"You can't do it now!"
-                    ,Toast.LENGTH_SHORT
-            ).show();
+            gameView.showGameEventMessage("You can't do it now!",
+                    ViewControllerTimerConst.TIME_SHORT);
     }
 
     @Override
@@ -94,15 +87,26 @@ public class Presenter implements GameContract.Presenter {
             gameView.setRate(rate);
             gameView.setPlayerView(gameStats.getMainPlayer());
         }else
-            Toast.makeText(
-                    PokerApplicationManager.getInstance().getApplicationContext()
-                    ,"You can't do it now!"
-                    ,Toast.LENGTH_SHORT
-            ).show();
+            gameView.showGameEventMessage("You can't do it now!",
+                    ViewControllerTimerConst.TIME_SHORT);
     }
 
     @Override
     public int getPlayerMoney(){ return this.gameStats.getPlayerMoney(this.PLAYER_NAME); }
+
+    @Override
+    public void onViewStopped() {
+        serverController.sendMessageOnServerLeave();
+        PokerApplicationManager.getInstance()
+                .getSharedPreferences(Constants.PREFS_NAME, Context.MODE_PRIVATE)
+                .edit()
+                .putInt(
+                        Constants.PLAYER_MONEY
+                        ,gameStats
+                                .getPlayerByName(this.PLAYER_NAME)
+                                .getMoney()
+                ).apply();
+    }
 
     public int getRate(){ return this.gameStats.getRate(); }
 
@@ -122,11 +126,8 @@ public class Presenter implements GameContract.Presenter {
                 gameView.setPlayerView(gameStats.getMainPlayer());
                 gameStats.setPlayerPushedButton(true);
         }else
-            Toast.makeText(
-                    PokerApplicationManager.getInstance().getApplicationContext()
-                    ,"You can't do it now!"
-                    ,Toast.LENGTH_SHORT
-            ).show();
+            gameView.showGameEventMessage("You can't do it now!",
+                    ViewControllerTimerConst.TIME_SHORT);
     }
 
     @Override
@@ -392,6 +393,7 @@ public class Presenter implements GameContract.Presenter {
         sitThePlayers();
         gameView.setRate(base_rate);
         gameView.setLead(gameStats.getPosPlayer(gameStats.getLead()));
+        gameView.setHandPowerProgressBarProgress(gameStats.getMainPlayerHandCombinationRank(3));
         serverController.sendMessageOnServerHandPower(gameStats.getMainPlayerHandPower(5));
     }
 
@@ -414,16 +416,15 @@ public class Presenter implements GameContract.Presenter {
         Logger.getAnonymousLogger().info("Sitting the players, their number is: "+gameStats.getPlayers().size());
         this.gameStats.getPlayers().forEach((i) -> {
                     if (!i.getName().equals(this.PLAYER_NAME)) {
-                        if (gameStats.checkIfPlaceIsNotTaken(ViewControllerActionCode.POSITION_OPPONENT_FIRST)) {
-                            Logger.getAnonymousLogger().info("opponent first seat is empty. sitting the player " + i.getName());
+                        if (gameStats.checkIfPlaceIsNotTaken(ViewControllerActionCode.POSITION_OPPONENT_FIRST))
                             i.setPos(ViewControllerActionCode.POSITION_OPPONENT_FIRST);
-                        }
                         if (gameStats.checkIfPlaceIsNotTaken(ViewControllerActionCode.POSITION_OPPONENT_SECOND))
                             i.setPos(ViewControllerActionCode.POSITION_OPPONENT_SECOND);
                         if (gameStats.checkIfPlaceIsNotTaken(ViewControllerActionCode.POSITION_OPPONENT_THIRD))
                             i.setPos(ViewControllerActionCode.POSITION_OPPONENT_THIRD);
                         if (gameStats.checkIfPlaceIsNotTaken(ViewControllerActionCode.POSITION_OPPONENT_FOURTH))
                             i.setPos(ViewControllerActionCode.POSITION_OPPONENT_FOURTH);
+                        Logger.getAnonymousLogger().info("the player is placed: " + i.getName()+"  "+i.getPos());
                         gameView.setOpponentView(i.getPos(), i);
                     }
                 }
@@ -447,6 +448,7 @@ public class Presenter implements GameContract.Presenter {
                     , gameStats.getDeck().get(3)
             );
             gameStats.setCardsOpened(4);
+            gameView.setHandPowerProgressBarProgress(gameStats.getMainPlayerHandCombinationRank(4));
         }
         if(roundNow >= 2 && cardsOpened < 5) {
             gameView.setCardView(
@@ -454,6 +456,7 @@ public class Presenter implements GameContract.Presenter {
                     , gameStats.getDeck().get(4)
             );
             gameStats.setCardsOpened(5);
+            gameView.setHandPowerProgressBarProgress(gameStats.getMainPlayerHandCombinationRank(5));
         }
     }
 

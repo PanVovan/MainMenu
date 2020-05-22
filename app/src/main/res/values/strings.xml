@@ -16,6 +16,11 @@
     <string name="check">CHECK</string>
     <string name="fold">FOLD</string>
     <string name="raise">RAISE</string>
-    v
+    <string name="you_disconnected">YOU HAVE BEEN\nDISCONNECTED!</string>
+    <string name="ok">OK</string>
+    <string name="undefined">undefined</string>
+    <string name="clear">CLEAR</string>
+
+
 
 </resources>
