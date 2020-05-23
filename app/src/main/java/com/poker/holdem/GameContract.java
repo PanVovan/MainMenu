@@ -35,6 +35,11 @@ public interface GameContract {
         void setPlayerView (Player player);
         void updatePlayerMoney(int pos, Integer money);
         void clearOpponentView(int pos);
+
+        void showFirstOpponentEventMessage(String message, int timeInMillis);
+        void showSecondOpponentEventMessage(String message, int timeInMillis);
+        void showThirdOpponentEventMessage(String message, int timeInMillis);
+        void showFourthOpponentEventMessage(String message, int timeInMillis);
     }
 
     interface Presenter{

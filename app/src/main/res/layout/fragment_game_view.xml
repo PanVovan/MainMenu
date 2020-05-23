@@ -609,7 +609,7 @@
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <TextView
-        android:id="@+id/fifth_opponent_state"
+        android:id="@+id/fourth_opponent_state"
         android:layout_width="100dp"
         android:layout_height="20dp"
         android:layout_marginEnd="76dp"
