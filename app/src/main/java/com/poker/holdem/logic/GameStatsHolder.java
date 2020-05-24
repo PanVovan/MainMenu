@@ -184,8 +184,6 @@ public class GameStatsHolder {
         for(Player i: players) {
             if (i.getName().equals(name))
                 i.setActive(activity);
-            if(!activity)
-                i.setCards(new ArrayList<>());
         }
     }
 

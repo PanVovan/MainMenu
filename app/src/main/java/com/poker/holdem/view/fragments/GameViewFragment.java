@@ -487,6 +487,7 @@ public class GameViewFragment extends Fragment implements GameContract.View {
             }
         });
     }
+
     @Override
     public void setPlayerView(Player player) {
         Objects.requireNonNull(getActivity()).runOnUiThread(()-> {
@@ -624,6 +625,78 @@ public class GameViewFragment extends Fragment implements GameContract.View {
         }
     }
 
+
+
+    @Override
+    public void showFirstOpponentEventMessage(String message, int timeInMillis) {
+        Objects.requireNonNull(getActivity())
+                .runOnUiThread(()-> firstOpponentState.setText(message));
+        Timer timer = new Timer();
+
+        timer.schedule(new TimerTask() {
+            @Override
+            public void run() {
+                try {
+                    Objects.requireNonNull(getActivity())
+                            .runOnUiThread(() -> firstOpponentState.setText(""));
+                }catch (Exception e){}
+            }}, timeInMillis);
+    }
+
+    @Override
+    public void showSecondOpponentEventMessage(String message, int timeInMillis) {
+
+        Objects.requireNonNull(getActivity())
+                .runOnUiThread(()-> secondOpponentState.setText(message));
+        Timer timer = new Timer();
+
+        timer.schedule(new TimerTask() {
+            @Override
+            public void run() {
+                try {
+                    Objects.requireNonNull(getActivity())
+                            .runOnUiThread(() -> secondOpponentState.setText(""));
+                }catch (Exception e){}
+            }}, timeInMillis);
+
+    }
+
+    @Override
+    public void showThirdOpponentEventMessage(String message, int timeInMillis) {
+
+        Objects.requireNonNull(getActivity())
+                .runOnUiThread(()-> thirdOpponentState.setText(message));
+        Timer timer = new Timer();
+
+        timer.schedule(new TimerTask() {
+            @Override
+            public void run() {
+                try {
+                    Objects.requireNonNull(getActivity())
+                            .runOnUiThread(() -> thirdOpponentState.setText(""));
+                }catch (Exception e){}
+            }}, timeInMillis);
+
+    }
+
+    @Override
+    public void showFourthOpponentEventMessage(String message, int timeInMillis) {
+
+        Objects.requireNonNull(getActivity())
+                .runOnUiThread(()-> fourthOpponentState.setText(message));
+        Timer timer = new Timer();
+
+        timer.schedule(new TimerTask() {
+            @Override
+            public void run() {
+                try {
+                    Objects.requireNonNull(getActivity())
+                            .runOnUiThread(() -> fourthOpponentState.setText(""));
+                }catch (Exception e){}
+            }}, timeInMillis);
+
+    }
+
     //перенёс, чтобы не мешалось
     //Кнопки
     @BindView(R.id.exit_button)                 Button exitButton;
@@ -696,4 +769,10 @@ public class GameViewFragment extends Fragment implements GameContract.View {
 
     @BindView(R.id.player_hand_power_progress_bar)  ProgressBar playerHandPowerProgressBar;
     @BindView(R.id.player_hand_combination_name)    TextView playerHandCombinationName;
+
+    //Состояния игроков
+    @BindView(R.id.first_opponent_state)    TextView firstOpponentState;
+    @BindView(R.id.second_opponent_state)   TextView secondOpponentState;
+    @BindView(R.id.third_opponent_state)    TextView thirdOpponentState;
+    @BindView(R.id.fourth_opponent_state)   TextView fourthOpponentState;
 }

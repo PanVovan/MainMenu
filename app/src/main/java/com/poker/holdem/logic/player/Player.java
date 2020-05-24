@@ -18,8 +18,6 @@ public class Player{
 
     public void setActive(boolean active) {
         this.active = active;
-        if(active)
-            this.cards = new ArrayList<>();
     }
 
     public List<Integer> getCards() { return cards; }
