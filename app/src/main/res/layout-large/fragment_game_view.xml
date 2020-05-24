@@ -1,0 +1,764 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    android:id="@+id/game_container"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:background="@drawable/background_casino"
+    tools:context=".view.fragments.GameViewFragment">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/you_disconnected_layout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:visibility="gone"
+        >
+        <TextView
+            android:id="@+id/you_disconnected_info_text"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/you_disconnected"
+            android:textColor="@color/splash_primairy"
+            android:textSize="@dimen/you_disconnected_layout_text_size"
+            />
+        <Button
+            android:id="@+id/you_disconnected_button"
+            android:layout_width="100dp"
+            android:layout_height="50dp"
+            android:background="@drawable/button"
+            android:text="@string/ok"
+            android:textSize="@dimen/you_disconnected_layout_button_text_size"
+            android:textColor="@color/my_black"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/you_disconnected_info_text"
+            android:layout_marginTop="10dp"
+            />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+    <!--
+        Коварный план - чтобы можно было сразу
+        убрать все элементы
+    -->
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/game_elements_layout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:visibility="visible"
+        >
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/bank_layout"
+            android:layout_width="80dp"
+            android:layout_height="50dp"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            android:layout_marginTop="70dp"
+            android:background="@drawable/bank_frame"
+            android:visibility="visible"
+            >
+            <TextView
+                android:id="@+id/bank_text_view"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textAlignment="center"
+                android:textSize="15sp"
+                android:textColor="@color/combination_progress_bar"
+                />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <Button
+            android:id="@+id/all_in_button"
+            android:layout_width="100dp"
+            android:layout_height="25dp"
+            android:layout_above="@+id/check_button"
+            android:layout_alignParentEnd="true"
+            android:layout_marginStart="16dp"
+            android:layout_marginBottom="20dp"
+            android:adjustViewBounds="true"
+            android:background="@drawable/button"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            android:text="@string/all_in"/>
+
+        <Button
+            android:id="@+id/exit_button"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentEnd="true"
+            app:layout_constraintRight_toRightOf="parent"
+            android:adjustViewBounds="true"
+            android:background="@drawable/exit"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:ignore="MissingConstraints" />
+        <Button
+            android:id="@+id/game_info_button"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:layout_alignParentStart="true"
+            app:layout_constraintLeft_toLeftOf="parent"
+            android:layout_alignParentTop="true"
+            android:adjustViewBounds="true"
+            android:background="@drawable/__help"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:ignore="MissingConstraints" />
+        <Button
+            android:id="@+id/check_button"
+            android:layout_width="100dp"
+            android:layout_height="25dp"
+            android:layout_alignParentBottom="true"
+            android:layout_marginEnd="16dp"
+            android:layout_marginBottom="16dp"
+            android:layout_toStartOf="@+id/fold_button"
+            app:layout_constraintLeft_toLeftOf="@+id/fold_button"
+            android:adjustViewBounds="true"
+            android:background="@drawable/button"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:text="@string/check"/>
+        <Button
+            android:id="@+id/fold_button"
+            android:layout_width="100dp"
+            android:layout_height="25dp"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentBottom="true"
+            android:layout_marginEnd="20dp"
+            android:layout_marginBottom="16dp"
+            android:adjustViewBounds="true"
+            android:background="@drawable/button"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/check_button"
+            android:text="@string/fold"/>
+        <Button
+            android:id="@+id/raise_button"
+            android:layout_width="100dp"
+            android:layout_height="25dp"
+            android:layout_above="@+id/check_button"
+            android:layout_alignParentEnd="true"
+            android:layout_marginEnd="136dp"
+            android:layout_marginBottom="12dp"
+            android:adjustViewBounds="true"
+            android:background="@drawable/button"
+            app:layout_constraintBottom_toTopOf="@+id/fold_button"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:text="@string/raise"/>
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/player_layout"
+            android:layout_width="180dp"
+            android:layout_height="wrap_content"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent">
+
+            <FrameLayout
+                android:layout_width="@dimen/player_frame_width"
+                android:layout_height="@dimen/player_frame_height"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent">
+
+                <ImageView
+                    android:id="@+id/player_icon"
+                    android:layout_width="@dimen/player_icon_width"
+                    android:layout_height="@dimen/player_icon_height"
+                    android:layout_gravity="center_vertical|center_horizontal" />
+
+                <ImageView
+                    android:id="@+id/player_frame"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="@drawable/frame_gamer" />
+
+            </FrameLayout>
+
+            <ImageView
+                android:id="@+id/first_hole_card"
+                android:layout_width="40dp"
+                android:layout_height="53dp"
+                android:layout_marginTop="@dimen/player_card_margin_top"
+                android:layout_marginEnd="@dimen/first_player_card_margin_end"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <ImageView
+                android:id="@+id/second_hole_card"
+                android:layout_width="@dimen/card_width"
+                android:layout_height="@dimen/card_height"
+                android:layout_marginTop="@dimen/player_card_margin_top"
+                android:layout_marginEnd="@dimen/second_player_card_margin_end"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <FrameLayout
+                android:id="@+id/player_money"
+                android:layout_width="110dp"
+                android:layout_height="30dp"
+                android:background="@drawable/text_view"
+                app:layout_constraintBottom_toTopOf="@id/player_hand_combination_name"
+                app:layout_constraintEnd_toEndOf="parent">
+
+                <TextView
+                    android:id="@+id/player_money_textview"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical|center_horizontal"/>
+            </FrameLayout>
+
+            <TextView
+                android:id="@+id/player_hand_combination_name"
+                android:layout_width="110dp"
+                android:layout_height="10dp"
+                app:layout_constraintBottom_toTopOf="@id/player_hand_power_progress_bar"
+                app:layout_constraintRight_toRightOf="parent"
+                android:textSize="@dimen/player_hand_combination_name_text_size"
+                android:textAlignment="viewStart"
+                android:textColor="@color/splash_primairy"
+                />
+
+            <ProgressBar
+                android:id="@+id/player_hand_power_progress_bar"
+                style="@style/Widget.AppCompat.ProgressBar.Horizontal"
+                android:layout_width="110dp"
+                android:layout_height="15dp"
+                android:background="@color/myTransparent"
+                android:indeterminate="false"
+                android:indeterminateTintMode="src_atop"
+                android:progressTint="@color/splash_primairy"
+                android:max="18"
+                android:progress="1"
+
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/first_opponent_layout"
+            android:layout_width="150dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="32dp"
+            android:layout_marginBottom="168dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            android:visibility="invisible">
+
+            <FrameLayout
+                android:layout_width="@dimen/opponent_frame_width"
+                android:layout_height="@dimen/opponent_frame_height"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent">
+
+
+                <ImageView
+                    android:id="@+id/first_opponent_icon"
+                    android:layout_width="@dimen/opponent_icon_width"
+                    android:layout_height="@dimen/opponent_icon_height"
+                    android:layout_gravity="center_vertical|center_horizontal" />
+
+                <ImageView
+                    android:id="@+id/first_opponent_frame"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="@drawable/frame_gamer" />
+
+
+
+            </FrameLayout>
+
+            <ImageView
+                android:id="@+id/first_opponent_first_card"
+                android:layout_width="@dimen/card_width"
+                android:layout_height="@dimen/card_height"
+                android:layout_marginTop="@dimen/opponent_card_margin_top"
+                android:layout_marginEnd="@dimen/first_opponent_card_margin_end"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <ImageView
+                android:id="@+id/first_opponent_second_card"
+                android:layout_width="@dimen/card_width"
+                android:layout_height="@dimen/card_height"
+                android:layout_marginTop="@dimen/opponent_card_margin_top"
+                android:layout_marginEnd="@dimen/second_opponent_card_margin_end"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <FrameLayout
+                android:layout_width="@dimen/opponent_text_width"
+                android:layout_height="@dimen/opponent_text_height"
+                android:layout_marginBottom="@dimen/margin_bottom_opponent_money"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                android:background="@drawable/text_view">
+                <TextView
+                    android:id="@+id/first_opponent_money"
+                    android:textSize="@dimen/opponent_view_text_size"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical|center_horizontal"/>
+
+            </FrameLayout>
+
+            <FrameLayout
+                android:layout_width="@dimen/opponent_text_width"
+                android:layout_height="@dimen/opponent_text_height"
+                android:layout_marginBottom="@dimen/margin_bottom_opponent_name"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                android:background="@drawable/text_view">
+
+                <TextView
+                    android:id="@+id/first_opponent_name"
+                    android:textSize="@dimen/opponent_view_text_size"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical|center_horizontal"/>
+
+            </FrameLayout>
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <TextView
+            android:id="@+id/first_opponent_state"
+            android:layout_width="100dp"
+            android:layout_height="20dp"
+            android:layout_marginStart="56dp"
+            android:layout_marginBottom="128dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            android:textSize="@dimen/opponent_msg_text_size"
+            android:textColor="@color/splash_primairy"/>
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/second_opponent_layout"
+            android:layout_width="150dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="108dp"
+            android:visibility="invisible"
+            android:layout_marginTop="20dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <FrameLayout
+                android:layout_width="@dimen/opponent_frame_width"
+                android:layout_height="@dimen/opponent_frame_height"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
+
+                <ImageView
+                    android:id="@+id/second_opponent_icon"
+                    android:layout_width="@dimen/opponent_icon_width"
+                    android:layout_height="@dimen/opponent_icon_height"
+                    android:layout_gravity="center_vertical|center_horizontal" />
+
+                <ImageView
+                    android:id="@+id/second_opponent_frame"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="@drawable/frame_gamer" />
+            </FrameLayout>
+
+            <ImageView
+                android:id="@+id/second_opponent_first_card"
+                android:layout_width="@dimen/card_width"
+                android:layout_height="@dimen/card_height"
+                android:layout_marginTop="@dimen/opponent_card_margin_top"
+                android:layout_marginEnd="@dimen/first_opponent_card_margin_end"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <ImageView
+                android:id="@+id/second_opponent_second_card"
+                android:layout_width="@dimen/card_width"
+                android:layout_height="@dimen/card_height"
+                android:layout_marginTop="@dimen/opponent_card_margin_top"
+                android:layout_marginEnd="@dimen/second_opponent_card_margin_end"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <FrameLayout
+                android:layout_width="@dimen/opponent_text_width"
+                android:layout_height="@dimen/opponent_text_height"
+                android:layout_marginBottom="@dimen/margin_bottom_opponent_money"
+                android:background="@drawable/text_view"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent">
+
+                <TextView
+                    android:id="@+id/second_opponent_money"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical|center_horizontal"
+                    android:textSize="@dimen/opponent_view_text_size" />
+
+            </FrameLayout>
+
+            <FrameLayout
+                android:layout_width="@dimen/opponent_text_width"
+                android:layout_height="@dimen/opponent_text_height"
+                android:layout_marginBottom="@dimen/margin_bottom_opponent_name"
+                android:background="@drawable/text_view"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent">
+
+                <TextView
+                    android:id="@+id/second_opponent_name"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical|center_horizontal"
+                    android:textSize="@dimen/opponent_view_text_size" />
+
+            </FrameLayout>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <TextView
+            android:id="@+id/second_opponent_state"
+            android:layout_width="100dp"
+            android:layout_height="20dp"
+            android:layout_marginStart="132dp"
+            android:layout_marginTop="104dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            android:textSize="@dimen/opponent_msg_text_size"
+            android:textColor="@color/splash_primairy"/>
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/third_opponent_layout"
+            android:layout_width="150dp"
+            android:layout_height="wrap_content"
+            android:visibility="invisible"
+            android:layout_marginTop="20dp"
+            android:layout_marginEnd="120dp"
+            app:layout_constraintEnd_toEndOf="@+id/set_rate_layout"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <FrameLayout
+                android:layout_width="@dimen/opponent_frame_width"
+                android:layout_height="@dimen/opponent_frame_height"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
+
+                <ImageView
+                    android:id="@+id/third_opponent_icon"
+                    android:layout_width="@dimen/opponent_icon_width"
+                    android:layout_height="@dimen/opponent_icon_height"
+                    android:layout_gravity="center_vertical|center_horizontal" />
+
+                <ImageView
+                    android:id="@+id/third_opponent_frame"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="@drawable/frame_gamer"
+                    android:textSize="@dimen/opponent_view_text_size" />
+            </FrameLayout>
+
+            <ImageView
+
+                android:id="@+id/third_opponent_first_card"
+                android:layout_width="@dimen/card_width"
+                android:layout_height="@dimen/card_height"
+                android:layout_marginTop="@dimen/opponent_card_margin_top"
+                android:layout_marginEnd="@dimen/first_opponent_card_margin_end"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <ImageView
+                android:id="@+id/third_opponent_second_card"
+                android:layout_width="@dimen/card_width"
+                android:layout_height="@dimen/card_height"
+                android:layout_marginTop="@dimen/opponent_card_margin_top"
+                android:layout_marginEnd="@dimen/second_opponent_card_margin_end"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <FrameLayout
+                android:layout_width="@dimen/opponent_text_width"
+                android:layout_height="@dimen/opponent_text_height"
+                android:layout_marginBottom="@dimen/margin_bottom_opponent_money"
+                android:background="@drawable/text_view"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent">
+
+                <TextView
+                    android:id="@+id/third_opponent_money"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical|center_horizontal"
+                    android:textSize="@dimen/opponent_view_text_size" />
+
+            </FrameLayout>
+
+            <FrameLayout
+                android:layout_width="@dimen/opponent_text_width"
+                android:layout_height="@dimen/opponent_text_height"
+                android:layout_marginBottom="@dimen/margin_bottom_opponent_name"
+                android:background="@drawable/text_view"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent">
+
+                <TextView
+                    android:id="@+id/third_opponent_name"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical|center_horizontal"
+                    android:textSize="@dimen/opponent_view_text_size" />
+
+            </FrameLayout>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+        <TextView
+            android:id="@+id/third_opponent_state"
+            android:layout_width="100dp"
+            android:layout_height="20dp"
+            android:layout_marginTop="104dp"
+            android:layout_marginEnd="144dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            android:textSize="@dimen/opponent_msg_text_size"
+            android:textColor="@color/splash_primairy" />
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/fourth_opponent_layout"
+            android:layout_width="150dp"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="168dp"
+            android:visibility="invisible"
+            android:layout_marginEnd="50dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent">
+
+            <FrameLayout
+                android:layout_width="@dimen/opponent_frame_width"
+                android:layout_height="@dimen/opponent_frame_height"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
+
+                <ImageView
+                    android:id="@+id/fourth_opponent_icon"
+                    android:layout_width="@dimen/opponent_icon_width"
+                    android:layout_height="@dimen/opponent_icon_height"
+                    android:layout_gravity="center_vertical|center_horizontal" />
+
+                <ImageView
+                    android:id="@+id/fourth_opponent_frame"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="@drawable/frame_gamer" />
+            </FrameLayout>
+
+            <ImageView
+                android:id="@+id/fourth_opponent_first_card"
+                android:layout_width="@dimen/card_width"
+                android:layout_height="@dimen/card_height"
+                android:layout_marginTop="@dimen/opponent_card_margin_top"
+                android:layout_marginEnd="@dimen/first_opponent_card_margin_end"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <ImageView
+                android:id="@+id/fourth_opponent_second_card"
+                android:layout_width="@dimen/card_width"
+                android:layout_height="@dimen/card_height"
+                android:layout_marginTop="@dimen/opponent_card_margin_top"
+                android:layout_marginEnd="@dimen/second_opponent_card_margin_end"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <FrameLayout
+                android:layout_width="@dimen/opponent_text_width"
+                android:layout_height="@dimen/opponent_text_height"
+                android:layout_marginBottom="@dimen/margin_bottom_opponent_money"
+                android:background="@drawable/text_view"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent">
+
+                <TextView
+                    android:id="@+id/fourth_opponent_money"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical|center_horizontal"
+                    android:textSize="@dimen/opponent_view_text_size" />
+
+            </FrameLayout>
+
+            <FrameLayout
+                android:layout_width="@dimen/opponent_text_width"
+                android:layout_height="@dimen/opponent_text_height"
+                android:layout_marginBottom="@dimen/margin_bottom_opponent_name"
+                android:background="@drawable/text_view"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent">
+
+                <TextView
+                    android:id="@+id/fourth_opponent_name"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical|center_horizontal"
+                    android:textSize="@dimen/opponent_view_text_size" />
+
+            </FrameLayout>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <TextView
+            android:id="@+id/fourth_opponent_state"
+            android:layout_width="100dp"
+            android:layout_height="20dp"
+            android:layout_marginEnd="76dp"
+            android:layout_marginBottom="128dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:textSize="@dimen/opponent_msg_text_size"
+            android:textColor="@color/splash_primairy"/>
+
+        <ImageView
+            android:id="@+id/second_community_card"
+            android:layout_width="@dimen/card_width"
+            android:layout_height="@dimen/card_height"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/first_community_card"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.421" />
+
+        <ImageView
+            android:id="@+id/fourth_community_card"
+            android:layout_width="@dimen/card_width"
+            android:layout_height="@dimen/card_height"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/third_community_card"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.421" />
+
+        <ImageView
+            android:id="@+id/fifth_community_card"
+            android:layout_width="@dimen/card_width"
+            android:layout_height="@dimen/card_height"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/fourth_community_card"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.421" />
+
+        <ImageView
+            android:id="@+id/first_community_card"
+            android:layout_width="@dimen/card_width"
+            android:layout_height="@dimen/card_height"
+            android:layout_marginStart="350dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.421" />
+
+        <ImageView
+            android:id="@+id/third_community_card"
+            android:layout_width="@dimen/card_width"
+            android:layout_height="@dimen/card_height"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/second_community_card"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.421" />
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/set_rate_layout"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/raise_back"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            android:visibility="invisible">
+
+            <FrameLayout
+                android:layout_width="42dp"
+                android:layout_height="227dp"
+                android:layout_marginStart="100dp"
+                android:layout_marginTop="15dp"
+                android:layout_marginEnd="15dp"
+                android:layout_marginBottom="15dp"
+                android:background="@drawable/scrollbar"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
+
+                <com.poker.holdem.view.customparts.seekbar.RaiseSeekBar
+                    android:id="@+id/raise_seekbar"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:progressDrawable="@color/myTransparent"
+                    android:thumb="@drawable/thumb" />
+            </FrameLayout>
+
+            <FrameLayout
+                android:layout_width="70dp"
+                android:layout_height="30dp"
+                android:layout_marginStart="16dp"
+                android:background="@drawable/text_view"
+                app:layout_constraintBottom_toTopOf="@+id/set_rate_button"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintVertical_bias="0.7">
+
+                <TextView
+                    android:id="@+id/set_rate_textview"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical|center_horizontal"/>
+            </FrameLayout>
+
+            <Button
+
+
+                android:id="@+id/set_rate_button"
+                android:layout_width="50dp"
+                android:layout_height="20dp"
+                android:layout_marginStart="28dp"
+                android:background="@drawable/button"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintVertical_bias="0.602" />
+
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <TextView
+            android:id="@+id/you_rate"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="#ffffff"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/player_layout"
+            app:layout_constraintStart_toStartOf="parent" />
+
+        <!--
+            Нам нужна змена простых тостов
+        -->
+        <TextView
+            android:id="@+id/message_box"
+            android:layout_width="@dimen/message_box_width"
+            android:layout_height="@dimen/message_box_height"
+            app:layout_constraintBottom_toTopOf="@id/player_layout"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_marginBottom="10dp"
+
+            android:textColor="@color/splash_primairy"
+            android:textSize="20sp"
+            android:textAlignment="center"/>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

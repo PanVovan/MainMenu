@@ -70,6 +70,12 @@ public class LoginActivity extends AppCompatActivity implements LobbyContract.Re
     }
 
     @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        finish();
+    }
+
+    @Override
     public void sendMessageOnServerRegister(String name, String password, Integer picture, Fragment fragment) {
         if(!name.equals("")&&!password.equals("")){
             Logger.getAnonymousLogger().info(name+"<------------->"+password);
