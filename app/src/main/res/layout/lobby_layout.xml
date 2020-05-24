@@ -1,43 +1,103 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/lobby_view"
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
+    android:layout_width="match_parent"
+    android:layout_height="90dp"
     app:layout_constraintEnd_toEndOf="parent"
     app:layout_constraintHorizontal_bias="0.0"
     app:layout_constraintStart_toStartOf="parent"
-    app:layout_constraintTop_toTopOf="parent">
+    app:layout_constraintTop_toTopOf="parent"
+    android:background="@drawable/button">
 
-    <TextView
-        android:id="@+id/players_active"
-        android:layout_width="120dp"
-        android:layout_height="25dp"
-        android:layout_marginTop="28dp"
-        android:textColor="#ffffff"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.546"
-        app:layout_constraintStart_toEndOf="@+id/min_rate"
-        app:layout_constraintTop_toBottomOf="@+id/lobby_name"
-        tools:text="Players" />
+    <LinearLayout
+        android:id="@+id/lobby_players_count_layout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toTopOf="@+id/lobby_min_rate_layout"
+        app:layout_constraintStart_toEndOf="@+id/lobby_min_rate_layout"
+        android:layout_marginStart="20dp"
+        >
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/players_count"
+            android:textSize="@dimen/choose_lobby_lobby_layout_text_size"
+            />
+        <TextView
+            android:layout_width="20dp"
+            android:layout_height="match_parent"
+            />
+        <TextView
+            android:id="@+id/players_active"
+            android:layout_width="wrap_content"
+            android:layout_height="25dp"
+            android:textColor="@color/my_black"
+            app:layout_constraintHorizontal_bias="0.546"
+            tools:text="Players"
+            android:textSize="@dimen/choose_lobby_lobby_layout_text_size"/>
+    </LinearLayout>
 
-    <TextView
-        android:id="@+id/min_rate"
-        android:layout_width="141dp"
-        android:layout_height="25dp"
-        android:layout_marginStart="68dp"
-        android:layout_marginTop="28dp"
-        android:textColor="#ffffff"
+    <LinearLayout
+        android:id="@+id/lobby_min_rate_layout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/lobby_name"
-        tools:text="Rate" />
+        app:layout_constraintTop_toBottomOf="@+id/lobby_name_layout"
+        android:layout_marginStart="30dp"
+        android:layout_marginTop="10dp"
+        >
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/rate"
+            android:textSize="@dimen/choose_lobby_lobby_layout_text_size"
+            />
+        <TextView
+            android:layout_width="20dp"
+            android:layout_height="match_parent"
+            />
+        <TextView
+            android:id="@+id/min_rate"
+            android:layout_width="100dp"
+            android:layout_height="25dp"
+            android:textColor="@color/my_black"
+            android:textSize="@dimen/choose_lobby_lobby_layout_text_size"
+            tools:text="Rate" />
+    </LinearLayout>
 
-    <TextView
-        android:id="@+id/lobby_name"
-        android:layout_width="415dp"
-        android:layout_height="36dp"
-        android:textColor="#ffffff"
-        tools:text="Name" />
+
+
+    <LinearLayout
+        android:id="@+id/lobby_name_layout"
+        android:layout_width="300dp"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        android:layout_marginTop="10dp"
+        android:layout_marginStart="25dp"
+        >
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/name"
+            android:textSize="@dimen/choose_lobby_lobby_layout_text_size"
+            />
+        <TextView
+            android:layout_width="20dp"
+            android:layout_height="match_parent"
+            />
+        <TextView
+            android:id="@+id/lobby_name"
+            android:layout_width="300dp"
+            android:layout_height="36dp"
+            android:textColor="@color/my_black"
+            android:textSize="@dimen/choose_lobby_lobby_layout_text_size"
+            tools:text="Name" />
+    </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

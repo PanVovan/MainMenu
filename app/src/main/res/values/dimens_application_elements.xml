@@ -46,4 +46,6 @@
     <dimen name="create_account_select_img_recyclerview_width">120dp</dimen>
     <dimen name="create_account_select_img_img_height">100dp</dimen>
     <dimen name="create_account_select_img_img_width">70dp</dimen>
+
+    <dimen name="choose_lobby_lobby_layout_text_size">15sp</dimen>
 </resources>
