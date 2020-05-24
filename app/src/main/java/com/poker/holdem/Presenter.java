@@ -362,7 +362,7 @@ public class Presenter implements GameContract.Presenter {
             case ViewControllerActionCode.POSITION_OPPONENT_FOURTH:
                 gameView.clearCards(ViewControllerActionCode.CLEAR_FOURTH_OPPONENT_CARDS);
                 gameView.clearOpponentView(ViewControllerActionCode.POSITION_OPPONENT_FOURTH);
-                gameView.showSecondOpponentEventMessage("Player left",
+                gameView.showFourthOpponentEventMessage("Player left",
                         ViewControllerTimerConst.TIME_SHORT);
                 break;
         }
