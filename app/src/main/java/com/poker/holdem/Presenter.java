@@ -226,6 +226,10 @@ public class Presenter implements GameContract.Presenter {
                 gameView.showFourthOpponentEventMessage("Raise"+ rate.toString(),
                         ViewControllerTimerConst.TIME_LONG);
                 break;
+            default:
+                gameView.showGameEventMessage("You raise",
+                        ViewControllerTimerConst.TIME_LONG);
+                break;
         }
 
         if(didRoundChange) gameStats.increaseRoundsNum();
@@ -245,6 +249,30 @@ public class Presenter implements GameContract.Presenter {
         gameStats.onPlayerAllIn(name);
         if(didRoundChange) gameStats.increaseRoundsNum();
         checkIfShouldOpenNewCard();
+
+        switch (gameStats.getPlayerByName(name).getPos()){
+            case ViewControllerActionCode.POSITION_OPPONENT_FIRST:
+                gameView.showFirstOpponentEventMessage("All in",
+                        ViewControllerTimerConst.TIME_LONG);
+                break;
+            case ViewControllerActionCode.POSITION_OPPONENT_SECOND:
+                gameView.showSecondOpponentEventMessage("All in",
+                        ViewControllerTimerConst.TIME_LONG);
+                break;
+            case ViewControllerActionCode.POSITION_OPPONENT_THIRD:
+                gameView.showThirdOpponentEventMessage("All in",
+                        ViewControllerTimerConst.TIME_LONG);
+                break;
+            case ViewControllerActionCode.POSITION_OPPONENT_FOURTH:
+                gameView.showFourthOpponentEventMessage("All in",
+                        ViewControllerTimerConst.TIME_LONG);
+                break;
+            default:
+                gameView.showGameEventMessage("You all in",
+                        ViewControllerTimerConst.TIME_LONG);
+                break;
+        }
+
         gameStats.setLead(newLead);
         gameView.setLead(gameStats.getPlayerByName(newLead).getPos());
         gameView.setBank(gameStats.getBank());
@@ -273,6 +301,10 @@ public class Presenter implements GameContract.Presenter {
                 break;
             case ViewControllerActionCode.POSITION_OPPONENT_FOURTH:
                 gameView.showFourthOpponentEventMessage("Fold",
+                        ViewControllerTimerConst.TIME_LONG);
+                break;
+            default:
+                gameView.showGameEventMessage("You fold",
                         ViewControllerTimerConst.TIME_LONG);
                 break;
         }
