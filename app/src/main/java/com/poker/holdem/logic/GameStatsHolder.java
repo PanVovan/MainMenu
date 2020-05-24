@@ -35,12 +35,22 @@ public class GameStatsHolder {
     //так и на работе сервера
     private boolean playerPushedButton = false;
 
+
+
     //нам нужно показать во вью карты игроков-победителей
     public HashMap<Integer, List<Integer> > getWinningPlayersCards(List<String> winners){
         return (HashMap<Integer, List<Integer>>)this.players
                 .stream()
                 .filter(x -> winners.contains(x.getName()))
                 .collect(Collectors.toMap(Player::getPos, Player::getCards));
+    }
+
+    //тут всё просто: карты всех игроков, кроме ушедших, покажутся во вью
+    public HashMap<Integer, List<Integer>> getAllPlayersCards(){
+        return (HashMap<Integer, List<Integer>>) this.players.stream()
+                .collect(
+                        //              вместо x->x.getPos() и x->x.getCards
+                        Collectors.toMap(Player::getPos, Player::getCards));
     }
 
     private void onNewRound(){

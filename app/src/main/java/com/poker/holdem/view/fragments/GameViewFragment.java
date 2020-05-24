@@ -224,10 +224,10 @@ public class GameViewFragment extends Fragment implements GameContract.View {
     }
 
     @Override
-    public void showWinners(HashMap<Integer, List<Integer> > winnersCards) {
+    public void showAllPlayersCards(HashMap<Integer, List<Integer> > cards) {
         Objects.requireNonNull(getActivity()).runOnUiThread(()->{
             Logger.getAnonymousLogger().info("Showing winners");
-            for (Map.Entry<Integer, List<Integer>> i : winnersCards.entrySet()) {
+            for (Map.Entry<Integer, List<Integer>> i : cards.entrySet()) {
                 if(i.getValue().isEmpty()) continue;
                 switch (i.getKey()) {
                     case ViewControllerActionCode.POSITION_MAIN_PLAYER:
@@ -489,6 +489,17 @@ public class GameViewFragment extends Fragment implements GameContract.View {
     }
 
     @Override
+    public void clearAll() {
+        Objects.requireNonNull(getActivity()).runOnUiThread(()->{
+            clearAllCards();
+            clearOpponentView(ViewControllerActionCode.POSITION_OPPONENT_FIRST);
+            clearOpponentView(ViewControllerActionCode.POSITION_OPPONENT_SECOND);
+            clearOpponentView(ViewControllerActionCode.POSITION_OPPONENT_THIRD);
+            clearOpponentView(ViewControllerActionCode.POSITION_OPPONENT_FOURTH);
+        });
+    }
+
+    @Override
     public void setPlayerView(Player player) {
         Objects.requireNonNull(getActivity()).runOnUiThread(()-> {
             //Integer money = new Integer(player.getMoney());
@@ -517,21 +528,23 @@ public class GameViewFragment extends Fragment implements GameContract.View {
     }
 
     private void clearAllCards(){
-        firstHoleCard.setBackground(null);
-        secondHoleCard.setBackground(null);
-        firstOpponentFirstCard.setBackground(null);
-        firstOpponentSecondCard.setBackground(null);
-        secondOpponentFirstCard.setBackground(null);
-        secondOpponentSecondCard.setBackground(null);
-        thirdOpponentFirstCard.setBackground(null);
-        thirdOpponentSecondCard.setBackground(null);
-        fourthOpponentFirstCard.setBackground(null);
-        fourthOpponentSecondCard.setBackground(null);
-        firstCommunityCard.setBackground(null);
-        secondCommunityCard.setBackground(null);
-        thirdCommunityCard.setBackground(null);
-        fourthCommunityCard.setBackground(null);
-        fifthCommunityCard.setBackground(null);
+        Objects.requireNonNull(getActivity()).runOnUiThread(()->{
+            firstHoleCard.setBackground(null);
+            secondHoleCard.setBackground(null);
+            firstOpponentFirstCard.setBackground(null);
+            firstOpponentSecondCard.setBackground(null);
+            secondOpponentFirstCard.setBackground(null);
+            secondOpponentSecondCard.setBackground(null);
+            thirdOpponentFirstCard.setBackground(null);
+            thirdOpponentSecondCard.setBackground(null);
+            fourthOpponentFirstCard.setBackground(null);
+            fourthOpponentSecondCard.setBackground(null);
+            firstCommunityCard.setBackground(null);
+            secondCommunityCard.setBackground(null);
+            thirdCommunityCard.setBackground(null);
+            fourthCommunityCard.setBackground(null);
+            fifthCommunityCard.setBackground(null);
+        });
     }
 
     private void setCommunityCard(int action, int card){
@@ -631,9 +644,7 @@ public class GameViewFragment extends Fragment implements GameContract.View {
     public void showFirstOpponentEventMessage(String message, int timeInMillis) {
         Objects.requireNonNull(getActivity())
                 .runOnUiThread(()-> firstOpponentState.setText(message));
-        Timer timer = new Timer();
-
-        timer.schedule(new TimerTask() {
+        new Timer().schedule(new TimerTask() {
             @Override
             public void run() {
                 try {
@@ -648,9 +659,7 @@ public class GameViewFragment extends Fragment implements GameContract.View {
 
         Objects.requireNonNull(getActivity())
                 .runOnUiThread(()-> secondOpponentState.setText(message));
-        Timer timer = new Timer();
-
-        timer.schedule(new TimerTask() {
+        new Timer().schedule(new TimerTask() {
             @Override
             public void run() {
                 try {
@@ -666,9 +675,7 @@ public class GameViewFragment extends Fragment implements GameContract.View {
 
         Objects.requireNonNull(getActivity())
                 .runOnUiThread(()-> thirdOpponentState.setText(message));
-        Timer timer = new Timer();
-
-        timer.schedule(new TimerTask() {
+        new Timer().schedule(new TimerTask() {
             @Override
             public void run() {
                 try {
@@ -684,9 +691,7 @@ public class GameViewFragment extends Fragment implements GameContract.View {
 
         Objects.requireNonNull(getActivity())
                 .runOnUiThread(()-> fourthOpponentState.setText(message));
-        Timer timer = new Timer();
-
-        timer.schedule(new TimerTask() {
+        new Timer().schedule(new TimerTask() {
             @Override
             public void run() {
                 try {

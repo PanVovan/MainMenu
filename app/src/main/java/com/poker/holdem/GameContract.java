@@ -21,7 +21,7 @@ public interface GameContract {
 
         void setLead(int pos);
         void setBank(int val);
-        void showWinners(HashMap<Integer, List<Integer> > winnersCards);
+        void showAllPlayersCards(HashMap<Integer, List<Integer> > cards);
         void setRate(int val);
 
         //установить значения
@@ -35,6 +35,7 @@ public interface GameContract {
         void setPlayerView (Player player);
         void updatePlayerMoney(int pos, Integer money);
         void clearOpponentView(int pos);
+        void clearAll();
 
         void showFirstOpponentEventMessage(String message, int timeInMillis);
         void showSecondOpponentEventMessage(String message, int timeInMillis);

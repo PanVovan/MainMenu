@@ -9,8 +9,11 @@ import com.poker.holdem.view.util.ViewControllerActionCode;
 import com.poker.holdem.view.util.ViewControllerTimerConst;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Timer;
+import java.util.TimerTask;
 import java.util.logging.Logger;
 
 public class Presenter implements GameContract.Presenter {
@@ -20,6 +23,8 @@ public class Presenter implements GameContract.Presenter {
 
     private String ROOM_NAME = "";
     private String PLAYER_NAME = "";
+
+    private boolean flagToWaitBeforeGameStarts = false;
 
     //просто контейнер для кучи значений
     private GameStatsHolder gameStats;
@@ -381,25 +386,12 @@ public class Presenter implements GameContract.Presenter {
     }
     @Override
     public void acceptMessageFromServerEndGame(Integer winVal, List<String> winners) {
-        gameView.showWinners(gameStats.getWinningPlayersCards(winners));
-        gameStats.onEndGame(winVal, winners);
-        showCardsWhenGameIsDone();
-
-        //TODO: *романтическая пауза*
-        //вот тут нужно сделать задержку, чтобы игрок полюбовался на
-        //карты победителей (свои карты)
-
-
-        //карт у игроков больше нет, убираем
-        gameStats.clearAllPlayersCards();
-        gameView.clearCards(ViewControllerActionCode.CLEAR_ALL_CARDS);
-        gameView.setLead(ViewControllerActionCode.NONE);
-
-        //вот так нехитро обновляем деньги игроков
-        gameStats.getPlayers().forEach((i) -> gameView.updatePlayerMoney(
-                gameStats.getPlayerByName(i.getName()).getPos()
-                , gameStats.getPlayerByName(i.getName()).getMoney()
-        ));
+        HashMap<Integer, List<Integer>> playersCards = gameStats.getAllPlayersCards();
+        gameView.showAllPlayersCards(gameStats.getAllPlayersCards());
+        //gameStats.getAllPlayersCards()
+        this.flagToWaitBeforeGameStarts = true;
+        gameView.showGameEventMessage("GAME OVER!"
+                    ,ViewControllerTimerConst.TIME_VERY_LONG);
     }
 
     @Override
@@ -482,26 +474,57 @@ public class Presenter implements GameContract.Presenter {
             ,String lead
             ,Integer base_rate
     ) {
-        Logger.getAnonymousLogger().info("Starting game..."+allplayers.size());
-        gameStats.setGame(
-                allplayers
-                ,allplayers
-                ,playersCardsMap
-                ,this.PLAYER_NAME
-                ,deck
-                ,lead
-                ,base_rate
-                ,0
-                ,0
-        );
-        gameView.setPlayerView(gameStats.getMainPlayer());
-        gameView.setBank(0);
-        showFirstFreeCards();
-        sitThePlayers();
-        gameView.setRate(base_rate);
-        gameView.setLead(gameStats.getPosPlayer(gameStats.getLead()));
-        gameView.setHandPowerProgressBarProgress(gameStats.getMainPlayerHandCombinationRank(3));
-        serverController.sendMessageOnServerHandPower(gameStats.getMainPlayerHandPower(5));
+        if(flagToWaitBeforeGameStarts)
+            new Timer().schedule(new TimerTask() {
+                @Override
+                public void run() {
+                    try {
+                        gameView.clearAll();
+                    }catch (Exception e){}
+                    Logger.getAnonymousLogger().info("Starting game..."+allplayers.size());
+                    gameStats.setGame(
+                            allplayers
+                            ,allplayers
+                            ,playersCardsMap
+                            ,PLAYER_NAME
+                            ,deck
+                            ,lead
+                            ,base_rate
+                            ,0
+                            ,0
+                    );
+                    gameView.setPlayerView(gameStats.getMainPlayer());
+                    gameView.setBank(0);
+                    showFirstFreeCards();
+                    sitThePlayers();
+                    gameView.setRate(base_rate);
+                    gameView.setLead(gameStats.getPosPlayer(gameStats.getLead()));
+                    gameView.setHandPowerProgressBarProgress(gameStats.getMainPlayerHandCombinationRank(3));
+                    serverController.sendMessageOnServerHandPower(gameStats.getMainPlayerHandPower(5));
+                }
+            }, ViewControllerTimerConst.TIME_SHORT);
+        else {
+            Logger.getAnonymousLogger().info("Starting game..." + allplayers.size());
+            gameStats.setGame(
+                    allplayers
+                    , allplayers
+                    , playersCardsMap
+                    , PLAYER_NAME
+                    , deck
+                    , lead
+                    , base_rate
+                    , 0
+                    , 0
+            );
+            gameView.setPlayerView(gameStats.getMainPlayer());
+            gameView.setBank(0);
+            showFirstFreeCards();
+            sitThePlayers();
+            gameView.setRate(base_rate);
+            gameView.setLead(gameStats.getPosPlayer(gameStats.getLead()));
+            gameView.setHandPowerProgressBarProgress(gameStats.getMainPlayerHandCombinationRank(3));
+            serverController.sendMessageOnServerHandPower(gameStats.getMainPlayerHandPower(5));
+        }
     }
 
     private void showFirstFreeCards(){
@@ -564,17 +587,6 @@ public class Presenter implements GameContract.Presenter {
             );
             gameStats.setCardsOpened(5);
             gameView.setHandPowerProgressBarProgress(gameStats.getMainPlayerHandCombinationRank(5));
-        }
-    }
-
-    //когда игра заканчивается, нужно увидеть карты
-    //всех игроков, кто не слился
-    private void showCardsWhenGameIsDone(){
-        ArrayList<Player> playersInTheEnd = new ArrayList<>(gameStats.getPlayers());
-        for(int i=0; i<playersInTheEnd.size(); i++){
-            if(playersInTheEnd.get(i).isActive()){}
-                //TODO:сделать так, чтобы показались карты всех активных игроков
-                //switch ()
         }
     }
 }
