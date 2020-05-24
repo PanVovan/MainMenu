@@ -177,23 +177,23 @@ public class Presenter implements GameContract.Presenter {
         switch (gameStats.getPlayerByName(name).getPos()){
             case ViewControllerActionCode.POSITION_OPPONENT_FIRST:
                 gameView.showFirstOpponentEventMessage("Check",
-                        ViewControllerTimerConst.TIME_LONG);
+                        ViewControllerTimerConst.TIME_SHORT);
                 break;
             case ViewControllerActionCode.POSITION_OPPONENT_SECOND:
                 gameView.showSecondOpponentEventMessage("Check",
-                        ViewControllerTimerConst.TIME_LONG);
+                        ViewControllerTimerConst.TIME_SHORT);
                 break;
             case ViewControllerActionCode.POSITION_OPPONENT_THIRD:
                 gameView.showThirdOpponentEventMessage("Check",
-                        ViewControllerTimerConst.TIME_LONG);
+                        ViewControllerTimerConst.TIME_SHORT);
                 break;
             case ViewControllerActionCode.POSITION_OPPONENT_FOURTH:
                 gameView.showFourthOpponentEventMessage("Check",
-                        ViewControllerTimerConst.TIME_LONG);
+                        ViewControllerTimerConst.TIME_SHORT);
                 break;
             default:
                 gameView.showGameEventMessage("You check!",
-                        ViewControllerTimerConst.TIME_LONG);
+                        ViewControllerTimerConst.TIME_SHORT);
                 break;
         }
 
@@ -217,23 +217,23 @@ public class Presenter implements GameContract.Presenter {
         switch (gameStats.getPlayerByName(name).getPos()){
             case ViewControllerActionCode.POSITION_OPPONENT_FIRST:
                 gameView.showFirstOpponentEventMessage("Raise"+ rate.toString(),
-                        ViewControllerTimerConst.TIME_LONG);
+                        ViewControllerTimerConst.TIME_SHORT);
                 break;
             case ViewControllerActionCode.POSITION_OPPONENT_SECOND:
                 gameView.showSecondOpponentEventMessage("Raise"+ rate.toString(),
-                        ViewControllerTimerConst.TIME_LONG);
+                        ViewControllerTimerConst.TIME_SHORT);
                 break;
             case ViewControllerActionCode.POSITION_OPPONENT_THIRD:
                 gameView.showThirdOpponentEventMessage("Raise"+ rate.toString(),
-                        ViewControllerTimerConst.TIME_LONG);
+                        ViewControllerTimerConst.TIME_SHORT);
                 break;
             case ViewControllerActionCode.POSITION_OPPONENT_FOURTH:
                 gameView.showFourthOpponentEventMessage("Raise"+ rate.toString(),
-                        ViewControllerTimerConst.TIME_LONG);
+                        ViewControllerTimerConst.TIME_SHORT);
                 break;
             default:
                 gameView.showGameEventMessage("You raise",
-                        ViewControllerTimerConst.TIME_LONG);
+                        ViewControllerTimerConst.TIME_SHORT);
                 break;
         }
 
@@ -258,23 +258,23 @@ public class Presenter implements GameContract.Presenter {
         switch (gameStats.getPlayerByName(name).getPos()){
             case ViewControllerActionCode.POSITION_OPPONENT_FIRST:
                 gameView.showFirstOpponentEventMessage("All in",
-                        ViewControllerTimerConst.TIME_LONG);
+                        ViewControllerTimerConst.TIME_SHORT);
                 break;
             case ViewControllerActionCode.POSITION_OPPONENT_SECOND:
                 gameView.showSecondOpponentEventMessage("All in",
-                        ViewControllerTimerConst.TIME_LONG);
+                        ViewControllerTimerConst.TIME_SHORT);
                 break;
             case ViewControllerActionCode.POSITION_OPPONENT_THIRD:
                 gameView.showThirdOpponentEventMessage("All in",
-                        ViewControllerTimerConst.TIME_LONG);
+                        ViewControllerTimerConst.TIME_SHORT);
                 break;
             case ViewControllerActionCode.POSITION_OPPONENT_FOURTH:
                 gameView.showFourthOpponentEventMessage("All in",
-                        ViewControllerTimerConst.TIME_LONG);
+                        ViewControllerTimerConst.TIME_SHORT);
                 break;
             default:
                 gameView.showGameEventMessage("You all in",
-                        ViewControllerTimerConst.TIME_LONG);
+                        ViewControllerTimerConst.TIME_SHORT);
                 break;
         }
 
@@ -294,23 +294,23 @@ public class Presenter implements GameContract.Presenter {
         switch (gameStats.getPlayerByName(name).getPos()){
             case ViewControllerActionCode.POSITION_OPPONENT_FIRST:
                 gameView.showFirstOpponentEventMessage("Fold",
-                        ViewControllerTimerConst.TIME_LONG);
+                        ViewControllerTimerConst.TIME_SHORT);
                 break;
             case ViewControllerActionCode.POSITION_OPPONENT_SECOND:
                 gameView.showSecondOpponentEventMessage("Fold",
-                        ViewControllerTimerConst.TIME_LONG);
+                        ViewControllerTimerConst.TIME_SHORT);
                 break;
             case ViewControllerActionCode.POSITION_OPPONENT_THIRD:
                 gameView.showThirdOpponentEventMessage("Fold",
-                        ViewControllerTimerConst.TIME_LONG);
+                        ViewControllerTimerConst.TIME_SHORT);
                 break;
             case ViewControllerActionCode.POSITION_OPPONENT_FOURTH:
                 gameView.showFourthOpponentEventMessage("Fold",
-                        ViewControllerTimerConst.TIME_LONG);
+                        ViewControllerTimerConst.TIME_SHORT);
                 break;
             default:
                 gameView.showGameEventMessage("You fold",
-                        ViewControllerTimerConst.TIME_LONG);
+                        ViewControllerTimerConst.TIME_SHORT);
                 break;
         }
 
@@ -345,25 +345,25 @@ public class Presenter implements GameContract.Presenter {
                 gameView.clearCards(ViewControllerActionCode.CLEAR_FIRST_OPPONENT_CARDS);
                 gameView.clearOpponentView(ViewControllerActionCode.POSITION_OPPONENT_FIRST);
                 gameView.showFirstOpponentEventMessage("Player left",
-                        ViewControllerTimerConst.TIME_LONG);
+                        ViewControllerTimerConst.TIME_SHORT);
                 break;
             case ViewControllerActionCode.POSITION_OPPONENT_SECOND:
                 gameView.clearCards(ViewControllerActionCode.CLEAR_SECOND_OPPONENT_CARDS);
                 gameView.clearOpponentView(ViewControllerActionCode.POSITION_OPPONENT_SECOND);
                 gameView.showSecondOpponentEventMessage("Player left",
-                        ViewControllerTimerConst.TIME_LONG);
+                        ViewControllerTimerConst.TIME_SHORT);
                 break;
             case ViewControllerActionCode.POSITION_OPPONENT_THIRD:
                 gameView.clearCards(ViewControllerActionCode.CLEAR_THIRD_OPPONENT_CARDS);
                 gameView.clearOpponentView(ViewControllerActionCode.POSITION_OPPONENT_THIRD);
                 gameView.showThirdOpponentEventMessage("Player left",
-                        ViewControllerTimerConst.TIME_LONG);
+                        ViewControllerTimerConst.TIME_SHORT);
                 break;
             case ViewControllerActionCode.POSITION_OPPONENT_FOURTH:
                 gameView.clearCards(ViewControllerActionCode.CLEAR_FOURTH_OPPONENT_CARDS);
                 gameView.clearOpponentView(ViewControllerActionCode.POSITION_OPPONENT_FOURTH);
                 gameView.showSecondOpponentEventMessage("Player left",
-                        ViewControllerTimerConst.TIME_LONG);
+                        ViewControllerTimerConst.TIME_SHORT);
                 break;
         }
         //ВАЖНО: сначала надо очищать во вью,
@@ -388,10 +388,38 @@ public class Presenter implements GameContract.Presenter {
     public void acceptMessageFromServerEndGame(Integer winVal, List<String> winners) {
         HashMap<Integer, List<Integer>> playersCards = gameStats.getAllPlayersCards();
         gameView.showAllPlayersCards(gameStats.getAllPlayersCards());
-        //gameStats.getAllPlayersCards()
-        this.flagToWaitBeforeGameStarts = true;
         gameView.showGameEventMessage("GAME OVER!"
-                    ,ViewControllerTimerConst.TIME_VERY_LONG);
+                ,ViewControllerTimerConst.TIME_VERY_LONG);
+
+        //для каждого имени победителя находим соотв. игрока
+        //и пишем радом с ним "Winner"
+        winners.stream().map(x->gameStats.getPlayerByName(x)).forEach((x)->{
+            switch (x.getPos()){
+                case ViewControllerActionCode.POSITION_MAIN_PLAYER:
+                    gameView.showGameEventMessage("You win!"
+                            ,ViewControllerTimerConst.TIME_VERY_LONG);
+                    break;
+                case ViewControllerActionCode.POSITION_OPPONENT_FIRST:
+                    gameView.showFirstOpponentEventMessage("Winner"
+                            ,ViewControllerTimerConst.TIME_VERY_LONG);
+                    break;
+                case ViewControllerActionCode.POSITION_OPPONENT_SECOND:
+                    gameView.showSecondOpponentEventMessage("Winner"
+                            ,ViewControllerTimerConst.TIME_VERY_LONG);
+                    break;
+                case ViewControllerActionCode.POSITION_OPPONENT_THIRD:
+                    gameView.showThirdOpponentEventMessage("Winner"
+                            ,ViewControllerTimerConst.TIME_VERY_LONG);
+                    break;
+                case ViewControllerActionCode.POSITION_OPPONENT_FOURTH:
+                    gameView.showFourthOpponentEventMessage("Winner"
+                            ,ViewControllerTimerConst.TIME_VERY_LONG);
+                    break;
+            }
+        });
+
+        //когда начнётся след. игра, отсчитается таймер
+        this.flagToWaitBeforeGameStarts = true;
     }
 
     @Override

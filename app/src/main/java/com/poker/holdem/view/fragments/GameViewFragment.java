@@ -208,9 +208,7 @@ public class GameViewFragment extends Fragment implements GameContract.View {
     public void showGameEventMessage(String message, int timeInMillis ){
         Objects.requireNonNull(getActivity())
                 .runOnUiThread(()-> messageBox.setText(message));
-        Timer timer = new Timer();
-
-        timer.schedule(new TimerTask() {
+        new Timer().schedule(new TimerTask() {
             @Override
             public void run() {
                 //вот тут неожиданность --
@@ -496,6 +494,7 @@ public class GameViewFragment extends Fragment implements GameContract.View {
             clearOpponentView(ViewControllerActionCode.POSITION_OPPONENT_SECOND);
             clearOpponentView(ViewControllerActionCode.POSITION_OPPONENT_THIRD);
             clearOpponentView(ViewControllerActionCode.POSITION_OPPONENT_FOURTH);
+            messageBox.setText("");
         });
     }
 
