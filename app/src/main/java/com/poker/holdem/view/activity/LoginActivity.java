@@ -32,7 +32,6 @@ public class LoginActivity extends AppCompatActivity implements LobbyContract.Re
     Logger logger = Logger.getAnonymousLogger();
 
     private String playerName;
-    private String authToken;
     private String playerPassword;
 
     private Socket socket;
@@ -58,7 +57,7 @@ public class LoginActivity extends AppCompatActivity implements LobbyContract.Re
 
 
         if(prefs.contains(Constants.AUTH_TOKEN) && prefs.contains(Constants.PLAYER_NAME)){
-            authToken = prefs.getString(Constants.AUTH_TOKEN, "");
+            String authToken = prefs.getString(Constants.AUTH_TOKEN, "");
             playerName = prefs.getString(Constants.PLAYER_NAME, "");
             if(!playerName.equals("")&&!authToken.equals("")){
                 sendMessageOnServerAuthToken(playerName, authToken);
@@ -130,10 +129,12 @@ public class LoginActivity extends AppCompatActivity implements LobbyContract.Re
             Logger.getAnonymousLogger().info("<------------got "+responce.getFlag());
             if(responce.getFlag()){
                 prefsEditor = prefs.edit();
+                prefsEditor.clear();
                 prefsEditor.putString(Constants.AUTH_TOKEN, responce.getNewauthtoken());
                 prefsEditor.putString(Constants.SESSION_TOKEN, responce.getToken());
                 prefsEditor.putString(Constants.PLAYER_NAME, responce.getAuthPlayer().getName());
                 prefsEditor.putInt(Constants.PLAYER_PICTURE, responce.getAuthPlayer().getPicture());
+                prefsEditor.putInt(Constants.PLAYER_MONEY, responce.getAuthPlayer().getMoney());
                 prefsEditor.apply();
 
                 Intent intent = new Intent(LoginActivity.this, MainActivity.class);
