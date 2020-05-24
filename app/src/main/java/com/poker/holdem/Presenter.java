@@ -165,20 +165,30 @@ public class Presenter implements GameContract.Presenter {
     }
     @Override
     public void acceptMessageFromServerOpponentCheck(String name, String newLead, boolean didRoundChange) {
-        gameStats.onPlayerCheck(name);
+        //если это мы, то никаких действий предпринимать не надо
+        if(!name.equals(this.PLAYER_NAME))
+            gameStats.onPlayerCheck(name);
 
         switch (gameStats.getPlayerByName(name).getPos()){
             case ViewControllerActionCode.POSITION_OPPONENT_FIRST:
-                gameView.showFirstOpponentEventMessage("Check", 5000);
+                gameView.showFirstOpponentEventMessage("Check",
+                        ViewControllerTimerConst.TIME_LONG);
                 break;
             case ViewControllerActionCode.POSITION_OPPONENT_SECOND:
-                gameView.showSecondOpponentEventMessage("Check", 5000);
+                gameView.showSecondOpponentEventMessage("Check",
+                        ViewControllerTimerConst.TIME_LONG);
                 break;
             case ViewControllerActionCode.POSITION_OPPONENT_THIRD:
-                gameView.showThirdOpponentEventMessage("Check", 5000);
+                gameView.showThirdOpponentEventMessage("Check",
+                        ViewControllerTimerConst.TIME_LONG);
                 break;
             case ViewControllerActionCode.POSITION_OPPONENT_FOURTH:
-                gameView.showFourthOpponentEventMessage("Check", 5000);
+                gameView.showFourthOpponentEventMessage("Check",
+                        ViewControllerTimerConst.TIME_LONG);
+                break;
+            default:
+                gameView.showGameEventMessage("You check!",
+                        ViewControllerTimerConst.TIME_LONG);
                 break;
         }
 
@@ -201,16 +211,20 @@ public class Presenter implements GameContract.Presenter {
 
         switch (gameStats.getPlayerByName(name).getPos()){
             case ViewControllerActionCode.POSITION_OPPONENT_FIRST:
-                gameView.showFirstOpponentEventMessage("Raise"+ rate.toString(), 5000);
+                gameView.showFirstOpponentEventMessage("Raise"+ rate.toString(),
+                        ViewControllerTimerConst.TIME_LONG);
                 break;
             case ViewControllerActionCode.POSITION_OPPONENT_SECOND:
-                gameView.showSecondOpponentEventMessage("Raise"+ rate.toString(), 5000);
+                gameView.showSecondOpponentEventMessage("Raise"+ rate.toString(),
+                        ViewControllerTimerConst.TIME_LONG);
                 break;
             case ViewControllerActionCode.POSITION_OPPONENT_THIRD:
-                gameView.showThirdOpponentEventMessage("Raise"+ rate.toString(), 5000);
+                gameView.showThirdOpponentEventMessage("Raise"+ rate.toString(),
+                        ViewControllerTimerConst.TIME_LONG);
                 break;
             case ViewControllerActionCode.POSITION_OPPONENT_FOURTH:
-                gameView.showFourthOpponentEventMessage("Raise"+ rate.toString(), 5000);
+                gameView.showFourthOpponentEventMessage("Raise"+ rate.toString(),
+                        ViewControllerTimerConst.TIME_LONG);
                 break;
         }
 
@@ -246,16 +260,20 @@ public class Presenter implements GameContract.Presenter {
 
         switch (gameStats.getPlayerByName(name).getPos()){
             case ViewControllerActionCode.POSITION_OPPONENT_FIRST:
-                gameView.showFirstOpponentEventMessage("Fold", 5000);
+                gameView.showFirstOpponentEventMessage("Fold",
+                        ViewControllerTimerConst.TIME_LONG);
                 break;
             case ViewControllerActionCode.POSITION_OPPONENT_SECOND:
-                gameView.showSecondOpponentEventMessage("Fold", 5000);
+                gameView.showSecondOpponentEventMessage("Fold",
+                        ViewControllerTimerConst.TIME_LONG);
                 break;
             case ViewControllerActionCode.POSITION_OPPONENT_THIRD:
-                gameView.showThirdOpponentEventMessage("Fold", 5000);
+                gameView.showThirdOpponentEventMessage("Fold",
+                        ViewControllerTimerConst.TIME_LONG);
                 break;
             case ViewControllerActionCode.POSITION_OPPONENT_FOURTH:
-                gameView.showFourthOpponentEventMessage("Fold", 5000);
+                gameView.showFourthOpponentEventMessage("Fold",
+                        ViewControllerTimerConst.TIME_LONG);
                 break;
         }
 
@@ -289,22 +307,26 @@ public class Presenter implements GameContract.Presenter {
             case ViewControllerActionCode.POSITION_OPPONENT_FIRST:
                 gameView.clearCards(ViewControllerActionCode.CLEAR_FIRST_OPPONENT_CARDS);
                 gameView.clearOpponentView(ViewControllerActionCode.POSITION_OPPONENT_FIRST);
-                gameView.showFirstOpponentEventMessage("Player left", 5000);
+                gameView.showFirstOpponentEventMessage("Player left",
+                        ViewControllerTimerConst.TIME_LONG);
                 break;
             case ViewControllerActionCode.POSITION_OPPONENT_SECOND:
                 gameView.clearCards(ViewControllerActionCode.CLEAR_SECOND_OPPONENT_CARDS);
                 gameView.clearOpponentView(ViewControllerActionCode.POSITION_OPPONENT_SECOND);
-                gameView.showSecondOpponentEventMessage("Player left", 5000);
+                gameView.showSecondOpponentEventMessage("Player left",
+                        ViewControllerTimerConst.TIME_LONG);
                 break;
             case ViewControllerActionCode.POSITION_OPPONENT_THIRD:
                 gameView.clearCards(ViewControllerActionCode.CLEAR_THIRD_OPPONENT_CARDS);
                 gameView.clearOpponentView(ViewControllerActionCode.POSITION_OPPONENT_THIRD);
-                gameView.showThirdOpponentEventMessage("Player left", 5000);
+                gameView.showThirdOpponentEventMessage("Player left",
+                        ViewControllerTimerConst.TIME_LONG);
                 break;
             case ViewControllerActionCode.POSITION_OPPONENT_FOURTH:
                 gameView.clearCards(ViewControllerActionCode.CLEAR_FOURTH_OPPONENT_CARDS);
                 gameView.clearOpponentView(ViewControllerActionCode.POSITION_OPPONENT_FOURTH);
-                gameView.showSecondOpponentEventMessage("Player left", 5000);
+                gameView.showSecondOpponentEventMessage("Player left",
+                        ViewControllerTimerConst.TIME_LONG);
                 break;
         }
         //ВАЖНО: сначала надо очищать во вью,
