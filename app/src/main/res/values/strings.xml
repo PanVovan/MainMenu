@@ -1,7 +1,7 @@
 <resources>
     <string name="app_name">Poker Holdem</string>
     <string name="loading_text">Loading…</string>
-    <string name="auth_data_not_found">The application could not find\nyour authentication data.\nPlease, create a new account or sign in.</string>
+    <string name="auth_data_not_found">The application could not find\nyour authentication data.\nPlease, create a new account or sign in</string>
     \
     <string name="create_account_in_auth">create a new account</string>
     <string name="sign_in">sign in</string>

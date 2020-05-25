@@ -16,6 +16,8 @@ import java.util.Map;
 
 public interface GameContract {
     interface View {
+        void didNoteEnterLobbySoLeave();
+
         void setHandPowerProgressBarProgress(HandCombination combination);
         void showGameEventMessage(String message, int timeInMillis);
 
@@ -44,6 +46,8 @@ public interface GameContract {
     }
 
     interface Presenter{
+        void acceptMessageFromServerDidNotEnterLobby();
+
         void onViewStopped();
 
         //для отображения во вью

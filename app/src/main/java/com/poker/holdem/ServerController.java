@@ -119,8 +119,10 @@ public class ServerController implements GameContract.Server {
                             ,enterResp.getLobbyinfo().getBank()
                             ,enterResp.getLobbyinfo().getIsgamerunning()
                     );
-                else
+                else {
                     Logger.getAnonymousLogger().info("<-----Didn't manage to Enter!");
+                    presenter.acceptMessageFromServerDidNotEnterLobby();
+                }
             }catch (Exception e){
                 //sendMessageOnServerLeave();
                 e.printStackTrace();

@@ -30,8 +30,6 @@ import butterknife.OnClick;
  */
 public class CreateAccFragment extends Fragment {
 
-    private View view;
-
     private List<Integer> pics = Arrays.asList(0, 1, 2, 3, 4, 5, 6, 7);
     //была идея сделать через итератор, но его методы возвращают
     //текущее значение и переходят на одно вперёд/назад
@@ -51,7 +49,7 @@ public class CreateAccFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        view = inflater.inflate(R.layout.fragment_create_acc, container, false);
+        View view = inflater.inflate(R.layout.fragment_create_acc, container, false);
         ButterKnife.bind(this, view);
         return view;
     }

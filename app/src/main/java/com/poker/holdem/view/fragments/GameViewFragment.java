@@ -11,6 +11,7 @@ import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.SeekBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 import androidx.constraintlayout.widget.ConstraintLayout;
@@ -147,7 +148,6 @@ public class GameViewFragment extends Fragment implements GameContract.View {
                 raiseSeekBar.setValue(progress);
                 //[значение] = [текущая ставка]+
                 // [прогресс]*(([деньги игрока]-[текущая ставка]) / [максимальное значение сикбара])
-
                 //т.к. int a/int b (a<b) = 0, приходится использовать float
                 int rate        = presenter.getRate();
                 float diff      = (float)( presenter.getPlayerMoney() - rate );
@@ -156,16 +156,9 @@ public class GameViewFragment extends Fragment implements GameContract.View {
                 int newProgress = rate +
                         +(int)( pro_gress * ( diff / max ));
                 setRateTextView.setText(String.format(Locale.ENGLISH,"%d",newProgress));
-
             }
-            @Override
-            public void onStartTrackingTouch(SeekBar seekBar) {
-
-            }
-            @Override
-            public void onStopTrackingTouch(SeekBar seekBar) {
-
-            }
+            public void onStartTrackingTouch(SeekBar seekBar) {}
+            public void onStopTrackingTouch(SeekBar seekBar) {}
         };
     }
 
@@ -194,6 +187,15 @@ public class GameViewFragment extends Fragment implements GameContract.View {
     public void setRate(int val){
         Objects.requireNonNull(getActivity()).runOnUiThread(()->
             youRate.setText(String.format(Locale.ENGLISH, "%d", val)));
+    }
+
+    @Override
+    public void didNoteEnterLobbySoLeave() {
+        Toast.makeText(
+                PokerApplicationManager.getInstance().getApplicationContext()
+                ,"Did not manage to enter the lobby!"
+                ,Toast.LENGTH_LONG).show();
+        Objects.requireNonNull(getActivity()).finish();
     }
 
     @Override

@@ -7,6 +7,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.Toast;
 
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -125,8 +126,14 @@ public class ChooseLobbyFragment extends Fragment implements LobbyContract.MenuL
             RespRooms roomsObject = MyDeserializer.desGetLobbiesResponce(args[0].toString());
             lobbies.clear();
             lobbies.addAll(roomsObject.getRooms());
-            Objects.requireNonNull(getActivity())
+            if(Objects.requireNonNull(getActivity()!=null))
+                Objects.requireNonNull(getActivity())
                     .runOnUiThread(() -> setLobbies());
+            else
+                Toast.makeText(
+                        getContext()
+                        ,"Something is wrong. Please, try again."
+                       ,Toast.LENGTH_LONG ).show();
         }
     };
 }

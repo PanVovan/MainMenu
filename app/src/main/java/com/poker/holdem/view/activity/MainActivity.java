@@ -34,15 +34,6 @@ public class MainActivity extends AppCompatActivity implements NavigationHost {
                 .commit();
     }
 
-    //@Override
-    //protected void onRestoreInstanceState(@NonNull Bundle savedInstanceState) {
-    //    super.onRestoreInstanceState(savedInstanceState);
-    //    mainMenuFragment = new MainMenuFragment();
-    //    getSupportFragmentManager()
-    //            .beginTransaction()
-    //            .add(R.id.container_main_menu, mainMenuFragment)
-    //            .commit();
-    //}
 
     @Override
     protected void onPause() {

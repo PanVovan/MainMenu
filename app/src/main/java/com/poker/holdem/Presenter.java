@@ -1,6 +1,7 @@
 package com.poker.holdem;
 
 import android.content.Context;
+import android.widget.Toast;
 
 import com.poker.holdem.constants.Constants;
 import com.poker.holdem.logic.GameStatsHolder;
@@ -100,6 +101,11 @@ public class Presenter implements GameContract.Presenter {
     public int getPlayerMoney(){ return this.gameStats.getPlayerMoney(this.PLAYER_NAME); }
 
     @Override
+    public void acceptMessageFromServerDidNotEnterLobby() {
+        gameView.didNoteEnterLobbySoLeave();
+    }
+
+    @Override
     public void onViewStopped() {
         serverController.sendMessageOnServerLeave();
         PokerApplicationManager.getInstance()
@@ -138,15 +144,18 @@ public class Presenter implements GameContract.Presenter {
     @Override
     public void exitButtonClicked(){
         serverController.sendMessageOnServerLeave();
-        PokerApplicationManager.getInstance()
-                .getSharedPreferences(Constants.PREFS_NAME, Context.MODE_PRIVATE)
-                .edit()
-                .putInt(
-                        Constants.PLAYER_MONEY
-                        ,gameStats
-                                .getPlayerByName(this.PLAYER_NAME)
-                                .getMoney()
-                        ).apply();
+        //если игроков нет, то и деньги возвращать не нужно
+        if(!gameStats.getPlayers().isEmpty())
+            PokerApplicationManager.getInstance()
+                    .getSharedPreferences(Constants.PREFS_NAME, Context.MODE_PRIVATE)
+                    .edit()
+                    .putInt(
+                            Constants.PLAYER_MONEY
+                            , gameStats
+                                    .getPlayerByName(this.PLAYER_NAME)
+                                    .getMoney()
+                    ).apply();
+
     }
 
     //То, что мы получаем от сервера
@@ -445,7 +454,6 @@ public class Presenter implements GameContract.Presenter {
                 ,bank
                 ,rounds_done
         );
-
         if(!isgamerunning) gameStats.setPlayerCards(gameStats.getMainPlayerName(), new ArrayList<>());
         gameView.setPlayerView(gameStats.getMainPlayer());
 
@@ -453,7 +461,6 @@ public class Presenter implements GameContract.Presenter {
                 this.PLAYER_NAME
                 ,ViewControllerActionCode.POSITION_MAIN_PLAYER
         );
-
         if(isgamerunning) {
             showFirstFreeCards();
             checkIfShouldOpenNewCard();
