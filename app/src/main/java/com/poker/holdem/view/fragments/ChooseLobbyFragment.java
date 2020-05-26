@@ -41,10 +41,10 @@ public class ChooseLobbyFragment extends Fragment implements LobbyContract.MenuL
     private Logger logger = Logger.getAnonymousLogger();
 
     @BindView(R.id.stat_of_menu) ImageView label;
-    @BindView(R.id.private_games) Button privateButton;
+    //@BindView(R.id.private_games) Button privateButton;
     @BindView(R.id.reload_lobbies_btn) Button reloadLobbiesBtn;
     @BindView(R.id.btn_navigate_to_main_menu) Button exitBtn;
-    @BindView(R.id.clear_lobbies) Button clear_lobbies_button;
+    //@BindView(R.id.clear_lobbies) Button clear_lobbies_button;
     @BindView(R.id.new_lobby) Button newLobby;
 
     private ArrayList<RespRoom> lobbies = new ArrayList<>();
@@ -89,17 +89,17 @@ public class ChooseLobbyFragment extends Fragment implements LobbyContract.MenuL
     void navigateToMainMenu (){
         ((NavigationHost) Objects.requireNonNull(getActivity())).navigateTo(new MainMenuFragment(), false);
     }
-    @OnClick(R.id.clear_lobbies)
-    void clearLobbies(){
-        PokerApplicationManager applicationManager = (PokerApplicationManager) Objects.requireNonNull(getActivity()).getApplication();
-        if(applicationManager.getSocket() != null){
-            socket = applicationManager.getSocket();
-            socket.connect();
-            socket.emit("clearlobbies");
-            socket.disconnect();
-        }else
-            Logger.getAnonymousLogger().info("PokerApplicationManager return null object! ChooseLobby");
-    }
+    //@OnClick(R.id.clear_lobbies)
+    //void clearLobbies(){
+    //    PokerApplicationManager applicationManager = (PokerApplicationManager) Objects.requireNonNull(getActivity()).getApplication();
+    //    if(applicationManager.getSocket() != null){
+    //        socket = applicationManager.getSocket();
+    //        socket.connect();
+    //        socket.emit("clearlobbies");
+    //        socket.disconnect();
+    //    }else
+    //        Logger.getAnonymousLogger().info("PokerApplicationManager return null object! ChooseLobby");
+    //}
 
     @Override
     public void sendMessageOnServerGetLobbies() {

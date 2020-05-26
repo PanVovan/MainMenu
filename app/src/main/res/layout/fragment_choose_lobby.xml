@@ -37,7 +37,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
 
-    <Button
+    <!--Button
         android:id="@+id/private_games"
         android:layout_width="138dp"
         android:layout_height="55dp"
@@ -45,7 +45,7 @@
         android:adjustViewBounds="true"
         android:background="@drawable/button"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/reload_lobbies_btn" />
+        app:layout_constraintStart_toEndOf="@+id/reload_lobbies_btn" /-->
 
     <Button
         android:id="@+id/new_lobby"
@@ -55,11 +55,11 @@
         android:adjustViewBounds="true"
         android:background="@drawable/button"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/private_games"
+        app:layout_constraintStart_toStartOf="@id/reload_lobbies_btn"
         android:text="@string/create_lobby"
         android:textSize="20sp"/>
 
-    <Button
+    <!--Button
         android:id="@+id/clear_lobbies"
         android:text="@string/clear"
         android:textSize="20sp"
@@ -69,7 +69,7 @@
         android:adjustViewBounds="true"
         android:background="@drawable/button"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/new_lobby" />
+        app:layout_constraintStart_toEndOf="@+id/new_lobby" /-->
 
     <Button
         android:id="@+id/btn_navigate_to_main_menu"
