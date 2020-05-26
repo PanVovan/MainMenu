@@ -35,8 +35,7 @@ package="com.poker.holdem">
         </activity>
         <activity
             android:name=".view.activity.GameActivity"
-            android:screenOrientation="userLandscape"
-            android:noHistory="true">
+            android:screenOrientation="userLandscape">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.DEFAULT" />
